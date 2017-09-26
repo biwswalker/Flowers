@@ -1,1 +1,164 @@
 /* You can add global styles to this file, and also import other style files */
+
+.padding-form {
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+input {
+    font-weight: 200;
+}
+
+select {
+    font-weight: 200;
+}
+
+textarea {
+    font-weight: 200;
+}
+
+.no-side-margin {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+
+.no-side-padding {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+a.max-width {
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+
+.max-width {
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+
+.input-bg {
+    margin-top: 20px;
+    background-color: #F8F8F8;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 0px;
+}
+
+
+/* Radio */
+
+ul.radio {
+    list-style-type: none;
+    margin: auto;
+}
+
+li.radio {
+    position: relative;
+    padding: 3px;
+    padding-left: 30px;
+    height: 30px;
+    display: inline-grid;
+}
+
+label.radio {
+    font-weight: 200;
+}
+
+label.radio:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background: #F4B2B2;
+    position: absolute;
+    left: 2px;
+    top: calc(50% - 8px);
+    box-sizing: border-box;
+    border-radius: 50%;
+}
+
+input[type="radio"] {
+    opacity: 0;
+    -webkit-appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 15px);
+    cursor: pointer;
+}
+
+.bullet {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    left: -3px;
+    top: 2px;
+    border: 3px solid #F4B2B2;
+    opacity: 0;
+    border-radius: 50%;
+}
+
+input[type="radio"]:checked~.bullet {
+    position: absolute;
+    opacity: 1;
+    animation-name: explode;
+    animation-duration: 0.350s;
+}
+
+@keyframes explode {
+    0% {
+        opacity: 0;
+        transform: scale(10);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* Button outline override*/
+
+.button-outline-normal {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    border: 2px solid #242424;
+    border-radius: 5px;
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+    color: #242424;
+}
+
+.button-outline-normal:hover {
+    border-color: #7E7E7E;
+    color: #7E7E7E;
+}
+
+.button-outline-normal:disabled,
+.button-outline-normal[disabled] {
+    border: 2px solid #7E7E7E;
+    color: #7E7E7E;
+}
+
+
+/* Validate */
+
+.ng-touched.ng-invalid {
+    border-color: red;
+}

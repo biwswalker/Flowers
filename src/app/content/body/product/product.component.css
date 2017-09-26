@@ -1,0 +1,22 @@
+.img-text {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+    color: rgba(248, 248, 248, 0.85);
+    background: transparent;
+    font-size: 13vw;
+}
+
+.service-box:hover {
+    opacity: 0.8;
+    background-color: #F8F8F8;
+    transition: all 0.5s;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
