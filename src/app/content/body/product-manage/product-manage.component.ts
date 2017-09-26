@@ -28,10 +28,12 @@ export class ProductManageComponent implements OnInit {
   binaryString: string;
   file: File;
 
+  // Alert
+  isAlert = false;
+
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.productForm = new ManageProductForm();
     this.imagePath = './assets/img/empty.png'
     this.isAddPage = false;
     this.dtOptions = {
@@ -40,22 +42,27 @@ export class ProductManageComponent implements OnInit {
       info: false,
       pageLength: 10
     };
+    this.resetform();
+  }
 
+  resetform() {
+    this.productForm = new ManageProductForm();
     this.productForm.product.productSize = 'S';
     this.productForm.product.productType = 'S';
 
     this.group = new FormGroup({
-      'name': new FormControl(this.productForm.product.productName, Validators.required),
-      'category': new FormControl(this.productForm.product.productCategory, Validators.required),
-      'price': new FormControl(this.productForm.product.productPrice, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])),
-      'size': new FormControl(this.productForm.product.productSize, Validators.required),
-      'type': new FormControl(this.productForm.product.productType, Validators.required),
-      'detail': new FormControl(this.productForm.product.productDetail),
+      'productName': new FormControl(this.productForm.product.productName, Validators.required),
+      'productCategory': new FormControl(this.productForm.product.productCategory, Validators.required),
+      'productPrice': new FormControl(this.productForm.product.productPrice, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])),
+      'productSize': new FormControl(this.productForm.product.productSize, Validators.required),
+      'productType': new FormControl(this.productForm.product.productType, Validators.required),
+      'productDetail': new FormControl(this.productForm.product.productDetail),
       'file': new FormControl(null),
     });
   }
 
   onChangePage(mode: string) {
+    this.resetform();
     if (mode === 'I') {
       this.isAddPage = true;
     } else {
@@ -64,10 +71,19 @@ export class ProductManageComponent implements OnInit {
   }
 
   onClickSubmit() {
+    if (this.file === null) {
+      this.isAlert = true;
+      return;
+    }
     if (this.group.valid) {
-      let test = { name: this.group.value.name, category: this.group.value.category, price: this.group.value.price };
-      this.productService.addProduct(test)
-        .then(data => { console.log('Success') })
+      this.productForm.product.productName = this.group.value.productName;
+      this.productForm.product.productCategory = this.group.value.productCategory;
+      this.productForm.product.productPrice = this.group.value.productPrice;
+      this.productForm.product.productSize = this.group.value.productSize;
+      this.productForm.product.productType = this.group.value.productType;
+      this.productForm.product.productDetail = this.group.value.productDetail;
+      this.productService.addProduct(this.productForm, this.imagePath)
+        .then(data => { console.log('Success'); this.onChangePage('S'); })
         .catch(error => { console.log('Error : ' + error.message) });
     }
   }

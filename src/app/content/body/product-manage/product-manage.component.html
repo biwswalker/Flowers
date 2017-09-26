@@ -1,129 +1,188 @@
-<section id="product-table" *ngIf="!isAddPage">
-    <div class="container">
-        <button class="btn btn-primary" (click)="onChangePage('I')">เพิ่มรายการสินค้า</button>
-        <table datatable [dtOptions]="dtOptions" class="row-border hover">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                </tr>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div style="height: 56px;"></div>
+
+<div class="container"
+     *ngIf="isAlert">
+  <div class="alert alert-warning alert-dismissible fade show"
+       role="alert">
+    <button type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> กรุณา...
+  </div>
+</div>
+
+<section id="product-table"
+         *ngIf="!isAddPage">
+  <div class="container">
+    <button class="btn btn-primary"
+            (click)="onChangePage('I')">เพิ่มรายการสินค้า</button>
+    <table datatable
+           [dtOptions]="dtOptions"
+           class="row-border hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tiger Nixon</td>
+          <td>System Architect</td>
+          <td>Edinburgh</td>
+        </tr>
+        <tr>
+          <td>Tiger Nixon</td>
+          <td>System Architect</td>
+          <td>Edinburgh</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
-<section id="product-table" *ngIf="isAddPage">
-    <form [formGroup]="group" (ngSubmit)="onClickSubmit()">
-        <div class="container">
-            <button class="btn btn-danger" (click)="onChangePage('S')">ยกเลิก</button>
-            <div class="row input-bg">
-                <div class="col-lg-9 col-sm-12">
-                    <div class="row col-lg-12 col-sm-12 padding-form">
-                        <div class="col-lg-6 col-sm-6 col-xs-6">
-                            <label for="">ชื่อสินค้า</label>
-                            <input formControlName="name" name="name" type="text" class="form-control">
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-xs-3">
-                            <label for="">ประเถทสินค้า</label>
-                            <select formControlName="category" name="category" class="form-control">
+<section id="product-table"
+         *ngIf="isAddPage">
+  <form [formGroup]="group"
+        (ngSubmit)="onClickSubmit()">
+    <div class="container">
+      <button class="btn btn-danger"
+              (click)="onChangePage('S')">ยกเลิก</button>
+      <div class="row input-bg">
+        <div class="col-lg-9 col-sm-12">
+          <div class="row col-lg-12 col-sm-12 padding-form">
+            <div class="col-lg-6 col-sm-6 col-xs-6">
+              <label for="">ชื่อสินค้า</label>
+              <input formControlName="productName"
+                     name="productName"
+                     type="text"
+                     class="form-control">
+            </div>
+            <div class="col-lg-3 col-sm-3 col-xs-3">
+              <label for="">ประเถทสินค้า</label>
+              <select formControlName="productCategory"
+                      name="productCategory"
+                      class="form-control">
                           <option value="" selected disabled></option>
                           <option value="1">ช่อดอกไม้</option>
                           <option value="2">กระเช้าดอกไม้</option>
                           <option value="3">ขวดแก้ว</option>
                         </select>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-xs-3">
-                            <label for="">ราคา</label>
-                            <input formControlName="price" name="price" type="number" class="form-control">
-                        </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-xs-3">
+              <label for="">ราคา</label>
+              <input formControlName="productPrice"
+                     name="productPrice"
+                     type="number"
+                     class="form-control">
+            </div>
+          </div>
+          <div class="row col-lg-12 col-sm-12 col-xs-12 padding-form">
+            <div class="col-lg-6 col-sm-12 col-xs-12">
+              <label for="">ขนาด</label>
+              <div>
+                <ul class="radio">
+                  <li class="radio"
+                      style="width:50px;">
+                    <input formControlName="productSize"
+                           checked
+                           type="radio"
+                           name="productSize"
+                           value="S">
+                    <label class="radio">S</label>
+                    <div class="bullet">
                     </div>
-                    <div class="row col-lg-12 col-sm-12 col-xs-12 padding-form">
-                        <div class="col-lg-6 col-sm-12 col-xs-12">
-                            <label for="">ขนาด</label>
-                            <div>
-                                <ul class="radio">
-                                    <li class="radio" style="width:50px;">
-                                        <input formControlName="size" checked type="radio" name="size" value="S">
-                                        <label class="radio">S</label>
-                                        <div class="bullet">
-                                        </div>
-                                    </li>
-                                    <li class="radio" style="width:50px;">
-                                        <input formControlName="size" type="radio" name="size" value="M">
-                                        <label class="radio">M</label>
-                                        <div class="bullet">
-                                        </div>
-                                    </li>
-                                    <li class="radio" style="width:50px;">
-                                        <input formControlName="size" type="radio" name="size" value="L">
-                                        <label class="radio">L</label>
-                                        <div class="bullet">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-12 col-xs-12">
-                            <label for="">ชนิด</label>
-                            <div>
-                                <ul class="radio">
-                                    <li class="radio" style="width:70px;">
-                                        <input formControlName="type" checked type="radio" value="S" name="type">
-                                        <label class="radio">เซ็ท</label>
-                                        <div class="bullet">
-                                        </div>
-                                    </li>
-                                    <li class="radio" style="width:70px;">
-                                        <input formControlName="type" type="radio" value="P" name="type">
-                                        <label class="radio">ชิ้น</label>
-                                        <div class="bullet">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                  </li>
+                  <li class="radio"
+                      style="width:50px;">
+                    <input formControlName="productSize"
+                           type="radio"
+                           name="productSize"
+                           value="M">
+                    <label class="radio">M</label>
+                    <div class="bullet">
                     </div>
-                    <div class="row col-lg-12 col-sm-12 padding-form">
-                        <div class="col-lg-12 col-sm-12 col-xs-12">
-                            <label for="">รายละเอียด</label>
-                            <textarea formControlName="detail" name="detail" rows="5" class="form-control">This one.&#10;This is my statement2</textarea>
-                        </div>
+                  </li>
+                  <li class="radio"
+                      style="width:50px;">
+                    <input formControlName="productSize"
+                           type="radio"
+                           name="productSize"
+                           value="L">
+                    <label class="radio">L</label>
+                    <div class="bullet">
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-12">
-                    <div class="col-lg-12 col-sm-12 col-xs-12 margin-t" style="text-align: center;">
-                        <div>
-                            <a (click)="onDeleteImage()" class="btn-close">
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 col-xs-12">
+              <label for="">ชนิด</label>
+              <div>
+                <ul class="radio">
+                  <li class="radio"
+                      style="width:70px;">
+                    <input formControlName="productType"
+                           checked
+                           type="radio"
+                           value="S"
+                           name="productType">
+                    <label class="radio">เซ็ท</label>
+                    <div class="bullet">
+                    </div>
+                  </li>
+                  <li class="radio"
+                      style="width:70px;">
+                    <input formControlName="productType"
+                           type="radio"
+                           value="P"
+                           name="productType">
+                    <label class="radio">ชิ้น</label>
+                    <div class="bullet">
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row col-lg-12 col-sm-12 padding-form">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+              <label for="">รายละเอียด</label>
+              <textarea formControlName="productDetail"
+                        name="productDetail"
+                        rows="5"
+                        class="form-control">This one.&#10;This is my statement2</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-12">
+          <div class="col-lg-12 col-sm-12 col-xs-12 margin-t"
+               style="text-align: center;">
+            <div>
+              <a (click)="onDeleteImage()"
+                 class="btn-close">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                             </a>
-                            <img src="{{imagePath}}" style="min-width: 220px;max-width: 220px;">
-                        </div>
-                        <div class="padding-t">
-                            <label class="btn btn-primary">อัพโหลดไฟล์รูป
-                                <input (change)="onUploadImage($event)" formControlName="file" type="file" name="file" style="display: none;">
-                              </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row col-lg-12 col-sm-12">
-                    <div class="col-lg-12 col-sm-12 col-xs-12">
-                        <button type="submit" class="button-outline-normal" [disabled]="!group.valid">บันทึก</button>
-                    </div>
-                </div>
+              <img src="{{imagePath}}"
+                   style="min-width: 190px;max-width: 190px;">
             </div>
+            <div class="padding-t">
+              <label class="btn btn-primary">อัพโหลดไฟล์รูป
+                                <input (change)="onUploadImage($event)" formControlName="file" type="file" name="file" accept="image/*" style="display: none;">
+                              </label>
+            </div>
+          </div>
         </div>
-    </form>
+        <div class="row col-lg-12 col-sm-12">
+          <div class="col-lg-12 col-sm-12 col-xs-12">
+            <button type="submit"
+                    class="button-outline-normal"
+                    [disabled]="!group.valid">บันทึก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </section>

@@ -6,7 +6,7 @@ export const firebaseConfig = {
   authDomain: "flowers-flow.firebaseapp.com",
   databaseURL: "https://flowers-flow.firebaseio.com",
   projectId: "flowers-flow",
-  storageBucket: "",
+  storageBucket: "flowers-flow.appspot.com",
   messagingSenderId: "1064581697915"
 };
 
