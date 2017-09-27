@@ -1,7 +1,9 @@
+import { AlertService } from '../../../services/alert.service';
 import { ManageProductForm } from '../../../forms/manage-product';
 import { ProductService } from '../../../services/product.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { NgProgressService } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-product-manage',
@@ -28,12 +30,20 @@ export class ProductManageComponent implements OnInit {
   binaryString: string;
   file: File;
 
-  // Alert
-  isAlert = false;
+  // Loading
+  public loading = false;
 
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private alertService: AlertService,
+    private progressService: NgProgressService,) { }
 
   ngOnInit() {
+    this.progressService.start();
+    setTimeout(()=>{
+      this.progressService.done();
+    }, 2000);
+
     this.imagePath = './assets/img/empty.png'
     this.isAddPage = false;
     this.dtOptions = {
@@ -59,6 +69,8 @@ export class ProductManageComponent implements OnInit {
       'productDetail': new FormControl(this.productForm.product.productDetail),
       'file': new FormControl(null),
     });
+
+    this.onDeleteImage();
   }
 
   onChangePage(mode: string) {
@@ -71,24 +83,24 @@ export class ProductManageComponent implements OnInit {
   }
 
   onClickSubmit() {
-    if (this.file === null) {
-      this.isAlert = true;
-      return;
+    if (this.binaryString === null) {
+      this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพ');
     }
-    if (this.group.valid) {
-      this.productForm.product.productName = this.group.value.productName;
-      this.productForm.product.productCategory = this.group.value.productCategory;
-      this.productForm.product.productPrice = this.group.value.productPrice;
-      this.productForm.product.productSize = this.group.value.productSize;
-      this.productForm.product.productType = this.group.value.productType;
-      this.productForm.product.productDetail = this.group.value.productDetail;
-      this.productService.addProduct(this.productForm, this.imagePath)
-        .then(data => { console.log('Success'); this.onChangePage('S'); })
-        .catch(error => { console.log('Error : ' + error.message) });
-    }
+    // if (this.group.valid) {
+    //   this.productForm.product.productName = this.group.value.productName;
+    //   this.productForm.product.productCategory = this.group.value.productCategory;
+    //   this.productForm.product.productPrice = this.group.value.productPrice;
+    //   this.productForm.product.productSize = this.group.value.productSize;
+    //   this.productForm.product.productType = this.group.value.productType;
+    //   this.productForm.product.productDetail = this.group.value.productDetail;
+    //   this.productService.addProduct(this.productForm, this.imagePath)
+    //     .then(data => { console.log('Success'); this.onChangePage('S'); })
+    //     .catch(error => { console.log('Error : ' + error.message) });
+    // }
   }
 
   onUploadImage(event) {
+    this.loading = true;
     this.fileList = event.target.files;
     if (this.fileList.length > 0) {
       this.file = this.fileList[0];
@@ -99,22 +111,25 @@ export class ProductManageComponent implements OnInit {
         reader.readAsBinaryString(this.file);
       } else {
         this.onDeleteImage();
+        this.loading = false;
       }
     } else {
       this.onDeleteImage();
+      this.loading = false;
     }
   }
 
   handleReaderLoaded(readerEvent) {
     this.binaryString = readerEvent.target.result;
     this.imagePath = 'data:' + this.file.type + ';base64,' + btoa(this.binaryString);
+    this.loading = false;
   }
 
   onDeleteImage() {
+    this.progressService.done();
     this.imagePath = './assets/img/empty.png'
     this.fileList = null;
     this.binaryString = null;
     this.file = null;
   }
-
 }
