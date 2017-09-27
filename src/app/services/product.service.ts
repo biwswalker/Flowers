@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ManageProductForm } from "../forms/manage-product";
 import * as firebase from 'firebase';
+import { Product } from "../models/product";
 
 
 @Injectable()
 export class ProductService {
+
+  productList: Product[] = [];
 
   constructor() { }
 
@@ -25,11 +28,31 @@ export class ProductService {
     return imageRef.putString(imageData, firebase.storage.StringFormat.DATA_URL)
       .then((snapshot) => {
         form.product.productImagePath = snapshot.downloadURL;
+        this.productList.push(form.product);
         return firebase.database().ref('product/' + form.product.productId).set(form.product);
       })
       .catch(error => {
         console.log('Error ' + error);
       });
+  }
+
+  fetchProductListData() {
+    return firebase.database().ref('product').once('value')
+      .then(list => {
+        this.productList = [];
+        list.forEach(data => {
+          this.productList.push(data.val());
+        });
+        return this.productList;
+      })
+      .catch(error => {
+        console.log('Error ' + error);
+        return [];
+      });
+  }
+
+  getProductList() {
+    return this.productList.slice();
   }
 
 }

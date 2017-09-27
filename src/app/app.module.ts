@@ -17,7 +17,6 @@ import { IndexComponent } from './content/body/index/index.component';
 import { ProductComponent } from './content/body/product/product.component';
 import { ProductManageComponent } from './content/body/product-manage/product-manage.component';
 import { AlertsComponent } from './utils/alerts/alerts.component';
-import { ProgressbarComponent } from './utils/progressbar/progressbar.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { ProgressbarComponent } from './utils/progressbar/progressbar.component'
     IndexComponent,
     ProductComponent,
     ProductManageComponent,
-    AlertsComponent,
-    ProgressbarComponent
+    AlertsComponent
   ],
   imports: [
     BrowserModule,
