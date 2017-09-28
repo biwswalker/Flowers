@@ -10,3 +10,16 @@
 .padding-t {
     padding-top: 10px;
 }
+
+.h200 {
+  max-height: 200px;
+  max-width: 260px;
+}
+
+.mid {
+  vertical-align: middle;
+}
+
+.none-border {
+  border: none;
+}

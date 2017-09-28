@@ -35,7 +35,7 @@
           <td>{{ productObj.product.productName }}</td>
           <td>{{ productObj.product.productCategory }}</td>
           <td>{{ productObj.product.productType }}</td>
-          <td>{{ productObj.product.productSize }}</td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -51,145 +51,239 @@
         (ngSubmit)="onClickSubmit()">
     <div class="container">
       <button class="btn btn-danger"
-              (click)="onChangePage('S')">ยกเลิก</button>
-      <div class="row input-bg">
-        <div class="col-lg-9 col-sm-12">
-          <div class="row col-lg-12 col-sm-12 padding-form">
-            <div class="col-lg-6 col-sm-6 col-xs-6">
-              <label for="">ชื่อสินค้า</label>
-              <input formControlName="productName"
-                     name="productName"
-                     type="text"
-                     class="form-control">
+              (click)="onBack()">ยกเลิก</button>
+      <div class="input-bg">
+
+        <div class="row col-lg-12 col-sm-12 col-xs-12 padding-form">
+          <div class="col-lg-12 col-sm-12 col-xs-12">
+            <label for="">ชนิด</label>
+            <div>
+              <ul class="radio">
+                <li class="radio"
+                    style="width:70px;">
+                  <input formControlName="productType"
+                         checked
+                         type="radio"
+                         value="S"
+                         name="productType">
+                  <label class="radio">เซ็ท</label>
+                  <div class="bullet">
+                  </div>
+                </li>
+                <li class="radio"
+                    style="width:70px;">
+                  <input formControlName="productType"
+                         type="radio"
+                         value="P"
+                         name="productType">
+                  <label class="radio">ชิ้น</label>
+                  <div class="bullet">
+                  </div>
+                </li>
+              </ul>
             </div>
-            <div class="col-lg-3 col-sm-3 col-xs-3">
-              <label for="">ประเถทสินค้า</label>
-              <select formControlName="productCategory"
-                      name="productCategory"
-                      class="form-control">
-                          <option value="" selected disabled></option>
+          </div>
+        </div>
+
+        <div class="row col-lg-12 col-sm-12 padding-form">
+          <div class="col-lg-6 col-sm-6 col-xs-6">
+            <label for="">ชื่อสินค้า</label>
+            <input formControlName="productName"
+                   name="productName"
+                   type="text"
+                   class="form-control">
+          </div>
+          <div class="col-lg-4 col-sm-4 col-xs-4">
+            <label for="">ประเถทสินค้า</label>
+            <select formControlName="productCategory"
+                    name="productCategory"
+                    class="form-control">
                           <option value="1">ช่อดอกไม้</option>
                           <option value="2">กระเช้าดอกไม้</option>
                           <option value="3">ขวดแก้ว</option>
                         </select>
-            </div>
-            <div class="col-lg-3 col-sm-3 col-xs-3">
-              <label for="">ราคา</label>
-              <input formControlName="productPrice"
-                     name="productPrice"
-                     type="number"
-                     class="form-control">
-            </div>
           </div>
-          <div class="row col-lg-12 col-sm-12 col-xs-12 padding-form">
-            <div class="col-lg-6 col-sm-12 col-xs-12">
-              <label for="">ขนาด</label>
-              <div>
-                <ul class="radio">
-                  <li class="radio"
-                      style="width:50px;">
-                    <input formControlName="productSize"
-                           checked
-                           type="radio"
-                           name="productSize"
-                           value="S">
-                    <label class="radio">S</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                  <li class="radio"
-                      style="width:50px;">
-                    <input formControlName="productSize"
-                           type="radio"
-                           name="productSize"
-                           value="M">
-                    <label class="radio">M</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                  <li class="radio"
-                      style="width:50px;">
-                    <input formControlName="productSize"
-                           type="radio"
-                           name="productSize"
-                           value="L">
-                    <label class="radio">L</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-12 col-xs-12">
-              <label for="">ชนิด</label>
-              <div>
-                <ul class="radio">
-                  <li class="radio"
-                      style="width:70px;">
-                    <input formControlName="productType"
-                           checked
-                           type="radio"
+          <div class="col-lg-2 col-sm-2 col-xs-2">
+            <label for="">สถานะ</label>
+            <select formControlName="status"
+                    name="status"
+                    class="form-control">
+                            <option value="Y">ใช้งาน</option>
+                            <option value="N">ไม่ใช้งาน</option>
+                          </select>
+          </div>
+        </div>
+
+        <div class="row col-lg-12 col-sm-12 padding-form">
+          <div class="col-lg-12 col-sm-12 col-xs-12">
+            <label for="">รายละเอียด</label>
+            <textarea formControlName="productDetail"
+                      name="productDetail"
+                      rows="5"
+                      class="form-control">This one.&#10;This is my statement2</textarea>
+          </div>
+        </div>
+
+        <div class="row col-lg-12 col-sm-12 col-xs-12 margin-t">
+          <ngx-loading [show]="loadingImage"></ngx-loading>
+          <table class="table table-responsive">
+            <thead>
+              <tr>
+                <th class="none-border"></th>
+                <th class="none-border">ขนาด</th>
+                <th class="none-border">ราคา</th>
+                <th class="none-border">สถานะ</th>
+                <th class="none-border"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mid">
+                  <div class="checkbox">
+                    <input [(ngModel)]="productForm.product.productSizeS"
+                           formControlName="sizeS"
+                           name="sizeS"
+                           id="sizeS"
+                           type="checkbox"
                            value="S"
-                           name="productType">
-                    <label class="radio">เซ็ท</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                  <li class="radio"
-                      style="width:70px;">
-                    <input formControlName="productType"
-                           type="radio"
-                           value="P"
-                           name="productType">
-                    <label class="radio">ชิ้น</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="row col-lg-12 col-sm-12 padding-form">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-              <label for="">รายละเอียด</label>
-              <textarea formControlName="productDetail"
-                        name="productDetail"
-                        rows="5"
-                        class="form-control">This one.&#10;This is my statement2</textarea>
-            </div>
-          </div>
+                           (change)="onChkSize('S',productForm.product.productSizeS)">
+                    <label class="chkl"
+                           for="sizeS"><div class="chkv"><i class="fa fa-check"></i></div></label>
+                  </div>
+                </td>
+                <td class="mid">Small</td>
+                <td class="mid">
+                  <input [disabled]="true"
+                         formControlName="productPriceS"
+                         name="productPriceS"
+                         placeholder="ราคา"
+                         type="number"
+                         class="form-control"
+                         style="margin-top: 5px;text-align: center;">
+                </td>
+                <td class="mid">
+                  <select formControlName="statusS"
+                          name="statusS"
+                          class="form-control">
+                        <option value="Y">ใช้งาน</option>
+                        <option value="N">ไม่ใช้งาน</option>
+                      </select>
+                </td>
+                <td class="mid">
+                  <img src="{{imagePathS}}"
+                       class="h200">
+                  <label *ngIf="!this.productForm.product.productImagePathS"
+                         class="btn btn-primary">อัพโหลดไฟล์รูป
+                    <input
+                    (change)="onUploadImage($event, 'S')"
+                    formControlName="fileS"
+                    type="file"
+                    name="fileS"
+                    accept="image/*"
+                    style="display: none;">
+                  </label>
+                  <button *ngIf="this.productForm.product.productImagePathS"
+                          class="btn btn-danger"
+                          (click)="onDeleteImage('S')">ลบรูป</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mid">
+                  <div class="checkbox">
+                    <input [(ngModel)]="productForm.product.productSizeM"
+                           formControlName="sizeM"
+                           name="sizeM"
+                           id="sizeM"
+                           type="checkbox"
+                           value="M"
+                           (change)="onChkSize('M',productForm.product.productSizeM)">
+                    <label class="chkl"
+                           for="sizeM"><div class="chkv"><i class="fa fa-check"></i></div></label>
+                  </div>
+                </td>
+                <td class="mid">Medium</td>
+                <td class="mid">
+                  <input formControlName="productPriceM"
+                         name="productPriceM"
+                         placeholder="ราคา"
+                         type="number"
+                         class="form-control txtalign-center">
+                </td>
+                <td class="mid">
+                  <select formControlName="statusM"
+                          name="statusM"
+                          class="form-control">
+                    <option value="Y">ใช้งาน</option>
+                    <option value="N">ไม่ใช้งาน</option>
+                  </select>
+                </td>
+                <td class="mid">
+                  <img src="{{imagePathM}}"
+                       class="h200">
+                  <label class="btn btn-primary">อัพโหลดไฟล์รูป
+                    <input
+                    (change)="onUploadImage($event, 'M')"
+                    formControlName="fileM"
+                    type="file"
+                    name="fileM"
+                    accept="image/*"
+                    style="display: none;">
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td class="mid">
+                  <div class="checkbox">
+                    <input [(ngModel)]="productForm.product.productSizeL"
+                           formControlName="sizeL"
+                           name="sizeL"
+                           id="sizeL"
+                           type="checkbox"
+                           value="L"
+                           (change)="onChkSize('L',productForm.product.productSizeL)">
+                    <label class="chkl"
+                           for="sizeL"><div class="chkv"><i class="fa fa-check"></i></div></label>
+                  </div>
+                </td>
+                <td class="mid">Large</td>
+                <td class="mid">
+                  <input formControlName="productPriceL"
+                         name="productPriceL"
+                         placeholder="ราคา"
+                         type="number"
+                         class="form-control txtalign-center">
+                </td>
+                <td class="mid">
+                  <select formControlName="statusL"
+                          name="statusL"
+                          class="form-control">
+                    <option value="Y">ใช้งาน</option>
+                    <option value="N">ไม่ใช้งาน</option>
+                  </select>
+                </td>
+                <td class="mid">
+                  <img src="{{imagePathL}}"
+                       class="h200">
+                  <label class="btn btn-primary">อัพโหลดไฟล์รูป
+                      <input
+                      (change)="onUploadImage($event, 'L')"
+                      formControlName="fileL"
+                      type="file"
+                      name="fileL"
+                      accept="image/*"
+                      style="display: none;">
+                    </label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="col-lg-3 col-sm-12">
-          <div class="col-lg-12 col-sm-12 col-xs-12 margin-t"
-               style="text-align: center;">
-            <div class="col-lg-12">
-              <a (click)="onDeleteImage()"
-                 class="btn-close">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </a>
-              <img src="{{imagePath}}"
-                   style="min-width: 100%;max-width: 100%;">
-              <ngx-loading [show]="loadingImage"></ngx-loading>
-            </div>
-            <div class="padding-t">
-              <label class="btn btn-primary">อัพโหลดไฟล์รูป
-                <input
-                (change)="onUploadImage($event)"
-                (click)="onClickUpload()"
-                formControlName="file"
-                type="file"
-                name="file"
-                accept="image/*"
-                style="display: none;">
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row col-lg-12 col-sm-12">
+
+        <div class="row col-lg-12 col-sm-12 padding-t">
           <div class="col-lg-12 col-sm-12 col-xs-12">
             <button type="submit"
                     class="button-outline-normal"
-                    [disabled]="!group.valid || !file">บันทึก</button>
+                    [disabled]="!group.valid">บันทึก</button>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { AlertService } from '../../../services/alert.service';
 import { ManageProductForm } from '../../../forms/manage-product';
 import { ProductService } from '../../../services/product.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { NgProgressService } from 'ngx-progressbar';
 import { Product } from "../../../models/product";
 
@@ -27,10 +27,9 @@ export class ProductManageComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
 
   // Image
-  imagePath: any = '';
-  fileList: FileList;
-  binaryString: string;
-  file: File;
+  imagePathS: any = '';
+  imagePathM: any = '';
+  imagePathL: any = '';
 
   // Loading
   loadingImage = false;
@@ -60,8 +59,11 @@ export class ProductManageComponent implements OnInit {
         setTimeout(() => {
           this.alertService.clear();
         }, 5000);
+        window.scrollTo(0, 0)
       });
-    this.imagePath = './assets/img/empty.png'
+    this.imagePathS = './assets/img/empty.png'
+    this.imagePathM = './assets/img/empty.png'
+    this.imagePathL = './assets/img/empty.png'
     this.isAddPage = false;
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -75,102 +77,235 @@ export class ProductManageComponent implements OnInit {
     this.group = new FormGroup({
       'productName': new FormControl(this.productForm.product.productName, Validators.required),
       'productCategory': new FormControl(this.productForm.product.productCategory, Validators.required),
-      'productPrice': new FormControl(this.productForm.product.productPrice, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])),
-      'productSize': new FormControl(this.productForm.product.productSize, Validators.required),
       'productType': new FormControl(this.productForm.product.productType, Validators.required),
       'productDetail': new FormControl(this.productForm.product.productDetail),
-      'file': new FormControl(null),
+      'status': new FormControl(this.productForm.product.status, Validators.required),
+      'sizeS': new FormControl(this.productForm.product.productSizeS),
+      'sizeM': new FormControl(this.productForm.product.productSizeM),
+      'sizeL': new FormControl(this.productForm.product.productSizeL),
+      'productPriceS': new FormControl(this.productForm.product.productPriceS, Validators.pattern('[0-9]+')),
+      'productPriceM': new FormControl(this.productForm.product.productPriceM, Validators.pattern('[0-9]+')),
+      'productPriceL': new FormControl(this.productForm.product.productPriceL, Validators.pattern('[0-9]+')),
+      'statusS': new FormControl(this.productForm.product.statusS),
+      'statusM': new FormControl(this.productForm.product.statusM),
+      'statusL': new FormControl(this.productForm.product.statusL),
+      'fileS': new FormControl(null),
+      'fileM': new FormControl(null),
+      'fileL': new FormControl(null)
     });
+
+    this.onChkSize('S', this.productForm.product.productSizeS);
+    this.onChkSize('M', this.productForm.product.productSizeM);
+    this.onChkSize('L', this.productForm.product.productSizeL);
+  }
+
+  onChkSize(size: string, tf: boolean) {
+    const price = 'productPrice' + size;
+    const status = 'status' + size;
+    const file = 'file' + size;
+    if (!tf) {
+      this.group.controls[price].disable();
+      this.group.controls[status].disable();
+      this.group.controls[file].disable();
+      this.group.controls[price].setValidators([Validators.required, Validators.pattern('[0-9]+')]);
+      this.group.controls[status].setValidators(Validators.required);
+    } else {
+      this.group.controls[price].enable();
+      this.group.controls[status].enable();
+      this.group.controls[file].enable();
+      this.group.controls[price].setValidators(Validators.nullValidator);
+      this.group.controls[status].setValidators(Validators.nullValidator);
+    }
   }
 
   onChangePage(mode: string) {
     if (mode === 'I') {
       this.isAddPage = true;
       this.productForm = new ManageProductForm();
-      this.productForm.product.productSize = 'S';
       this.productForm.product.productType = 'S';
+      this.productForm.product.status = 'Y';
+      this.productForm.product.productSizeS = false;
+      this.productForm.product.productSizeM = false;
+      this.productForm.product.productSizeL = false;
       this.resetFormGroup();
-      this.onDeleteImage();
     } else if (mode === 'U') {
       this.isAddPage = true;
       this.resetFormGroup();
     } else {
+      this.productForm = new ManageProductForm();
       this.getAllDataProduct();
       this.isAddPage = false;
     }
   }
 
+  onBack() {
+    this.ngOnDestroy();
+    this.onChangePage('S');
+  }
+
   onClickSubmit() {
-    if (!this.binaryString) {
-      this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพ')
-      setTimeout(() => {
-        this.alertService.clear();
-      }, 5000);
-      return;
-    }
-    this.progressService.start();
-    this.loading = true;
     if (this.group.valid) {
-      this.productForm.product.productName = this.group.value.productName;
-      this.productForm.product.productCategory = this.group.value.productCategory;
-      this.productForm.product.productPrice = this.group.value.productPrice;
-      this.productForm.product.productSize = this.group.value.productSize;
-      this.productForm.product.productType = this.group.value.productType;
-      this.productForm.product.productDetail = this.group.value.productDetail;
-      this.productService.addProduct(this.productForm, this.imagePath)
-        .then(data => {
-          console.log('Success');
-          this.progressService.done();
-          this.loading = false;
-          this.onChangePage('S');
-          this.alertService.success('บันทึกสินค้าเรียบร้อย')
+      if (this.productForm.product.productSizeS) {
+      } else if (this.productForm.product.productSizeM) {
+      } else if (this.productForm.product.productSizeL) {
+      } else {
+        this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพสินค้า อย่างน้อย 1 รูป')
+        setTimeout(() => {
+          this.alertService.clear();
+        }, 5000);
+        window.scrollTo(0, 0)
+        return;
+      }
+
+      if (this.productForm.product.productSizeS) {
+        if (!this.productForm.product.productImagePathS) {
+          this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพสินค้า')
           setTimeout(() => {
             this.alertService.clear();
           }, 5000);
+          window.scrollTo(0, 0)
           return;
-        })
-        .catch(error => {
-          console.log('Error : ' + error.message)
-        });
+        } else if (!this.group.value.productPriceS) {
+          this.alertService.warn('กรุณากรอกราคา')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          window.scrollTo(0, 0)
+          return;
+        }
+      }
+      if (this.productForm.product.productSizeM) {
+        if (!this.productForm.product.productImagePathM) {
+          this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพสินค้า')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          window.scrollTo(0, 0)
+          return;
+        } else if (!this.group.value.productPriceM) {
+          this.alertService.warn('กรุณากรอกราคา')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          window.scrollTo(0, 0)
+          return;
+        }
+      }
+      if (this.productForm.product.productSizeL) {
+        if (!this.productForm.product.productImagePathL) {
+          this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพสินค้าขนาดใหญ่')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          window.scrollTo(0, 0)
+          return;
+        } else if (!this.group.value.productPriceL) {
+          this.alertService.warn('กรุณากรอกราคา')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          window.scrollTo(0, 0)
+          return;
+        }
+      }
+
+      this.progressService.start();
+      this.loading = true;
+
+      this.productForm.product.productName = this.group.value.productName;
+      this.productForm.product.productCategory = this.group.value.productCategory;
+      this.productForm.product.productType = this.group.value.productType;
+      this.productForm.product.productDetail = this.group.value.productDetail;
+      this.productForm.product.status = this.group.value.status;
+      this.productForm.product.productPriceS = this.group.value.productPriceS;
+      this.productForm.product.productPriceM = this.group.value.productPriceM;
+      this.productForm.product.productPriceL = this.group.value.productPriceL;
+      this.productForm.product.statusS = this.group.value.statusS;
+      this.productForm.product.statusM = this.group.value.statusM;
+      this.productForm.product.statusL = this.group.value.statusL;
+
+      // this.productService.addProduct(this.productForm, this.imagePathS, this.imagePathM, this.imagePathL)
+      //   .then(data => {
+      //     console.log('Success');
+      //     this.progressService.done();
+      //     this.loading = false;
+      //     this.onChangePage('S');
+      //     this.alertService.success('บันทึกสินค้าเรียบร้อย')
+      //     setTimeout(() => {
+      //       this.alertService.clear();
+      //     }, 5000);
+      //     return;
+      //   })
+      //   .catch(error => {
+      //     console.log('Error : ' + error.message)
+      //   });
     }
   }
 
-  onClickUpload() {
+  onUploadImage(event, size: string) {
     this.loadingImage = true;
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      const file: File = files[0];
+      const name = Date.now();
+      const imageName = `images/${name}.${file.type}`;
+      if (file.size < 5000000) {
+        if (size === 'S') {
+          this.productForm.product.productImageNameS = imageName;
+          this.productService.addProductImage(file, imageName)
+            .then((data) => {
+              this.productForm.product.productImagePathS = data;
+              this.imagePathS = data;
+              this.loadingImage = false;
+            });
+        } else if (size === 'M') {
+          this.productForm.product.productImageNameM = imageName;
+          this.productService.addProductImage(file, imageName)
+            .then((data) => {
+              this.productForm.product.productImagePathM = data;
+              this.imagePathM = data;
+              this.loadingImage = false;
+            });
+        } else if (size === 'L') {
+          this.productForm.product.productImageNameL = imageName;
+          this.productService.addProductImage(file, imageName)
+            .then((data) => {
+              this.productForm.product.productImagePathL = data;
+              this.imagePathL = data;
+              this.loadingImage = false;
+            });
+        }
+      }
+    }
   }
 
-  onUploadImage(event) {
-    this.fileList = event.target.files;
-    if (this.fileList.length > 0) {
-      this.loadingImage = false;
-      this.file = this.fileList[0];
-      // 5 MB
-      if (this.file.size < 5000000) {
-        let reader = new FileReader();
-        reader.onload = this.handleReaderLoaded.bind(this);
-        reader.readAsBinaryString(this.file);
-      } else {
-        this.onDeleteImage();
-        this.loadingImage = false;
+  onDeleteImage(size: string) {
+    if (size === 'S') {
+      this.imagePathS = './assets/img/empty.png';
+      if (this.productForm.product.productImageNameS) {
+        this.productService.deleteProductImage(this.productForm.product.productImageNameS);
+        this.productForm.product.productImageNameS = '';
+        this.productForm.product.productImagePathS = '';
+      }
+    } else if (size === 'M') {
+      this.imagePathM = './assets/img/empty.png';
+      if (this.productForm.product.productImageNameM) {
+        this.productService.deleteProductImage(this.productForm.product.productImageNameM);
+        this.productForm.product.productImageNameM = '';
+        this.productForm.product.productImagePathM = '';
+      }
+    } else if (size === 'L') {
+      this.imagePathL = './assets/img/empty.png';
+      if (this.productForm.product.productImageNameL) {
+        this.productService.deleteProductImage(this.productForm.product.productImageNameL);
+        this.productForm.product.productImageNameL = '';
+        this.productForm.product.productImagePathL = '';
       }
     } else {
-      this.onDeleteImage();
-      this.loadingImage = false;
+      this.imagePathS = './assets/img/empty.png';
+      this.imagePathM = './assets/img/empty.png';
+      this.imagePathL = './assets/img/empty.png';
     }
-  }
-
-  handleReaderLoaded(readerEvent) {
-    this.binaryString = readerEvent.target.result;
-    this.imagePath = 'data:' + this.file.type + ';base64,' + btoa(this.binaryString);
-    this.loadingImage = false;
-  }
-
-  onDeleteImage() {
-    this.progressService.done();
-    this.imagePath = './assets/img/empty.png'
-    this.fileList = null;
-    this.binaryString = null;
-    this.file = null;
   }
 
   getAllDataProduct() {
@@ -187,7 +322,41 @@ export class ProductManageComponent implements OnInit {
 
   onSelectRow(form: ManageProductForm) {
     this.productForm = form;
-    this.imagePath = this.productForm.product.productImagePath;
+    if (this.productForm.product.productImagePathS) {
+      this.imagePathS = this.productForm.product.productImagePathS;
+    } else {
+      this.imagePathS = './assets/img/empty.png';
+    }
+
+    if (this.productForm.product.productImagePathM) {
+      this.imagePathM = this.productForm.product.productImagePathM;
+    } else {
+      this.imagePathM = './assets/img/empty.png';
+    }
+
+    if (this.productForm.product.productImagePathL) {
+      this.imagePathL = this.productForm.product.productImagePathL;
+    } else {
+      this.imagePathL = './assets/img/empty.png';
+    }
     this.onChangePage('U');
   }
+
+  ngOnDestroy() {
+    if (this.productForm.product.productImageNameS) {
+      this.productService.deleteProductImage(this.productForm.product.productImageNameS);
+    }
+    if (this.productForm.product.productImageNameM) {
+      this.productService.deleteProductImage(this.productForm.product.productImageNameM);
+    }
+    if (this.productForm.product.productImageNameL) {
+      this.productService.deleteProductImage(this.productForm.product.productImageNameL);
+    }
+  }
+
+
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeunloadHandler($event) {
+  //   $event.returnValue = this.ngOnDestroy();
+  // }
 }

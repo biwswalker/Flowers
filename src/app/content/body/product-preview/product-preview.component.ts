@@ -37,7 +37,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
           if (productObj) {
             console.log(productObj);
             this.product = productObj;
-            this.imagePath = this.product.productImagePath;
+            // this.imagePath = this.product.productImagePath;
             console.log(this.product.productDetail);
             this.loading = false;
           }

@@ -1,3 +1,7 @@
+.txtalign-center {
+    text-align: center;
+}
+
 section {
     padding: 25px 0 !important;
 }
@@ -163,4 +167,42 @@ input[type="radio"]:checked~.bullet {
 
 .ng-touched.ng-invalid {
     border-color: red;
+}
+
+
+/*CHECKBOX*/
+
+input[type="checkbox"] {
+    display: none;
+}
+
+label.chkl div.chkv {
+    color: #16a085;
+    font-size: 18px;
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    border: 2px solid #16a085;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 6px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+label.chkl i {
+    font-size: 16px;
+    opacity: 0;
+}
+
+label.chkl:hover div.chkv {
+    background: transparent;
+}
+
+input[type="checkbox"]:checked+label.chkl i {
+    opacity: 1;
+}
+
+input[type="checkbox"]:checked+label.chkl div.chkv {
+    background: transparent;
 }

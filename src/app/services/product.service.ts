@@ -11,29 +11,31 @@ export class ProductService {
 
   constructor() { }
 
-  addProduct(form: ManageProductForm, imageData: any) {
-    let storageRef = firebase.storage().ref();
-    const pk = Math.floor(Date.now() / 1000);
-    const path = `images/${pk}.jpg`;
-    const imageRef = storageRef.child(path);
-
-    // Set data
-    form.product.productId = String(pk);
-    form.product.productImageName = path;
-    form.product.createDatetime = String(pk);
-    form.product.createUser = '1';
-    form.product.status = 'Y';
-
-    return imageRef.putString(imageData, firebase.storage.StringFormat.DATA_URL)
-      .then((snapshot) => {
-        form.product.productImagePath = snapshot.downloadURL;
-        this.productList.push(form.product);
-        return firebase.database().ref('product/' + form.product.productId).set(form.product);
+  addProductImage(imageData: File, imageName: string) {
+    return firebase.storage().ref().child(imageName).put(imageData)
+      .then((url) => {
+        return url.downloadURL;
       })
       .catch(error => {
         console.log('Error ' + error);
       });
   }
+
+  deleteProductImage(imageName) {
+    firebase.storage().ref().child(imageName).delete().catch(function (error) {
+      console.log('error '+error.message)
+    });
+  }
+
+  addProduct(form: ManageProductForm) {
+
+    form.product.productId = String(Date.now());
+    form.product.createDatetime = String(form.product.productId);
+    form.product.createUser = 'biwswalker';
+    this.productList.push(form.product);
+    return firebase.database().ref('product/' + form.product.productId).set(form.product);
+  }
+
 
   fetchProductListData() {
     return firebase.database().ref('product').once('value')
