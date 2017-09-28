@@ -23,7 +23,6 @@
            class="row-border hover">
       <thead>
         <tr>
-          <th>ลำดับ</th>
           <th>ชื่อสินค้า</th>
           <th>ประเภทสินค้า</th>
           <th>ชนิด</th>
@@ -31,9 +30,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let productObj of productListForm; let i = index"
-            (click)="onSelectRow(productObj, i)">
-          <td>{{ i+1 }}</td>
+        <tr *ngFor="let productObj of productListForm"
+            (click)="onSelectRow(productObj)">
           <td>{{ productObj.product.productName }}</td>
           <td>{{ productObj.product.productCategory }}</td>
           <td>{{ productObj.product.productType }}</td>

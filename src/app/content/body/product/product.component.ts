@@ -36,5 +36,4 @@ export class ProductComponent implements OnInit {
         }, 5000);
       });
   }
-
 }

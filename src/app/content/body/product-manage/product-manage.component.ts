@@ -185,7 +185,7 @@ export class ProductManageComponent implements OnInit {
     this.loading = false;
   }
 
-  onSelectRow(form: ManageProductForm, index: number) {
+  onSelectRow(form: ManageProductForm) {
     this.productForm = form;
     this.imagePath = this.productForm.product.productImagePath;
     this.onChangePage('U');

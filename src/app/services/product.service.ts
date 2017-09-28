@@ -12,7 +12,6 @@ export class ProductService {
   constructor() { }
 
   addProduct(form: ManageProductForm, imageData: any) {
-
     let storageRef = firebase.storage().ref();
     const pk = Math.floor(Date.now() / 1000);
     const path = `images/${pk}.jpg`;
@@ -53,6 +52,13 @@ export class ProductService {
 
   getProductList() {
     return this.productList.slice();
+  }
+
+  getProductByKey(productId: string) {
+    return firebase.database().ref('product').child(productId).once('value')
+      .then(product => {
+        return product.val();
+      })
   }
 
 }

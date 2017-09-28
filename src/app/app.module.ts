@@ -17,6 +17,7 @@ import { IndexComponent } from './content/body/index/index.component';
 import { ProductComponent } from './content/body/product/product.component';
 import { ProductManageComponent } from './content/body/product-manage/product-manage.component';
 import { AlertsComponent } from './utils/alerts/alerts.component';
+import { ProductPreviewComponent } from './content/body/product-preview/product-preview.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AlertsComponent } from './utils/alerts/alerts.component';
     IndexComponent,
     ProductComponent,
     ProductManageComponent,
-    AlertsComponent
+    AlertsComponent,
+    ProductPreviewComponent
   ],
   imports: [
     BrowserModule,

@@ -20,3 +20,7 @@
     float: none;
     margin: 0 auto;
 }
+
+.a-underline {
+  text-decoration: none;
+}
