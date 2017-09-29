@@ -109,6 +109,10 @@ export class ProductManageComponent implements OnInit {
       this.group.controls[file].disable();
       this.group.controls[price].setValidators([Validators.required, Validators.pattern('[0-9]+')]);
       this.group.controls[status].setValidators(Validators.required);
+      this.group.controls[price].setValue(null);
+      this.group.controls[status].setValue(null);
+      this.group.controls[file].setValue(null);
+      this.onDeleteImage(size);
     } else {
       this.group.controls[price].enable();
       this.group.controls[status].enable();
@@ -135,6 +139,9 @@ export class ProductManageComponent implements OnInit {
       this.productForm = new ManageProductForm();
       this.getAllDataProduct();
       this.isAddPage = false;
+      this.imagePathS = './assets/img/empty.png';
+      this.imagePathM = './assets/img/empty.png';
+      this.imagePathL = './assets/img/empty.png';
     }
   }
 
@@ -173,7 +180,13 @@ export class ProductManageComponent implements OnInit {
           window.scrollTo(0, 0)
           return;
         }
+        this.productForm.product.productPriceS = this.group.value.productPriceS;
+        this.productForm.product.statusS = this.group.value.statusS;
+      } else {
+        this.productForm.product.productPriceS = 0;
+        this.productForm.product.statusS = '';
       }
+
       if (this.productForm.product.productSizeM) {
         if (!this.productForm.product.productImagePathM) {
           this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพสินค้า')
@@ -190,7 +203,13 @@ export class ProductManageComponent implements OnInit {
           window.scrollTo(0, 0)
           return;
         }
+        this.productForm.product.productPriceM = this.group.value.productPriceM;
+        this.productForm.product.statusM = this.group.value.statusM;
+      } else {
+        this.productForm.product.productPriceM = 0;
+        this.productForm.product.statusM = '';
       }
+
       if (this.productForm.product.productSizeL) {
         if (!this.productForm.product.productImagePathL) {
           this.alertService.warn('กรุณาอัพโหลดไฟล์รูปภาพสินค้าขนาดใหญ่')
@@ -207,6 +226,11 @@ export class ProductManageComponent implements OnInit {
           window.scrollTo(0, 0)
           return;
         }
+        this.productForm.product.productPriceL = this.group.value.productPriceL;
+        this.productForm.product.statusL = this.group.value.statusL;
+      } else {
+        this.productForm.product.productPriceL = 0;
+        this.productForm.product.statusL = '';
       }
 
       this.progressService.start();
@@ -217,28 +241,28 @@ export class ProductManageComponent implements OnInit {
       this.productForm.product.productType = this.group.value.productType;
       this.productForm.product.productDetail = this.group.value.productDetail;
       this.productForm.product.status = this.group.value.status;
-      this.productForm.product.productPriceS = this.group.value.productPriceS;
-      this.productForm.product.productPriceM = this.group.value.productPriceM;
-      this.productForm.product.productPriceL = this.group.value.productPriceL;
-      this.productForm.product.statusS = this.group.value.statusS;
-      this.productForm.product.statusM = this.group.value.statusM;
-      this.productForm.product.statusL = this.group.value.statusL;
 
-      // this.productService.addProduct(this.productForm, this.imagePathS, this.imagePathM, this.imagePathL)
-      //   .then(data => {
-      //     console.log('Success');
-      //     this.progressService.done();
-      //     this.loading = false;
-      //     this.onChangePage('S');
-      //     this.alertService.success('บันทึกสินค้าเรียบร้อย')
-      //     setTimeout(() => {
-      //       this.alertService.clear();
-      //     }, 5000);
-      //     return;
-      //   })
-      //   .catch(error => {
-      //     console.log('Error : ' + error.message)
-      //   });
+      this.productService.addProduct(this.productForm)
+        .then(data => {
+          console.log('Success');
+          this.progressService.done();
+          this.loading = false;
+          this.onChangePage('S');
+          this.alertService.success('บันทึกสินค้าเรียบร้อย')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          return;
+        })
+        .catch(error => {
+          this.onChangePage('S');
+          this.ngOnDestroy();
+          this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          console.log('Error : ' + error.message)
+        });
     }
   }
 

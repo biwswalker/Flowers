@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <div class="row col-lg-12 col-sm-12 col-xs-12 margin-t">
+        <div class="row col-lg-12 col-sm-12 col-xs-12 margin-t col-centered padding-side">
           <ngx-loading [show]="loadingImage"></ngx-loading>
           <table class="table table-responsive">
             <thead>
@@ -187,6 +187,7 @@
                           (click)="onDeleteImage('S')">ลบรูป</button>
                 </td>
               </tr>
+
               <tr>
                 <td class="mid">
                   <div class="checkbox">
@@ -203,24 +204,27 @@
                 </td>
                 <td class="mid">Medium</td>
                 <td class="mid">
-                  <input formControlName="productPriceM"
+                  <input [disabled]="true"
+                         formControlName="productPriceM"
                          name="productPriceM"
                          placeholder="ราคา"
                          type="number"
-                         class="form-control txtalign-center">
+                         class="form-control"
+                         style="margin-top: 5px;text-align: center;">
                 </td>
                 <td class="mid">
                   <select formControlName="statusM"
                           name="statusM"
                           class="form-control">
-                    <option value="Y">ใช้งาน</option>
-                    <option value="N">ไม่ใช้งาน</option>
-                  </select>
+                        <option value="Y">ใช้งาน</option>
+                        <option value="N">ไม่ใช้งาน</option>
+                      </select>
                 </td>
                 <td class="mid">
                   <img src="{{imagePathM}}"
                        class="h200">
-                  <label class="btn btn-primary">อัพโหลดไฟล์รูป
+                  <label *ngIf="!this.productForm.product.productImagePathM"
+                         class="btn btn-primary">อัพโหลดไฟล์รูป
                     <input
                     (change)="onUploadImage($event, 'M')"
                     formControlName="fileM"
@@ -229,8 +233,12 @@
                     accept="image/*"
                     style="display: none;">
                   </label>
+                  <button *ngIf="this.productForm.product.productImagePathM"
+                          class="btn btn-danger"
+                          (click)="onDeleteImage('M')">ลบรูป</button>
                 </td>
               </tr>
+
               <tr>
                 <td class="mid">
                   <div class="checkbox">
@@ -247,34 +255,41 @@
                 </td>
                 <td class="mid">Large</td>
                 <td class="mid">
-                  <input formControlName="productPriceL"
+                  <input [disabled]="true"
+                         formControlName="productPriceL"
                          name="productPriceL"
                          placeholder="ราคา"
                          type="number"
-                         class="form-control txtalign-center">
+                         class="form-control"
+                         style="margin-top: 5px;text-align: center;">
                 </td>
                 <td class="mid">
                   <select formControlName="statusL"
                           name="statusL"
                           class="form-control">
-                    <option value="Y">ใช้งาน</option>
-                    <option value="N">ไม่ใช้งาน</option>
-                  </select>
+                        <option value="Y">ใช้งาน</option>
+                        <option value="N">ไม่ใช้งาน</option>
+                      </select>
                 </td>
                 <td class="mid">
                   <img src="{{imagePathL}}"
                        class="h200">
-                  <label class="btn btn-primary">อัพโหลดไฟล์รูป
-                      <input
-                      (change)="onUploadImage($event, 'L')"
-                      formControlName="fileL"
-                      type="file"
-                      name="fileL"
-                      accept="image/*"
-                      style="display: none;">
-                    </label>
+                  <label *ngIf="!this.productForm.product.productImagePathL"
+                         class="btn btn-primary">อัพโหลดไฟล์รูป
+                    <input
+                    (change)="onUploadImage($event, 'L')"
+                    formControlName="fileL"
+                    type="file"
+                    name="fileL"
+                    accept="image/*"
+                    style="display: none;">
+                  </label>
+                  <button *ngIf="this.productForm.product.productImagePathL"
+                          class="btn btn-danger"
+                          (click)="onDeleteImage('L')">ลบรูป</button>
                 </td>
               </tr>
+
             </tbody>
           </table>
         </div>

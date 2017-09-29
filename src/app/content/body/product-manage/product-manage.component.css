@@ -23,3 +23,7 @@
 .none-border {
   border: none;
 }
+
+.padding-side {
+  padding: 0 40px;
+}

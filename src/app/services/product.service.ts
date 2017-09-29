@@ -28,7 +28,6 @@ export class ProductService {
   }
 
   addProduct(form: ManageProductForm) {
-
     form.product.productId = String(Date.now());
     form.product.createDatetime = String(form.product.productId);
     form.product.createUser = 'biwswalker';
