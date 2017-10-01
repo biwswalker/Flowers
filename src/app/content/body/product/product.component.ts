@@ -1,6 +1,7 @@
+import { ProductForm } from './../../../forms/product';
+import { Product } from './../../../models/product';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from "../../../services/product.service";
-import { Product } from "../../../models/product";
 import { AlertService } from "../../../services/alert.service";
 
 @Component({
@@ -11,9 +12,13 @@ import { AlertService } from "../../../services/alert.service";
 export class ProductComponent implements OnInit {
 
   // Model
-  productList: Product[] = [];
+  productFormList: ProductForm[] = [];
+
   // Loading
   loading = false;
+
+  // ImageShowing
+  imagePath: any;
 
   constructor(
     private productService: ProductService,
@@ -24,8 +29,23 @@ export class ProductComponent implements OnInit {
     this.loading = true;
     this.productService.fetchProductListData()
       .then((products: Product[]) => {
-        this.productList = [];
-        this.productList.push(...products);
+        this.productFormList = [];
+        let form: ProductForm;
+        products.forEach((pd: Product) => {
+          form = new ProductForm();
+          form.product = pd;
+          if (pd.productSizeS) {
+            form.imageShowPath = pd.productImagePathS;
+            form.priceShow = pd.productPriceS;
+          } else if (pd.productSizeM) {
+            form.imageShowPath = pd.productImagePathM;
+            form.priceShow = pd.productPriceM;
+          } else if (pd.productSizeL) {
+            form.imageShowPath = pd.productImagePathL;
+            form.priceShow = pd.productPriceL;
+          }
+          this.productFormList.push(form);
+        })
         this.loading = false;
       })
       .catch(error => {

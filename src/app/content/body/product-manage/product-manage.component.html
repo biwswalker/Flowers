@@ -14,13 +14,13 @@
 
 <!-- Begin Search -->
 <section id="product-table"
-         *ngIf="!isAddPage">
+         *ngIf="mode === 'S'">
   <div class="container">
     <button class="btn btn-primary"
             (click)="onChangePage('I')">เพิ่มรายการสินค้า</button>
     <table datatable
            [dtOptions]="dtOptions"
-           class="row-border hover">
+           class="row-border hover table-responsive">
       <thead>
         <tr>
           <th>ชื่อสินค้า</th>
@@ -32,9 +32,16 @@
       <tbody>
         <tr *ngFor="let productObj of productListForm"
             (click)="onSelectRow(productObj)">
-          <td>{{ productObj.product.productName }}</td>
-          <td>{{ productObj.product.productCategory }}</td>
-          <td>{{ productObj.product.productType }}</td>
+          <td>
+            <div>{{ productObj.product.productName }}</div>
+          </td>
+          <td>
+            <div>{{ productObj.category.categoryName }}</div>
+          </td>
+          <td>
+            <div *ngIf="productObj.product.productType === 'S'">เซ็ท</div>
+            <div *ngIf="productObj.product.productType === 'P'">ชิ้น</div>
+          </td>
           <td></td>
         </tr>
       </tbody>
@@ -46,7 +53,7 @@
 
 <!-- Begin Edit -->
 <section id="product-table"
-         *ngIf="isAddPage">
+         *ngIf="mode !== 'S'">
   <form [formGroup]="group"
         (ngSubmit)="onClickSubmit()">
     <div class="container">
@@ -98,9 +105,7 @@
             <select formControlName="productCategory"
                     name="productCategory"
                     class="form-control">
-                          <option value="1">ช่อดอกไม้</option>
-                          <option value="2">กระเช้าดอกไม้</option>
-                          <option value="3">ขวดแก้ว</option>
+                          <option *ngFor="let category of categoryService.getCategoryList()" value="{{category.categoryId}}">{{category.categoryName}}</option>
                         </select>
           </div>
           <div class="col-lg-2 col-sm-2 col-xs-2">

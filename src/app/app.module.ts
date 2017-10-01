@@ -18,6 +18,7 @@ import { ProductComponent } from './content/body/product/product.component';
 import { ProductManageComponent } from './content/body/product-manage/product-manage.component';
 import { AlertsComponent } from './utils/alerts/alerts.component';
 import { ProductPreviewComponent } from './content/body/product-preview/product-preview.component';
+import { CategoryService } from "./services/category.service";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ProductPreviewComponent } from './content/body/product-preview/product-
   ],
   providers: [
     ProductService,
-    AlertService
+    AlertService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { NgProgressService } from 'ngx-progressbar';
 import { Product } from "../../../models/product";
+import { CategoryService } from "../../../services/category.service";
 
 @Component({
   selector: 'app-product-manage',
@@ -21,7 +22,7 @@ export class ProductManageComponent implements OnInit {
   productListForm: ManageProductForm[] = [];
 
   // Mode
-  isAddPage = false;
+  mode = 'S';
 
   // Datatables
   dtOptions: DataTables.Settings = {};
@@ -38,7 +39,8 @@ export class ProductManageComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private alertService: AlertService,
-    private progressService: NgProgressService) { }
+    private progressService: NgProgressService,
+    public categoryService: CategoryService) { }
 
   ngOnInit() {
     this.loading = true;
@@ -49,6 +51,7 @@ export class ProductManageComponent implements OnInit {
         products.forEach(product => {
           form = new ManageProductForm();
           form.product = product
+          form.category = this.categoryService.getCategoryByKey(product.productCategory);
           this.productListForm.push(form);
         });
         this.loading = false;
@@ -64,7 +67,7 @@ export class ProductManageComponent implements OnInit {
     this.imagePathS = './assets/img/empty.png'
     this.imagePathM = './assets/img/empty.png'
     this.imagePathL = './assets/img/empty.png'
-    this.isAddPage = false;
+    this.mode = 'S';
     this.dtOptions = {
       pagingType: 'full_numbers',
       lengthChange: false,
@@ -124,7 +127,7 @@ export class ProductManageComponent implements OnInit {
 
   onChangePage(mode: string) {
     if (mode === 'I') {
-      this.isAddPage = true;
+      this.mode = 'I';
       this.productForm = new ManageProductForm();
       this.productForm.product.productType = 'S';
       this.productForm.product.status = 'Y';
@@ -133,12 +136,12 @@ export class ProductManageComponent implements OnInit {
       this.productForm.product.productSizeL = false;
       this.resetFormGroup();
     } else if (mode === 'U') {
-      this.isAddPage = true;
+      this.mode = 'U';
       this.resetFormGroup();
     } else {
       this.productForm = new ManageProductForm();
       this.getAllDataProduct();
-      this.isAddPage = false;
+      this.mode = 'S';
       this.imagePathS = './assets/img/empty.png';
       this.imagePathM = './assets/img/empty.png';
       this.imagePathL = './assets/img/empty.png';
@@ -147,6 +150,27 @@ export class ProductManageComponent implements OnInit {
 
   onBack() {
     this.ngOnDestroy();
+    this.loading = true;
+    this.productService.fetchProductListData()
+      .then((products: Product[]) => {
+        this.productListForm = [];
+        let form: ManageProductForm;
+        products.forEach(product => {
+          form = new ManageProductForm();
+          form.product = product
+          form.category = this.categoryService.getCategoryByKey(product.productCategory);
+          this.productListForm.push(form);
+        });
+        this.loading = false;
+      })
+      .catch(error => {
+        this.loading = false;
+        this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ')
+        setTimeout(() => {
+          this.alertService.clear();
+        }, 5000);
+        window.scrollTo(0, 0)
+      });
     this.onChangePage('S');
   }
 
@@ -307,21 +331,27 @@ export class ProductManageComponent implements OnInit {
     if (size === 'S') {
       this.imagePathS = './assets/img/empty.png';
       if (this.productForm.product.productImageNameS) {
-        this.productService.deleteProductImage(this.productForm.product.productImageNameS);
+        if (this.mode === 'I') {
+          this.productService.deleteProductImage(this.productForm.product.productImageNameS);
+        }
         this.productForm.product.productImageNameS = '';
         this.productForm.product.productImagePathS = '';
       }
     } else if (size === 'M') {
       this.imagePathM = './assets/img/empty.png';
       if (this.productForm.product.productImageNameM) {
-        this.productService.deleteProductImage(this.productForm.product.productImageNameM);
+        if (this.mode === 'I') {
+          this.productService.deleteProductImage(this.productForm.product.productImageNameM);
+        }
         this.productForm.product.productImageNameM = '';
         this.productForm.product.productImagePathM = '';
       }
     } else if (size === 'L') {
       this.imagePathL = './assets/img/empty.png';
       if (this.productForm.product.productImageNameL) {
-        this.productService.deleteProductImage(this.productForm.product.productImageNameL);
+        if (this.mode === 'I') {
+          this.productService.deleteProductImage(this.productForm.product.productImageNameL);
+        }
         this.productForm.product.productImageNameL = '';
         this.productForm.product.productImagePathL = '';
       }
@@ -367,14 +397,16 @@ export class ProductManageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.productForm.product.productImageNameS) {
-      this.productService.deleteProductImage(this.productForm.product.productImageNameS);
-    }
-    if (this.productForm.product.productImageNameM) {
-      this.productService.deleteProductImage(this.productForm.product.productImageNameM);
-    }
-    if (this.productForm.product.productImageNameL) {
-      this.productService.deleteProductImage(this.productForm.product.productImageNameL);
+    if (this.mode === 'I') {
+      if (this.productForm.product.productImageNameS) {
+        this.productService.deleteProductImage(this.productForm.product.productImageNameS);
+      }
+      if (this.productForm.product.productImageNameM) {
+        this.productService.deleteProductImage(this.productForm.product.productImageNameM);
+      }
+      if (this.productForm.product.productImageNameL) {
+        this.productService.deleteProductImage(this.productForm.product.productImageNameL);
+      }
     }
   }
 
