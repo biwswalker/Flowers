@@ -1,3 +1,4 @@
+import { ProductForm } from '../../../forms/product';
 import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,10 +15,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
   loading = false;
 
   // Product
-  product: Product;
-
-  // Image Path
-  imagePath: any;
+  productForm: ProductForm;
 
   id: string;
   private sub: any;
@@ -29,16 +27,23 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
-    this.product = new Product();
+    this.productForm = new ProductForm();
     this.sub = this.route.params.subscribe(params => {
       this.id = params['pd'];
       this.productService.getProductByKey(this.id)
         .then((productObj: Product) => {
           if (productObj) {
-            console.log(productObj);
-            this.product = productObj;
-            // this.imagePath = this.product.productImagePath;
-            console.log(this.product.productDetail);
+            this.productForm.product = productObj;
+            if (productObj.productSizeS) {
+              this.productForm.imageShowPath = productObj.productImagePathS;
+              this.productForm.priceShow = productObj.productPriceS;
+            } else if (productObj.productSizeM) {
+              this.productForm.imageShowPath = productObj.productImagePathM;
+              this.productForm.priceShow = productObj.productPriceM;
+            } else if (productObj.productSizeL) {
+              this.productForm.imageShowPath = productObj.productImagePathL;
+              this.productForm.priceShow = productObj.productPriceL;
+            }
             this.loading = false;
           }
         })

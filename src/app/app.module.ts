@@ -2,13 +2,12 @@ import { AlertService } from './services/alert.service';
 import { FirebaseConfigModule } from './firebase-config';
 import { ProductService } from './services/product.service';
 import { RouterLinkModule } from './router';
-import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { DataTablesModule } from 'angular-datatables';
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
-import { NgProgressModule } from 'ngx-progressbar';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './content/header/header.component';
@@ -47,7 +46,6 @@ import { CategoryService } from "./services/category.service";
       secondaryColour: '#F4B2B2',
       tertiaryColour: '#F4B2B2'
     }),
-    NgProgressModule
   ],
   providers: [
     ProductService,

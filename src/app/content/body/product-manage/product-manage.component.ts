@@ -3,7 +3,6 @@ import { ManageProductForm } from '../../../forms/manage-product';
 import { ProductService } from '../../../services/product.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, HostListener } from '@angular/core';
-import { NgProgressService } from 'ngx-progressbar';
 import { Product } from "../../../models/product";
 import { CategoryService } from "../../../services/category.service";
 
@@ -39,7 +38,6 @@ export class ProductManageComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private alertService: AlertService,
-    private progressService: NgProgressService,
     public categoryService: CategoryService) { }
 
   ngOnInit() {
@@ -140,7 +138,27 @@ export class ProductManageComponent implements OnInit {
       this.resetFormGroup();
     } else {
       this.productForm = new ManageProductForm();
-      this.getAllDataProduct();
+      this.loading = true;
+      this.productService.fetchProductListData()
+        .then((products: Product[]) => {
+          this.productListForm = [];
+          let form: ManageProductForm;
+          products.forEach(product => {
+            form = new ManageProductForm();
+            form.product = product
+            form.category = this.categoryService.getCategoryByKey(product.productCategory);
+            this.productListForm.push(form);
+          });
+          this.loading = false;
+        })
+        .catch(error => {
+          this.loading = false;
+          this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ')
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          window.scrollTo(0, 0)
+        });
       this.mode = 'S';
       this.imagePathS = './assets/img/empty.png';
       this.imagePathM = './assets/img/empty.png';
@@ -150,27 +168,6 @@ export class ProductManageComponent implements OnInit {
 
   onBack() {
     this.ngOnDestroy();
-    this.loading = true;
-    this.productService.fetchProductListData()
-      .then((products: Product[]) => {
-        this.productListForm = [];
-        let form: ManageProductForm;
-        products.forEach(product => {
-          form = new ManageProductForm();
-          form.product = product
-          form.category = this.categoryService.getCategoryByKey(product.productCategory);
-          this.productListForm.push(form);
-        });
-        this.loading = false;
-      })
-      .catch(error => {
-        this.loading = false;
-        this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ')
-        setTimeout(() => {
-          this.alertService.clear();
-        }, 5000);
-        window.scrollTo(0, 0)
-      });
     this.onChangePage('S');
   }
 
@@ -257,7 +254,6 @@ export class ProductManageComponent implements OnInit {
         this.productForm.product.statusL = '';
       }
 
-      this.progressService.start();
       this.loading = true;
 
       this.productForm.product.productName = this.group.value.productName;
@@ -269,7 +265,6 @@ export class ProductManageComponent implements OnInit {
       this.productService.addProduct(this.productForm)
         .then(data => {
           console.log('Success');
-          this.progressService.done();
           this.loading = false;
           this.onChangePage('S');
           this.alertService.success('บันทึกสินค้าเรียบร้อย')
@@ -360,18 +355,6 @@ export class ProductManageComponent implements OnInit {
       this.imagePathM = './assets/img/empty.png';
       this.imagePathL = './assets/img/empty.png';
     }
-  }
-
-  getAllDataProduct() {
-    this.loading = true;
-    this.productListForm = [];
-    let form: ManageProductForm;
-    this.productService.getProductList().forEach(product => {
-      form = new ManageProductForm();
-      form.product = product
-      this.productListForm.push(form);
-    });
-    this.loading = false;
   }
 
   onSelectRow(form: ManageProductForm) {

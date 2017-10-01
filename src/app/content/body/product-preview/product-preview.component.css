@@ -1,0 +1,13 @@
+.dis-inline {
+    display: inline;
+}
+
+.price-labelc {
+    color: #656565;
+}
+
+.bottom-position {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
