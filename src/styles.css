@@ -51,6 +51,7 @@ a.max-width {
     padding-bottom: 15px;
     padding-left: 15px;
     padding-right: 0px;
+    border-collapse: collapse;
 }
 
 
@@ -177,12 +178,12 @@ input[type="checkbox"] {
 }
 
 label.chkl div.chkv {
-    color: #16a085;
+    color: #F4B2B2;
     font-size: 18px;
     width: 23px;
     height: 23px;
     display: inline-block;
-    border: 2px solid #16a085;
+    border: 2px solid #F4B2B2;
     text-align: center;
     line-height: 20px;
     margin-right: 6px;

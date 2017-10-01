@@ -8,17 +8,31 @@
              style="min-width: 100%;max-width: 100%;">
       </div>
       <div class="col-lg-6 col-md-6 input-bg">
-        <div>
-          <h2>{{ productForm.product.productName }}</h2>
-        </div>
-        <div>
-          <p>{{ productForm.product.productDetail }}</p>
-        </div>
-        <div class="bottom-position">
-          <h3 class="dis-inline price-labelc">ราคา</h3>
-          <h3 class="dis-inline">{{ productForm.priceShow }}</h3>
-          <h3 class="dis-inline price-labelc">บาท</h3>
-        </div>
+        <table class="table-parent">
+          <tr>
+            <td valign="top">
+              <div id="main">
+                <div>
+                  <h2>{{ productForm.product.productName }}</h2>
+                </div>
+                <div>
+                  <p>{{ productForm.product.productDetail }}</p>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td valign="bottom">
+              <div id="footer">
+                <h3 class="dis-inline price-labelc">ราคา</h3>
+                <h3 class="dis-inline">{{ productForm.priceShow }}</h3>
+                <h3 class="dis-inline price-labelc">บาท</h3>
+                <div><button type="button"
+                          class="button-outline-normal font25px nomargin">เพิ่มรายการ</button></div>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>

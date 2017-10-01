@@ -7,7 +7,22 @@
 }
 
 .bottom-position {
-    position: absolute;
     bottom: 10px;
     width: 100%;
+}
+
+.font25px {
+    font-size: 25px;
+}
+
+.nomargin {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.table-parent {
+  word-wrap: break-word;
+  table-layout:fixed;
+  height: 100%;
+  width: 100%;
 }
