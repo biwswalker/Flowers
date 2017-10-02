@@ -138,29 +138,38 @@ input[type="radio"]:checked~.bullet {
 
 /* Button outline override*/
 
-.button-outline-normal {
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-top: 10px;
-    margin-left: 15px;
-    margin-right: 15px;
+.button-outline {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: inherit;
+  transition: all .5s;
+}
+
+.button-outline.normal {
     border: 2px solid #242424;
-    border-radius: 5px;
-    background-color: transparent;
-    color: inherit;
-    transition: all .5s;
     color: #242424;
 }
 
-.button-outline-normal:hover {
-    border-color: #7E7E7E;
-    color: #7E7E7E;
+.button-outline.primary {
+  border: 2px solid #F4B2B2;
+  color: #F4B2B2;
 }
 
-.button-outline-normal:disabled,
-.button-outline-normal[disabled] {
-    border: 2px solid #7E7E7E;
-    color: #7E7E7E;
+.button-outline.normal:hover,
+.button-outline.primary:hover {
+  opacity: 0.7;
+}
+
+.button-outline.normal:disabled,
+.button-outline.normal[disabled],
+.button-outline.primary:disabled,
+.button-outline.primary[disabled] {
+  opacity: 0.7;
 }
 
 

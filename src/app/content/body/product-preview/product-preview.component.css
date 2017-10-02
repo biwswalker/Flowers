@@ -26,3 +26,26 @@
   height: 100%;
   width: 100%;
 }
+
+.margin-bottom {
+  margin-bottom: 10px;
+}
+
+.customr {
+  margin-top: -7px;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.paddingl0 {
+  padding-left: 0px;
+}
+
+.marginTB15 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+h2 {
+  font-weight: 300;
+}

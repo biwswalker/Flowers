@@ -17,6 +17,9 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
   // Product
   productForm: ProductForm;
 
+  // Size
+  size: string;
+
   id: string;
   private sub: any;
 
@@ -37,12 +40,15 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
             if (productObj.productSizeS) {
               this.productForm.imageShowPath = productObj.productImagePathS;
               this.productForm.priceShow = productObj.productPriceS;
+              this.size = 'S'
             } else if (productObj.productSizeM) {
               this.productForm.imageShowPath = productObj.productImagePathM;
               this.productForm.priceShow = productObj.productPriceM;
+              this.size = 'M'
             } else if (productObj.productSizeL) {
               this.productForm.imageShowPath = productObj.productImagePathL;
               this.productForm.priceShow = productObj.productPriceL;
+              this.size = 'L'
             }
             this.loading = false;
           }

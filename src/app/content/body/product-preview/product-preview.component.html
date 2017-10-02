@@ -2,6 +2,10 @@
 <div style="height: 70px;"></div>
 <section id="preview">
   <div class="container">
+    <div class="row col-12">
+      <a class="btn btn-danger margin-bottom"
+         routerLink="/product">ย้อนกลับ</a>
+    </div>
     <div class="row col-lg-12 col-sm-12">
       <div class="col-lg-6 col-md-6">
         <img src="{{productForm.imageShowPath}}"
@@ -16,6 +20,43 @@
                   <h2>{{ productForm.product.productName }}</h2>
                 </div>
                 <div>
+                  <ul class="radio paddingl0 marginTB15">
+                    <li class="radio"
+                        style="width:50px;">
+                      <input [(ngModel)]="size"
+                             [disabled]="!productForm.product.productSizeS"
+                             type="radio"
+                             value="S"
+                             name="size">
+                      <label class="radio customr">S</label>
+                      <div class="bullet">
+                      </div>
+                    </li>
+                    <li class="radio"
+                        style="width:50px;">
+                      <input [(ngModel)]="size"
+                             [disabled]="!productForm.product.productSizeM"
+                             type="radio"
+                             value="M"
+                             name="size">
+                      <label class="radio customr">M</label>
+                      <div class="bullet">
+                      </div>
+                    </li>
+                    <li class="radio"
+                        style="width:50px;">
+                      <input [(ngModel)]="size"
+                             [disabled]="!productForm.product.productSizeL"
+                             type="radio"
+                             value="L"
+                             name="size">
+                      <label class="radio customr">L</label>
+                      <div class="bullet">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div>
                   <p>{{ productForm.product.productDetail }}</p>
                 </div>
               </div>
@@ -24,11 +65,14 @@
           <tr>
             <td valign="bottom">
               <div id="footer">
-                <h3 class="dis-inline price-labelc">ราคา</h3>
-                <h3 class="dis-inline">{{ productForm.priceShow }}</h3>
-                <h3 class="dis-inline price-labelc">บาท</h3>
+                <div>
+                  <h3 class="dis-inline price-labelc">ราคา</h3>
+                  <h3 class="dis-inline">{{ productForm.priceShow }}</h3>
+                  <h3 class="dis-inline price-labelc">บาท</h3>
+                </div>
                 <div><button type="button"
-                          class="button-outline-normal font25px nomargin">เพิ่มรายการ</button></div>
+                          disabled
+                          class="button-outline primary font25px nomargin">เพิ่มรายการ</button></div>
               </div>
             </td>
           </tr>
