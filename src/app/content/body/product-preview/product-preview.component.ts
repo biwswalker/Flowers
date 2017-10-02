@@ -1,7 +1,8 @@
+import { CartService } from '../../../services/cart.service';
 import { ProductForm } from '../../../forms/product';
 import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
@@ -20,10 +21,14 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
   id: string;
   private sub: any;
 
+  size: string;
+
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private router: Router,
+    private cartService: CartService) { }
 
   ngOnInit() {
     this.loading = true;
@@ -37,12 +42,15 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
             if (productObj.productSizeS) {
               this.productForm.imageShowPath = productObj.productImagePathS;
               this.productForm.priceShow = productObj.productPriceS;
+              this.size = 'S';
             } else if (productObj.productSizeM) {
               this.productForm.imageShowPath = productObj.productImagePathM;
               this.productForm.priceShow = productObj.productPriceM;
+              this.size = 'M';
             } else if (productObj.productSizeL) {
               this.productForm.imageShowPath = productObj.productImagePathL;
               this.productForm.priceShow = productObj.productPriceL;
+              this.size = 'L';
             }
             this.loading = false;
           }
@@ -57,4 +65,8 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  onAddToCart() {
+    this.cartService.addProductToCart(this.productForm.product, this.size);
+    this.router.navigateByUrl('/cart');
+  }
 }

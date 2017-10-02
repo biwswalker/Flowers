@@ -24,3 +24,21 @@
 .a-underline {
   text-decoration: none;
 }
+
+p.item-label {
+  font-size: 18px;
+  color: #333333;
+}
+
+p.item-label.name {
+  font-weight: 200;
+}
+
+p.item-label.price {
+  font-weight: 100;
+}
+
+h2.section-heading {
+  font-size: 3rem;
+  font-weight: 200;
+}

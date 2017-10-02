@@ -1,3 +1,4 @@
+import { CartService } from './services/cart.service';
 import { AlertService } from './services/alert.service';
 import { FirebaseConfigModule } from './firebase-config';
 import { ProductService } from './services/product.service';
@@ -18,6 +19,7 @@ import { ProductManageComponent } from './content/body/product-manage/product-ma
 import { AlertsComponent } from './utils/alerts/alerts.component';
 import { ProductPreviewComponent } from './content/body/product-preview/product-preview.component';
 import { CategoryService } from "./services/category.service";
+import { CartComponent } from './content/body/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { CategoryService } from "./services/category.service";
     ProductComponent,
     ProductManageComponent,
     AlertsComponent,
-    ProductPreviewComponent
+    ProductPreviewComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { CategoryService } from "./services/category.service";
   providers: [
     ProductService,
     AlertService,
-    CategoryService
+    CategoryService,
+    CartService
   ],
   bootstrap: [AppComponent]
 })
