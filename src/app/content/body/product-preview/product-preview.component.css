@@ -49,3 +49,8 @@
 h2 {
   font-weight: 300;
 }
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}

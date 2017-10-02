@@ -7,11 +7,11 @@
          routerLink="/product">ย้อนกลับ</a>
     </div>
     <div class="row col-lg-12 col-sm-12">
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-7 col-md-6">
         <img src="{{productForm.imageShowPath}}"
              style="min-width: 100%;max-width: 100%;">
       </div>
-      <div class="col-lg-6 col-md-6 input-bg">
+      <div class="col-lg-5 col-md-6 input-bg">
         <table class="table-parent">
           <tr>
             <td valign="top">
@@ -65,14 +65,11 @@
           <tr>
             <td valign="bottom">
               <div id="footer">
-                <div>
-                  <h3 class="dis-inline price-labelc">ราคา</h3>
-                  <h3 class="dis-inline">{{ productForm.priceShow }}</h3>
-                  <h3 class="dis-inline price-labelc">บาท</h3>
-                </div>
-                <div><button type="button"
-                          disabled
-                          class="button-outline primary font25px nomargin">เพิ่มรายการ</button></div>
+                <h3 class="dis-inline price-labelc">ราคา</h3>
+                <h3 class="dis-inline">{{ productForm.priceShow }}</h3>
+                <h3 class="dis-inline price-labelc">บาท</h3>
+                <div><button type="button" (click)="onAddToCart()"
+                          class="button-outline-normal btn-block font25px nomargin">เพิ่มรายการ</button></div>
               </div>
             </td>
           </tr>

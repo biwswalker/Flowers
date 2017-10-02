@@ -1,0 +1,53 @@
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.table-parent {
+    word-wrap: break-word;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%;
+}
+
+.noside-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.item-list {
+    border-bottom: solid #e3e3e3 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.txtalign-cen {
+    text-align: center;
+}
+
+.non-margin {
+    margin: 0px;
+}
+
+.h20 {
+    height: 20px;
+}
+
+h2.header {
+    font-size: 3rem;
+    font-weight: 200;
+}
+
+.listh-text {
+    font-weight: 300;
+    font-size: 16px
+}
+
+.listc-text {
+  font-weight: 200;
+  font-size: 18px
+}
+
+.padding-bottom {
+  padding-bottom: 25px;
+}

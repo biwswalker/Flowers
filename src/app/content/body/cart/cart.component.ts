@@ -1,3 +1,5 @@
+import { CartForm } from '../../../forms/cart';
+import { CartService } from '../../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+  // Loading
+  loading = false;
+
+  // Form
+  cart: CartForm;
+
+  constructor(
+    private cartService: CartService
+  ) { }
 
   ngOnInit() {
+    this.cart = new CartForm();
+    this.cart = this.cartService.getCart();
   }
 
+  onChangeQty(index: number, qty: number) {
+    this.cartService.onChangeProductQty(index, qty);
+    this.cart = new CartForm();
+    this.cart = this.cartService.getCart();
+  }
 }

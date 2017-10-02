@@ -1,3 +1,64 @@
-<p>
-  cart works!
-</p>
+<ngx-loading [show]="loading"></ngx-loading>
+<div style="height: 70px;"></div>
+<section id="preview">
+  <div class="container">
+    <div class="row col-12 header-label">
+      <h2 class="header">Cart</h2>
+    </div>
+    <div class="row col-12 content-margint">
+      <div class="row col-lg-8 col-md-12 col-sm-12 non-margin">
+        <div class="col-12 d-none d-lg-block non-margin listh-text padding-bottom">
+          <div class="row col-12 noside-padding non-margin">
+            <div class="col-8">สินค้า
+            </div>
+            <div class="col-2 txtalign-cen">จำนวน</div>
+            <div class="col-2 txtalign-cen">ราคา</div>
+          </div>
+        </div>
+        <div class="col-12 non-margin">
+          <div class="row col-12 noside-padding item-list non-margin listc-text"
+               *ngFor="let cart of cart.carts; let i = index">
+            <div class="col-lg-8 col-12">
+              <div class="row">
+                <div class="col-lg-4 col-md-3 col-sm-4 col-4"><img src="{{cart.imagePath}}"
+                       style="max-width: 100%;"></div>
+                <div class="col-lg-8 col-md-9 col-sm-8 col-8">{{ cart.product.productName }} ({{ cart.productOrder.productSize }})</div>
+              </div>
+            </div>
+            <div class="col-12 d-block d-lg-none h20"></div>
+            <div class="col-lg-2 col-6 txtalign-cen">
+              <label class="d-block d-lg-none">จำนวน</label>
+              <input [(ngModel)]="cart.productOrder.productQty"
+                     type="number"
+                     class="form-control txtalign-cen"
+                     style="width:50px; margin:auto;"
+                     (change)="onChangeQty('i', cart.productOrder.productQty)"></div>
+            <div class="col-lg-2 col-6 txtalign-cen"><label class="d-block d-lg-none">ราคา</label>
+              <div>฿ {{ cart.productOrder.productTotalPrice }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-4 col-md-12 col-sm-12 input-bg">
+        <table class="table-parent">
+          <tr>
+            <td valign="top">
+              <div>
+                <h2>Summary</h2>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="footer">
+                <h3 class="dis-inline price-labelc">ราคา</h3>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

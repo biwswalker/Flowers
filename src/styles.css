@@ -45,8 +45,8 @@ a.max-width {
 
 .input-bg {
     margin-top: 20px;
-    background-color: #F8F8F8;
-    border-radius: 5px;
+    background-color: #f5f5f5;
+    border-radius: 1px;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
@@ -215,4 +215,13 @@ input[type="checkbox"]:checked+label.chkl i {
 
 input[type="checkbox"]:checked+label.chkl div.chkv {
     background: transparent;
+}
+
+
+.header-label {
+  border-bottom: solid #e3e3e3 1px;
+}
+
+.content-margint {
+  margin-top: 30px;
 }

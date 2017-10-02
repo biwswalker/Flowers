@@ -1,3 +1,4 @@
+import { CartService } from './services/cart.service';
 import { AlertService } from './services/alert.service';
 import { FirebaseConfigModule } from './firebase-config';
 import { ProductService } from './services/product.service';
@@ -30,7 +31,7 @@ import { CartComponent } from './content/body/cart/cart.component';
     ProductManageComponent,
     AlertsComponent,
     ProductPreviewComponent,
-    CartComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,8 @@ import { CartComponent } from './content/body/cart/cart.component';
   providers: [
     ProductService,
     AlertService,
-    CategoryService
+    CategoryService,
+    CartService
   ],
   bootstrap: [AppComponent]
 })
