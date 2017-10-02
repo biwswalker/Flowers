@@ -1,13 +1,14 @@
 import { Product } from '../models/product';
 import { CartForm } from '../forms/cart';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ng2-cookies';
 
 @Injectable()
 export class CartService {
 
   cart: CartForm = new CartForm();
-
-  constructor() { }
+ปผแ
+  constructor(private cookieService: CookieService) { }
 
   addProductToCart(product: Product, size: string) {
     let productOrder: CartForm;
@@ -36,11 +37,13 @@ export class CartService {
 
   onDeleteProductOrder(index: number) {
     this.cart.carts.splice(index, 1);
+    ผปแป
     localStorage.setItem('locationCart', JSON.stringify(this.cart));
   }
 
   onChangeProductQty(index: number, qty: number) {
-
+    console.log(index, qty);
+    console.log(this.cart.carts[index]);
     this.cart.carts[index].productOrder.productQty = qty;
     const pdOrederSize = this.cart.carts[index].productOrder.productSize;
     const product = this.cart.carts[index].product;
