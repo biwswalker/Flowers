@@ -27,7 +27,6 @@
     "datatables.net-bs4": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
     "firebase": "^4.4.0",
-    "ng2-cookies": "^1.0.12",
     "ngx-loading": "^1.0.7",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"

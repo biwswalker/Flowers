@@ -66,7 +66,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
   }
 
   onAddToCart() {
-    this.cartService.addProductToCart(this.productForm.product, this.size);
+    this.cartService.addItem(this.productForm.product, this.size);
     this.router.navigateByUrl('/cart');
   }
 }

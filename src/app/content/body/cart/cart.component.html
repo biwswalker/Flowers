@@ -5,7 +5,11 @@
     <div class="row col-12 header-label">
       <h2 class="header">Cart</h2>
     </div>
-    <div class="row col-12 content-margint">
+    <div class="row col-12 minh40" *ngIf="cart.cartItems.length == 0" >
+      <p>ไม่พบสินค้าในตระกร้า</p>
+      <p>ท่าสามารสั่งซื้อในหน้า <a routerLink="/product">รายการสินค้า</a> ได้</p>
+    </div>
+    <div class="row col-12 content-margint" *ngIf="cart.cartItems.length > 0">
       <div class="row col-lg-8 col-md-12 col-sm-12 non-margin">
         <div class="col-12 d-none d-lg-block non-margin listh-text padding-bottom">
           <div class="row col-12 noside-padding non-margin">
@@ -16,8 +20,8 @@
           </div>
         </div>
         <div class="col-12 non-margin">
-          <div class="row col-12 noside-padding item-list non-margin listc-text"
-               *ngFor="let cart of cart.carts; let i = index">
+          <div class="row col-12 noside-padding item-list listc-text"
+               *ngFor="let cart of cart.cartItems; let i = index">
             <div class="col-lg-8 col-12">
               <div class="row">
                 <div class="col-lg-4 col-md-3 col-sm-4 col-4"><img src="{{cart.imagePath}}"
@@ -31,33 +35,46 @@
               <input [(ngModel)]="cart.productOrder.productQty"
                      type="number"
                      class="form-control txtalign-cen"
-                     style="width:50px; margin:auto;"
-                     (change)="onChangeQty(i, cart.productOrder.productQty)"></div>
+                     style="width:70px; margin:auto;"
+                     (change)="onChangeQty(cart.product.productId, cart.productOrder.productQty)"></div>
             <div class="col-lg-2 col-6 txtalign-cen"><label class="d-block d-lg-none">ราคา</label>
               <div>฿ {{ cart.productOrder.productTotalPrice }}</div>
             </div>
+            <a (click)="onDeleteItem(cart.product.productId)"
+               class="absolute"><i class="fa fa-times" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
 
 
-      <div class="col-lg-4 col-md-12 col-sm-12 input-bg">
+      <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class="col-12 input-bg">
         <table class="table-parent">
           <tr>
             <td valign="top">
-              <div>
-                <h2>Summary</h2>
+              <div class="summary-item">
+                <h2 class="sumheader">สรุปการสั่งซื้อ</h2>
+              </div>
+              <div class="summary-item sub-summary minh40">
+                <p class="floatl">มูลค่าสินค้า</p>
+                <p class="floatr">฿ {{ cart.order.totalPrice }}</p>
+              </div>
+              <div class="summary-item total-summary minh40">
+                <p class="floatl">ยอดรวม</p>
+                <p class="floatr">฿ {{ cart.order.totalPrice }}</p>
               </div>
             </td>
           </tr>
           <tr>
             <td>
-              <div id="footer">
-                <h3 class="dis-inline price-labelc">ราคา</h3>
+              <div id="footer" class="sumfooter">
+                <button type="button"
+                        class="button-bg primary btn-block non-margin checkout">ชำระสินค้า</button>
               </div>
             </td>
           </tr>
         </table>
+      </div>
       </div>
     </div>
   </div>

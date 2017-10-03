@@ -1,11 +1,11 @@
 .row {
-  margin-left: 0px;
-  margin-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
+
 .table-parent {
     word-wrap: break-word;
     table-layout: fixed;
-    height: 100%;
     width: 100%;
 }
 
@@ -44,10 +44,55 @@ h2.header {
 }
 
 .listc-text {
-  font-weight: 200;
-  font-size: 18px
+    font-weight: 200;
+    font-size: 18px
 }
 
 .padding-bottom {
-  padding-bottom: 25px;
+    padding-bottom: 25px;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.summary-item {
+    width: 100%;
+    border-bottom: solid #e0e0e0 1px;
+    padding-bottom: 10px;
+}
+
+.sumheader {
+    font-weight: 200;
+}
+
+.sub-summary {
+    font-weight: 100;
+}
+
+.total-summary {
+    font-weight: 300;
+}
+
+.minh40 {
+    padding-top: 10px;
+    min-height: 40px;
+    height: 50px;
+}
+
+.floatl {
+    float: left;
+}
+
+.floatr {
+    float: right;
+}
+
+.checkout {
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.sumfooter {
+    padding-top: 15px;
 }

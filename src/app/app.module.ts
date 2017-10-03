@@ -1,3 +1,4 @@
+import { LocalStorageService, StorageService } from './services/local-storage.service';
 import { CartService } from './services/cart.service';
 import { AlertService } from './services/alert.service';
 import { FirebaseConfigModule } from './firebase-config';
@@ -54,7 +55,9 @@ import { CartComponent } from './content/body/cart/cart.component';
     ProductService,
     AlertService,
     CategoryService,
-    CartService
+    CartService,
+    LocalStorageService,
+    { provide: StorageService, useClass: LocalStorageService }
   ],
   bootstrap: [AppComponent]
 })

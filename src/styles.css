@@ -150,6 +150,17 @@ input[type="radio"]:checked~.bullet {
   transition: all .5s;
 }
 
+.button-bg {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 2px;
+  color: inherit;
+  transition: all .5s;
+}
+
 .button-outline.normal {
     border: 2px solid #242424;
     color: #242424;
@@ -157,6 +168,17 @@ input[type="radio"]:checked~.bullet {
 
 .button-outline.primary {
   border: 2px solid #F4B2B2;
+  color: #F4B2B2;
+}
+
+.button-bg.primary {
+  background-color: #F4B2B2;
+  border: 2px solid #F4B2B2;
+  color: #FFFFFF;
+}
+
+.button-bg.primary:hover {
+  background-color: transparent;
   color: #F4B2B2;
 }
 

@@ -4,5 +4,7 @@ export class Order {
   public createDate: string;
   public createUser: string;
   public addressId: string;
-  public status: string;
+  public totalPrice: number;
+  public paymentStatus: string;
+  public orderStatus: string;
 }
