@@ -21,6 +21,7 @@ import { AlertsComponent } from './utils/alerts/alerts.component';
 import { ProductPreviewComponent } from './content/body/product-preview/product-preview.component';
 import { CategoryService } from "./services/category.service";
 import { CartComponent } from './content/body/cart/cart.component';
+import { CheckoutComponent } from './content/body/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CartComponent } from './content/body/cart/cart.component';
     ProductManageComponent,
     AlertsComponent,
     ProductPreviewComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
