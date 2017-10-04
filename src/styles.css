@@ -174,24 +174,22 @@ input[type="radio"]:checked~.bullet {
 .button-bg.primary {
   background-color: #F4B2B2;
   border: 2px solid #F4B2B2;
-  color: #FFFFFF;
-}
-
-.button-bg.primary:hover {
-  background-color: transparent;
-  color: #F4B2B2;
+  color: white;
 }
 
 .button-outline.normal:hover,
-.button-outline.primary:hover {
+.button-outline.primary:hover,
+.button-bg.primary:hover {
   opacity: 0.7;
 }
 
 .button-outline.normal:disabled,
 .button-outline.normal[disabled],
 .button-outline.primary:disabled,
-.button-outline.primary[disabled] {
-  opacity: 0.7;
+.button-outline.primary[disabled],
+.button-bg.primary:disabled,
+.button-bg.primary[disabled] {
+  opacity: 0.5;
 }
 
 
@@ -246,4 +244,12 @@ input[type="checkbox"]:checked+label.chkl div.chkv {
 
 .content-margint {
   margin-top: 30px;
+}
+
+.floatl {
+  float: left;
+}
+
+.floatr {
+  float: right;
 }

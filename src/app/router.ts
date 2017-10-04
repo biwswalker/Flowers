@@ -1,3 +1,5 @@
+import { ConfirmationComponent } from './content/body/confirmation/confirmation.component';
+import { CheckoutComponent } from './content/body/checkout/checkout.component';
 import { CartComponent } from './content/body/cart/cart.component';
 import { ProductPreviewComponent } from './content/body/product-preview/product-preview.component';
 import { ProductManageComponent } from './content/body/product-manage/product-manage.component';
@@ -12,7 +14,9 @@ const appRoutes: Routes = [
   { path: 'product', component: ProductComponent },
   { path: 'product-manage', component: ProductManageComponent },
   { path: 'preview/:pd', component: ProductPreviewComponent },
-  { path: 'cart', component: CartComponent }
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'confirmation', component: ConfirmationComponent }
 ];
 
 @NgModule({

@@ -22,6 +22,7 @@ import { ProductPreviewComponent } from './content/body/product-preview/product-
 import { CategoryService } from "./services/category.service";
 import { CartComponent } from './content/body/cart/cart.component';
 import { CheckoutComponent } from './content/body/checkout/checkout.component';
+import { ConfirmationComponent } from './content/body/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CheckoutComponent } from './content/body/checkout/checkout.component';
     AlertsComponent,
     ProductPreviewComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

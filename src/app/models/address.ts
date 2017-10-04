@@ -1,7 +1,6 @@
 export class Address {
   public addressId: string;
-  public no: string;
-  public moo: string;
+  public address: string;
   public subDistrict: string;
   public district: string;
   public province: string;

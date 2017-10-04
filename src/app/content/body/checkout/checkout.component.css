@@ -1,0 +1,88 @@
+h2.header {
+    font-size: 3rem;
+    font-weight: 200;
+}
+
+.nopaddingb {
+    padding-bottom: 0px;
+}
+
+.paddingb15 {
+    padding-bottom: 15px;
+}
+
+.margint10 {
+    margin-top: 10px;
+}
+
+.sidepadding15 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.nosidepadding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.nomargin {
+    margin: 0px;
+}
+
+.box {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.box-header {
+    border-bottom: solid #e0e0e0 1px;
+    margin-bottom: 20px;
+}
+
+.box-footer {
+    height: 50px;
+    background-color: #e0e0e0;
+}
+
+.box-header h2 {
+    font-size: 1.5rem;
+    font-weight: 200;
+}
+
+.margin-vertical10 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.fontwei200 {
+    font-weight: 200;
+}
+
+.continue-btn {
+    font-size: 20px;
+    font-weight: 200;
+}
+
+table.item-list {
+    width: 100%;
+}
+
+table.item-list th {
+    font-weight: 300;
+}
+
+table.item-list td {
+    font-weight: 200;
+    border-bottom: solid #e0e0e0 1px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.nomarginb {
+    margin-bottom: 0px;
+}
+
+.total {
+  padding-top: 12px;
+  font-weight: 300;
+}

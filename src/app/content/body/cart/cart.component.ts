@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CartItem } from '../../../forms/cart-item';
 import { CartForm } from '../../../forms/cart';
 import { CartService } from '../../../services/cart.service';
@@ -17,7 +18,8 @@ export class CartComponent implements OnInit {
   cart: CartForm;
 
   constructor(
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -39,6 +41,11 @@ export class CartComponent implements OnInit {
 
   onDeleteItem(pid: string){
     this.cart.cartItems = this.cart.cartItems.filter((cartItem) => cartItem.product.productId !== pid);
+    this.cartService.calculatePrice(this.cart);
     this.cartService.save(this.cart);
+  }
+
+  onCheckOut(){
+    this.router.navigateByUrl('/checkout')
   }
 }

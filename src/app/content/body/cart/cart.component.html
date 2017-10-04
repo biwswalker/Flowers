@@ -3,7 +3,7 @@
 <section id="preview">
   <div class="container">
     <div class="row col-12 header-label">
-      <h2 class="header">Cart</h2>
+      <h2 class="header">CART</h2>
     </div>
     <div class="row col-12 minh40" *ngIf="cart.cartItems.length == 0" >
       <p>ไม่พบสินค้าในตระกร้า</p>
@@ -53,7 +53,7 @@
           <tr>
             <td valign="top">
               <div class="summary-item">
-                <h2 class="sumheader">สรุปการสั่งซื้อ</h2>
+                <h2 class="sumheader"><i class="fa fa-cube" aria-hidden="true"></i> สรุปการสั่งซื้อ</h2>
               </div>
               <div class="summary-item sub-summary minh40">
                 <p class="floatl">มูลค่าสินค้า</p>
@@ -68,8 +68,8 @@
           <tr>
             <td>
               <div id="footer" class="sumfooter">
-                <button type="button"
-                        class="button-bg primary btn-block non-margin checkout">ชำระสินค้า</button>
+                <button type="button" (click)="onCheckOut()"
+                        class="button-bg primary btn-block non-margin checkout"><i class="fa fa-credit-card" aria-hidden="true"></i> ชำระสินค้า</button>
               </div>
             </td>
           </tr>
