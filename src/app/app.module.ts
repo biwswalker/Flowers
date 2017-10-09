@@ -1,3 +1,4 @@
+import { UtilsService } from './services/utils.service';
 import { LocalStorageService, StorageService } from './services/local-storage.service';
 import { CartService } from './services/cart.service';
 import { AlertService } from './services/alert.service';
@@ -61,6 +62,7 @@ import { ConfirmationComponent } from './content/body/confirmation/confirmation.
     CategoryService,
     CartService,
     LocalStorageService,
+    UtilsService,
     { provide: StorageService, useClass: LocalStorageService }
   ],
   bootstrap: [AppComponent]

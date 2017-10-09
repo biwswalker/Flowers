@@ -2,8 +2,140 @@
 <div style="height: 70px;"></div>
 <section id="preview">
   <div class="container">
-    <div class="row col-lg-7 col-md-12 col-md-12 col-centered content-margint nomargin">
-          <button class="button-bg primary btn-block nomargin continue-btn"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</button>
+    <alerts></alerts>
+    <div class="row col-12 minh40"
+         *ngIf="!canAccess">
+      <p>กรุณาทำรายการในหน้า <a routerLink="/checkout">Check Out</a> ก่อน</p>
+    </div>
+    <div class="row col-lg-7 col-md-12 col-md-12 col-centered content-margint none-margin"
+         *ngIf="canAccess">
+      <div class="row col-12 input-bg">
+        <div class="col-12 box-header">
+          <h2><i class="fa fa-address-card-o"
+               aria-hidden="true"></i> ที่อยู่การจัดส่ง</h2>
+        </div>
+        <div class="col-6 margin-vertical10">
+          <label class="fontwei200">ชื่อ</label>
+          <input type="text"
+                 [(ngModel)]="cart.order.firstname"
+                 name="firstname"
+                 disabled
+                 class="form-control">
+        </div>
+        <div class="col-6 margin-vertical10">
+          <label class="fontwei200">นามสกุล</label>
+          <input type="text"
+                 [(ngModel)]="cart.order.lastname"
+                 name="lastname"
+                 disabled
+                 class="form-control">
+        </div>
+        <div class="col-12 margin-vertical10">
+          <label class="fontwei200">ที่อยู่</label>
+          <input type="text"
+                 disabled
+                 [(ngModel)]="cart.address.address"
+                 name="address"
+                 disabled
+                 class="form-control">
+        </div>
+        <div class="col-6 margin-vertical10">
+          <label class="fontwei200">ตำบล</label>
+          <select class="form-control"
+                  disabled
+                  [(ngModel)]="cart.address.subDistrict"
+                  name="subDistrict">
+            <option value="" disabled></option>
+            <option value="WIANG">เวียง</option>
+            <option value="ROBWIANG">รอบเวียง</option>
+          </select>
+        </div>
+        <div class="col-6 margin-vertical10">
+          <label class="fontwei200">อำเภอ</label>
+          <select class="form-control"
+                  disabled
+                  [(ngModel)]="cart.address.district"
+                  name="district">
+            <option value="" disabled></option>
+            <option value="MUANG">เมือง</option>
+          </select>
+        </div>
+        <div class="col-6 margin-vertical10">
+          <label class="fontwei200">จังหวัด</label>
+          <select [(ngModel)]="cart.address.province"
+                  name="province"
+                  disabled
+                  class="form-control">
+            <option value="" disabled></option>
+            <option value="CRI">เชียงราย</option>
+          </select>
+        </div>
+        <div class="col-6 margin-vertical10">
+          <label class="fontwei200">รหัสไปรษณีย์</label>
+          <input type="text"
+                 [(ngModel)]="cart.address.postcode"
+                 name="postcode"
+                 disabled
+                 class="form-control">
+        </div>
+        <div class="col-12 margin-vertical10">
+          <label class="fontwei200">เบอร์ติดต่อ</label>
+          <input type="text"
+                 [(ngModel)]="cart.address.tel"
+                 name="tel"
+                 disabled
+                 class="form-control">
+        </div>
+
+
+        <div class="col-12 space">
+        </div>
+        <div class="col-12 box-header">
+          <h2><i class="fa fa-credit-card"
+               aria-hidden="true"></i> ชำระเงิน</h2>
+        </div>
+        <div class="col">
+          <label class="fontwei200">{{ paymentMethodName }}</label>
+        </div>
+
+
+        <div class="col-12 space">
+        </div>
+        <div class="col-12 box-header">
+          <h2><i class="fa fa-cube"
+               aria-hidden="true"></i> สินค้า</h2>
+        </div>
+        <div class="col-12">
+          <table class="item-list">
+            <tr>
+              <th>สินค้า</th>
+              <th style="width:65px; text-align: center;">จำนวน</th>
+              <th style="width:70px; text-align: right;">ราคา</th>
+            </tr>
+            <tr *ngFor="let cartObj of cart.cartItems">
+              <td>{{ cartObj.product.productName }} ({{ cartObj.productOrder.productSize }})</td>
+              <td style="text-align: center;">{{ cartObj.productOrder.productQty }}</td>
+              <td style="text-align: right;">฿ {{ cartObj.productOrder.productTotalPrice }}</td>
+            </tr>
+            <tr>
+              <td style="border-bottom: 0px;">ค่าจัดส่ง</td>
+              <td style="border-bottom: 0px;"></td>
+              <td style="text-align: right;border-bottom: 0px;">฿ 0</td>
+            </tr>
+            <tr>
+              <td>ยอดสุทธิ</td>
+              <td></td>
+              <td style="text-align: right;">฿ {{ cart.order.totalPrice }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row col-12">
+        <div class="col-6"><button (click)="onBackToEditOrder()"
+                  class="button-bg negative btn-block size-btn"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไขข้อมูล</button></div>
+        <div class="col-6"><button (click)="onConfirmOrder()"
+                  class="button-bg primary btn-block size-btn"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</button></div>
+      </div>
     </div>
   </div>
 </section>

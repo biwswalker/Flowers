@@ -177,6 +177,12 @@ input[type="radio"]:checked~.bullet {
   color: white;
 }
 
+.button-bg.negative {
+  background-color: #919191;
+  border: 2px solid #919191;
+  color: white;
+}
+
 .button-outline.normal:hover,
 .button-outline.primary:hover,
 .button-bg.primary:hover {
@@ -252,4 +258,18 @@ input[type="checkbox"]:checked+label.chkl div.chkv {
 
 .floatr {
   float: right;
+}
+
+.space {
+  height: 50px;
+}
+
+.none-margin {
+  margin: 0px;
+}
+
+.minh40 {
+  padding-top: 10px;
+  min-height: 40px;
+  height: 50px;
 }

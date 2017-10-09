@@ -1,8 +1,13 @@
+import { UtilsService } from './utils.service';
+import { ProductOrder } from './../models/product-order';
+import { Order } from './../models/order';
+import { Address } from './../models/address';
 import { CartItem } from '../forms/cart-item';
 import { StorageService } from './local-storage.service';
 import { Product } from '../models/product';
 import { CartForm } from '../forms/cart';
 import { Injectable } from '@angular/core';
+import * as firebase from 'firebase';
 
 const CART_KEY = "cart";
 
@@ -12,8 +17,23 @@ export class CartService {
   private storage: Storage;
 
   constructor(
-    private storageService: StorageService) {
+    private storageService: StorageService,
+    private utilsService: UtilsService) {
     this.storage = this.storageService.get();
+  }
+
+  updateOrder(order: Order, address: Address) {
+    const cart = this.retrieve();
+    if (cart) {
+      if (order) {
+        cart.order = order;
+      }
+      if (address) {
+        cart.address = address
+      }
+    } else {
+    }
+    this.save(cart);
   }
 
   addItem(product: Product, size: string): void {
@@ -73,7 +93,7 @@ export class CartService {
     this.save(newCart);
   }
 
-  calculatePrice(cart: CartForm){
+  calculatePrice(cart: CartForm) {
     let total: number = 0;
     cart.cartItems.forEach((item: CartItem) => {
       total += item.productOrder.productTotalPrice;
@@ -91,5 +111,46 @@ export class CartService {
     return cart;
   }
 
+  createOrder(cart: CartForm) {
+    if (cart) {
+      const uuid = this.utilsService.generateUUID();
+      const orderId = this.utilsService.generateOrderID(10);
+      const nowdate = new Date();
+      cart.order.orderId = orderId;
+      cart.order.orderDate = nowdate;
+      cart.order.createDate = nowdate;
+      cart.order.createUser = 'biwswalker';
+      cart.order.paymentStatus = 'N';
+      cart.order.orderStatus = 'W';
+      let products: ProductOrder[] = [];
+      cart.cartItems.forEach(pd => {
+        products.push(pd.productOrder);
+      });
+      let cartOrder: CartOrder = new CartOrder(cart.order, cart.address, products);
+      return firebase.database().ref('order/' + uuid).set(cartOrder)
+        .then((snap) => {
+          this.empty();
+          return orderId;
+        }).catch(error => {
+          console.log('Error : '+error.message)
+        });
+    }
+  }
+}
 
+
+export class CartOrder {
+  public order: Order;
+  public address: Address;
+  public products: ProductOrder[];
+
+  constructor(
+    order: Order,
+    address: Address,
+    products: ProductOrder[]
+  ) {
+    this.order = order;
+    this.address = address;
+    this.products = products;
+  }
 }
