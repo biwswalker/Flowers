@@ -194,18 +194,21 @@ input[type="radio"]:checked~.bullet {
     color: white;
 }
 
-.button-outline.normal:hover,
+.button-outline.negative:hover,
 .button-outline.primary:hover,
-.button-bg.primary:hover {
+.button-bg.primary:hover,
+.button-bg.negative:hover {
     opacity: 0.7;
 }
 
-.button-outline.normal:disabled,
-.button-outline.normal[disabled],
+.button-outline.negative:disabled,
+.button-outline.negative[disabled],
 .button-outline.primary:disabled,
 .button-outline.primary[disabled],
 .button-bg.primary:disabled,
-.button-bg.primary[disabled] {
+.button-bg.primary[disabled],
+.button-bg.negative:disabled,
+.button-bg.negative[disabled] {
     opacity: 0.5;
 }
 
