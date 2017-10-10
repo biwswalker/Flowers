@@ -42,3 +42,12 @@ h2.section-heading {
   font-size: 3rem;
   font-weight: 200;
 }
+
+.size-btn {
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.nonmargin {
+  margin: 0;
+}

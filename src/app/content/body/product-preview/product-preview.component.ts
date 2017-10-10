@@ -69,4 +69,20 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
     this.cartService.addItem(this.productForm.product, this.size);
     this.router.navigateByUrl('/cart');
   }
+
+  onChangeSize() {
+    if (this.size === 'S') {
+      this.productForm.imageShowPath = this.productForm.product.productImagePathS;
+      this.productForm.priceShow = this.productForm.product.productPriceS;
+      this.size = 'S';
+    } else if (this.size === 'M') {
+      this.productForm.imageShowPath = this.productForm.product.productImagePathM;
+      this.productForm.priceShow = this.productForm.product.productPriceM;
+      this.size = 'M';
+    } else if (this.size === 'L') {
+      this.productForm.imageShowPath = this.productForm.product.productImagePathL;
+      this.productForm.priceShow = this.productForm.product.productPriceL;
+      this.size = 'L';
+    }
+  }
 }

@@ -38,13 +38,11 @@ export class ConfirmationComponent implements OnInit {
       this.paymentMethodName = 'เก็บเงินปลายทาง'
     }
 
-    if (this.cart.address.tel) {
-      this.canAccess = false;
-      if (this.cart.cartItems.length > 0) {
-        this.canAccess = true;
-      }
-    } else {
-      this.canAccess = false;
+    if (!this.cart.address.tel) {
+      this.router.navigateByUrl('/');
+    }
+    if (this.cart.cartItems.length == 0) {
+      this.router.navigateByUrl('/');
     }
   }
 
@@ -60,7 +58,7 @@ export class ConfirmationComponent implements OnInit {
         this.cartService.createOrder(this.cart)
           .then((id) => {
             this.loading = false;
-            this.router.navigateByUrl('/completeOrder');
+            this.router.navigate(['/completeOrder'], { queryParams: { orderId: id } });
           })
           .catch(error => {
             this.loading = false;

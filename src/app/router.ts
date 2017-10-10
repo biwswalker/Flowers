@@ -1,3 +1,4 @@
+import { CompleteOrderComponent } from './content/body/complete-order/complete-order.component';
 import { ConfirmationComponent } from './content/body/confirmation/confirmation.component';
 import { CheckoutComponent } from './content/body/checkout/checkout.component';
 import { CartComponent } from './content/body/cart/cart.component';
@@ -16,7 +17,8 @@ const appRoutes: Routes = [
   { path: 'preview/:pd', component: ProductPreviewComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'confirmation', component: ConfirmationComponent }
+  { path: 'confirmation', component: ConfirmationComponent },
+  { path: 'completeOrder', component: CompleteOrderComponent }
 ];
 
 @NgModule({

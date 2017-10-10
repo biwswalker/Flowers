@@ -1,0 +1,27 @@
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-head {
+  font-weight: 200;
+  font-size: 40px;
+}
+
+.text-ico {
+  color: rgb(97, 217, 127);
+  margin-top: -45px;
+  font-size: 150px;
+}
+
+.text-content {
+  font-weight: 200;
+}
+
+.nonemargin {
+  margin: 0px;
+}

@@ -156,9 +156,8 @@ body {
 
 @media (min-width: 992px) {
     #mainNav {
-        background-color: rgba(246, 246, 246, 0.58);
+        background-color: white;
         border-color: rgba(255, 255, 255, 0.3);
-        /* background-color: transparent; */
     }
     #mainNav .navbar-brand {
         color: rgba(37, 37, 37, 0.7);

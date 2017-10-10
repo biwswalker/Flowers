@@ -3,15 +3,11 @@
 <section id="preview">
   <div class="container">
     <alerts></alerts>
-    <div class="row col-12 minh40"
-         *ngIf="!canAccess">
-      <p>กรุณาทำรายการในหน้า <a routerLink="/checkout">Check Out</a> ก่อน</p>
-    </div>
-    <div class="row col-lg-7 col-md-12 col-md-12 col-centered content-margint none-margin"
-         *ngIf="canAccess">
-      <div class="row col-12 input-bg">
+    <div class="row col-lg-7 col-md-12 col-centered content-margint">
+      <div class="row col-12 input-bg none-margin">
         <div class="col-12 box-header">
-          <h2><i class="fa fa-address-card-o"
+          <h2>
+            <i class="fa fa-address-card-o"
                aria-hidden="true"></i> ที่อยู่การจัดส่ง</h2>
         </div>
         <div class="col-6 margin-vertical10">
@@ -45,7 +41,8 @@
                   disabled
                   [(ngModel)]="cart.address.subDistrict"
                   name="subDistrict">
-            <option value="" disabled></option>
+            <option value=""
+                    disabled></option>
             <option value="WIANG">เวียง</option>
             <option value="ROBWIANG">รอบเวียง</option>
           </select>
@@ -56,7 +53,8 @@
                   disabled
                   [(ngModel)]="cart.address.district"
                   name="district">
-            <option value="" disabled></option>
+            <option value=""
+                    disabled></option>
             <option value="MUANG">เมือง</option>
           </select>
         </div>
@@ -66,7 +64,8 @@
                   name="province"
                   disabled
                   class="form-control">
-            <option value="" disabled></option>
+            <option value=""
+                    disabled></option>
             <option value="CRI">เชียงราย</option>
           </select>
         </div>
@@ -91,7 +90,8 @@
         <div class="col-12 space">
         </div>
         <div class="col-12 box-header">
-          <h2><i class="fa fa-credit-card"
+          <h2>
+            <i class="fa fa-credit-card"
                aria-hidden="true"></i> ชำระเงิน</h2>
         </div>
         <div class="col">
@@ -102,7 +102,8 @@
         <div class="col-12 space">
         </div>
         <div class="col-12 box-header">
-          <h2><i class="fa fa-cube"
+          <h2>
+            <i class="fa fa-cube"
                aria-hidden="true"></i> สินค้า</h2>
         </div>
         <div class="col-12">
@@ -131,10 +132,18 @@
         </div>
       </div>
       <div class="row col-12">
-        <div class="col-6"><button (click)="onBackToEditOrder()"
-                  class="button-bg negative btn-block size-btn"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไขข้อมูล</button></div>
-        <div class="col-6"><button (click)="onConfirmOrder()"
-                  class="button-bg primary btn-block size-btn"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</button></div>
+        <div class="col-6">
+          <button (click)="onBackToEditOrder()"
+                  class="button-bg negative btn-block size-btn">
+            <i class="fa fa-pencil"
+               aria-hidden="true"></i> แก้ไขข้อมูล</button>
+        </div>
+        <div class="col-6">
+          <button (click)="onConfirmOrder()"
+                  class="button-bg primary btn-block size-btn">
+            <i class="fa fa-check"
+               aria-hidden="true"></i> ยืนยัน</button>
+        </div>
       </div>
     </div>
   </div>

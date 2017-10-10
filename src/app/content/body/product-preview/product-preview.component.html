@@ -4,75 +4,94 @@
   <div class="container">
     <div class="row col-12">
       <a class="btn btn-danger margin-bottom"
-         routerLink="/product">ย้อนกลับ</a>
+         routerLink="/product">
+        <i class="fa fa-chevron-left"
+           aria-hidden="true"></i> ย้อนกลับ</a>
     </div>
-    <div class="row col-lg-12 col-sm-12">
-      <div class="col-lg-7 col-md-6">
+    <div class="row col-12">
+      <div class="col-lg-7 col-12">
         <img src="{{productForm.imageShowPath}}"
              style="min-width: 100%;max-width: 100%;">
       </div>
-      <div class="col-lg-5 col-md-6 input-bg">
+      <div class="col-lg-5 col-12">
         <table class="table-parent">
-          <tr>
-            <td valign="top">
-              <div id="main">
-                <div>
-                  <h2>{{ productForm.product.productName }}</h2>
-                </div>
-                <div>
-                  <ul class="radio paddingl0 marginTB15">
-                    <li class="radio"
-                        style="width:50px;">
-                      <input [(ngModel)]="size"
-                             [disabled]="!productForm.product.productSizeS"
-                             type="radio"
-                             value="S"
-                             name="size">
-                      <label class="radio customr">S</label>
-                      <div class="bullet">
-                      </div>
-                    </li>
-                    <li class="radio"
-                        style="width:50px;">
-                      <input [(ngModel)]="size"
-                             [disabled]="!productForm.product.productSizeM"
-                             type="radio"
-                             value="M"
-                             name="size">
-                      <label class="radio customr">M</label>
-                      <div class="bullet">
-                      </div>
-                    </li>
-                    <li class="radio"
-                        style="width:50px;">
-                      <input [(ngModel)]="size"
-                             [disabled]="!productForm.product.productSizeL"
-                             type="radio"
-                             value="L"
-                             name="size">
-                      <label class="radio customr">L</label>
-                      <div class="bullet">
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <p>{{ productForm.product.productDetail }}</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td valign="bottom">
-              <div id="footer">
-                <h3 class="dis-inline price-labelc">ราคา</h3>
-                <h3 class="dis-inline">{{ productForm.priceShow }}</h3>
-                <h3 class="dis-inline price-labelc">บาท</h3>
-                <div><button type="button" (click)="onAddToCart()"
-                          class="button-outline normal btn-block font25px nomargin">เพิ่มรายการ</button></div>
-              </div>
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <th>
+                <h2>{{ productForm.product.productName }}</h2>
+              </th>
+              <th></th>
+            </tr>
+            <tr class="space"></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="label-showing label">ขนาด</div>
+              </td>
+              <td style="text-align: right">
+                <ul class="radio paddingl0 marginTB15">
+                  <li class="radio"
+                      style="width:60px;"
+                      *ngIf="productForm.product.productSizeS">
+                    <input [(ngModel)]="size"
+                           [disabled]="!productForm.product.productSizeS"
+                           type="radio"
+                           value="S"
+                           name="size"
+                           (change)="onChangeSize()">
+                    <label class="radio customr">S</label>
+                    <div class="bullet">
+                    </div>
+                  </li>
+                  <li class="radio"
+                      style="width:60px;"
+                      *ngIf="productForm.product.productSizeM">
+                    <input [(ngModel)]="size"
+                           [disabled]="!productForm.product.productSizeM"
+                           type="radio"
+                           value="M"
+                           name="size"
+                           (change)="onChangeSize()">
+                    <label class="radio customr">M</label>
+                    <div class="bullet">
+                    </div>
+                  </li>
+                  <li class="radio"
+                      style="width:60px;"
+                      *ngIf="productForm.product.productSizeL">
+                    <input [(ngModel)]="size"
+                           [disabled]="!productForm.product.productSizeL"
+                           type="radio"
+                           value="L"
+                           name="size"
+                           (change)="onChangeSize()">
+                    <label class="radio customr">L</label>
+                    <div class="bullet">
+                    </div>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="label-showing label">ราคา</div>
+              </td>
+              <td class="label-showing value"
+                  style="text-align: right">฿ {{ productForm.priceShow }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">
+                <button type="button"
+                        (click)="onAddToCart()"
+                        class="button-bg primary btn-block size-btn nomargin">
+                  <i class="fa fa-archive"
+                     aria-hidden="true"></i> เพิ่มรายการ</button>
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>

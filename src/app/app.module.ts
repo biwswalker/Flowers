@@ -24,6 +24,7 @@ import { CategoryService } from "./services/category.service";
 import { CartComponent } from './content/body/cart/cart.component';
 import { CheckoutComponent } from './content/body/checkout/checkout.component';
 import { ConfirmationComponent } from './content/body/confirmation/confirmation.component';
+import { CompleteOrderComponent } from './content/body/complete-order/complete-order.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ConfirmationComponent } from './content/body/confirmation/confirmation.
     ProductPreviewComponent,
     CartComponent,
     CheckoutComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    CompleteOrderComponent
   ],
   imports: [
     BrowserModule,
