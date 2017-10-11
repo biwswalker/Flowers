@@ -1,0 +1,37 @@
+
+.service-box:hover {
+  opacity: 0.8;
+  background-color: #F8F8F8;
+  transition: all 0.5s;
+}
+
+.a-underline {
+text-decoration: none;
+}
+
+p.item-label {
+font-size: 18px;
+color: #333333;
+}
+
+p.item-label.name {
+font-weight: 200;
+}
+
+p.item-label.price {
+font-weight: 100;
+}
+
+h2.section-heading {
+font-size: 3rem;
+font-weight: 200;
+}
+
+.size-btn {
+font-size: 20px;
+font-weight: 200;
+}
+
+.nonmargin {
+margin: 0;
+}

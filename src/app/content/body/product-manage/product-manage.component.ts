@@ -42,7 +42,7 @@ export class ProductManageComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.productService.fetchProductListData()
+    this.productService.fetchProductListData('')
       .then((products: Product[]) => {
         this.productListForm = [];
         let form: ManageProductForm;
@@ -139,7 +139,7 @@ export class ProductManageComponent implements OnInit {
     } else {
       this.productForm = new ManageProductForm();
       this.loading = true;
-      this.productService.fetchProductListData()
+      this.productService.fetchProductListData('')
         .then((products: Product[]) => {
           this.productListForm = [];
           let form: ManageProductForm;

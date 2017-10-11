@@ -23,7 +23,7 @@ export class ProductService {
 
   deleteProductImage(imageName) {
     firebase.storage().ref().child(imageName).delete().catch(function (error) {
-      console.log('error '+error.message)
+      console.log('error ' + error.message)
     });
   }
 
@@ -36,12 +36,19 @@ export class ProductService {
   }
 
 
-  fetchProductListData() {
+  fetchProductListData(productCategory: string) {
     return firebase.database().ref('product').once('value')
       .then(list => {
         this.productList = [];
         list.forEach(data => {
-          this.productList.push(data.val());
+          const pd: Product = data.val();
+          if (productCategory) {
+            if (pd.productCategory === productCategory) {
+              this.productList.push(pd);
+            }
+          } else {
+            this.productList.push(pd);
+          }
         });
         return this.productList;
       })
@@ -62,4 +69,21 @@ export class ProductService {
       })
   }
 
+  fetchLtdProductData() {
+    return firebase.database().ref('product').limitToLast(12).once('value')
+      .then(list => {
+        this.productList = [];
+        list.forEach(data => {
+          const pd: Product = data.val();
+          if (pd.productType == 'S') {
+            this.productList.push(pd);
+          }
+        });
+        return this.productList;
+      })
+      .catch(error => {
+        console.log('Error ' + error);
+        return [];
+      });
+  }
 }

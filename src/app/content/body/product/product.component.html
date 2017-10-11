@@ -9,10 +9,23 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 text-center">
-        <h2 class="section-heading">SET</h2>
+        <a class="portfolio-box max-width"
+           routerLink="/product">
+          <img class="img-fluid max-width"
+               src="./assets/img/flower_btn-1.jpg"
+               alt="">
+          <div class="img-text">SET</div>
+        </a>
       </div>
       <div class="col-lg-6 text-center">
-        <h2 class="section-heading">CUSTOM</h2>
+        <a class="portfolio-box max-width"
+           routerLink="/custom">
+          <img class="img-fluid max-width"
+               src="./assets/img/flower_btn-2.jpg"
+               alt="">
+          <div class="img-text">CUSTOM</div>
+          <div class="portfolio-box-caption"></div>
+        </a>
       </div>
     </div>
   </div>
@@ -21,7 +34,7 @@
 <div style="height: 56px;"></div>
 
 <section id="product">
-  <div class="container">
+  <div class="container topic-header">
     <div class="row">
       <div class="col-lg-12 text-center">
         <h2 class="section-heading">SET</h2>
@@ -32,12 +45,27 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 row nonmargin">
-        <div class="col-4"><button class="button-outline negative btn-block size-btn no-side-margin">ช่อดอกไม้</button></div>
-        <div class="col-4"><button class="button-outline negative btn-block size-btn no-side-margin">แจกันดอกไม้</button></div>
-        <div class="col-4"><button class="button-outline negative btn-block size-btn no-side-margin">กระเช้า</button></div>
+        <div class="col-3">
+          <button (click)="onChangeCategory('')"
+                  class="button-outline category btn-block size-btn no-side-margin"
+                  [ngClass]="{ 'active': !categoryMode }">ทั้งหมด</button>
+        </div>
+        <div class="col-3">
+          <button (click)="onChangeCategory('1')"
+                  class="button-outline category btn-block size-btn no-side-margin"
+                  [ngClass]="{ 'active': categoryMode === '1'}">ช่อดอกไม้</button>
+        </div>
+        <div class="col-3">
+          <button (click)="onChangeCategory('2')"
+                  class="button-outline category btn-block size-btn no-side-margin"
+                  [ngClass]="{ 'active': categoryMode === '2'}">แจกันดอกไม้</button>
+        </div>
+        <div class="col-3">
+          <button (click)="onChangeCategory('3')"
+                  class="button-outline category btn-block size-btn no-side-margin"
+                  [ngClass]="{ 'active': categoryMode === '3'}">กระเช้าดอกไม้</button>
+        </div>
       </div>
-      <!-- <div class="col-lg-3 col-md-3 text-center col-centered">
-      </div> -->
     </div>
   </div>
   <div class="container">
