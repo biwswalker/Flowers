@@ -3,7 +3,7 @@
 }
 
 .txtalign-right {
-  text-align: right;
+    text-align: right;
 }
 
 section {
@@ -153,6 +153,7 @@ input[type="radio"]:checked~.bullet {
 /* Button outline override*/
 
 .button-outline {
+    cursor: pointer;
     padding-left: 15px;
     padding-right: 15px;
     margin-top: 10px;
@@ -165,6 +166,7 @@ input[type="radio"]:checked~.bullet {
 }
 
 .button-bg {
+    cursor: pointer;
     padding-left: 15px;
     padding-right: 15px;
     margin-top: 10px;
@@ -203,10 +205,24 @@ input[type="radio"]:checked~.bullet {
     color: white;
 }
 
+.button-bg.facebook {
+    background-color: #3b5998;
+    border: 2px solid #3b5998;
+    color: white;
+}
+
+.button-bg.google {
+    background-color: #ea4335;
+    border: 2px solid #ea4335;
+    color: white;
+}
+
 .button-outline.negative:hover,
 .button-outline.primary:hover,
 .button-bg.primary:hover,
-.button-bg.negative:hover {
+.button-bg.negative:hover,
+.button-bg.facebook:hover,
+.button-bg.google:hover {
     opacity: 0.7;
 }
 
@@ -227,7 +243,11 @@ input[type="radio"]:checked~.bullet {
 .button-bg.primary:disabled,
 .button-bg.primary[disabled],
 .button-bg.negative:disabled,
-.button-bg.negative[disabled] {
+.button-bg.negative[disabled],
+.button-bg.facebook:disabled,
+.button-bg.facebook[disabled],
+.button-bg.google:disabled,
+.button-bg.google[disabled] {
     opacity: 0.5;
 }
 

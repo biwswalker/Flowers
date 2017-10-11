@@ -1,27 +1,53 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">FLOWER FLOW</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top"
+     id="mainNav">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger"
+       href="#page-top">FLOWER FLOW</a>
+    <button class="navbar-toggler navbar-toggler-right"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
  <span class="navbar-toggler-icon"></span>
 </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" routerLink="/product"><i class="fa fa-tags" aria-hidden="true"></i> รายการสินค้า</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" routerLink="/product-manage"><i class="fa fa-tasks" aria-hidden="true"></i> จัดการสินค้า</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href=""><i class="fa fa-search" aria-hidden="true"></i> ติดตามสถานะ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" routerLink="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> ตะกร้าสินค้า</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href=""><i class="fa fa-sign-in" aria-hidden="true"></i> เข้าสู่ระบบ</a>
-                </li>
-            </ul>
-        </div>
+    <div class="collapse navbar-collapse"
+         id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger"
+             routerLink="/product"><i class="fa fa-tags" aria-hidden="true"></i> รายการสินค้า</a>
+        </li>
+        <li class="nav-item" *ngIf="1 == 0">
+          <a class="nav-link js-scroll-trigger"
+             routerLink="/product-manage"><i class="fa fa-tasks" aria-hidden="true"></i> จัดการสินค้า</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger"
+             routerLink="/"><i class="fa fa-search" aria-hidden="true"></i> ติดตามสถานะ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger"
+             routerLink="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> ตะกร้าสินค้า</a>
+        </li>
+        <li class="nav-item"
+            *ngIf="!displayName">
+          <a class="nav-link js-scroll-trigger"
+             routerLink="/signin"><i class="fa fa-sign-in" aria-hidden="true"></i> เข้าสู่ระบบ</a>
+        </li>
+        <li class="nav-item d-lg-block d-none"
+            *ngIf="displayName"
+            style="margin-left: 40px;">
+          <a class="nav-link js-scroll-trigger"> {{displayName}}</a>
+        </li>
+        <li class="nav-item"
+            *ngIf="displayName">
+          <a class="nav-link js-scroll-trigger"
+             (click)="logout()"
+             style="cursor: pointer"><i class="fa fa-sign-out" aria-hidden="true"></i> ออกจากระบบ</a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>

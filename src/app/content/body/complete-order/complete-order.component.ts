@@ -8,6 +8,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class CompleteOrderComponent implements OnInit, OnDestroy {
 
+  loading = false;
   subscribe;
   orderId: string;
 
@@ -17,6 +18,7 @@ export class CompleteOrderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.subscribe = this.route
       .queryParams
       .subscribe(params => {

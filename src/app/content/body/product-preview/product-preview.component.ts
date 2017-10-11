@@ -31,6 +31,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
     private cartService: CartService) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.loading = true;
     this.productForm = new ProductForm();
     this.sub = this.route.params.subscribe(params => {

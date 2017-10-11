@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.cart = new CartForm();
     this.cart = this.cartService.retrieve();
     if (!this.cart.order.paymentType) {

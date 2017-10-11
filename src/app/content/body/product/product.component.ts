@@ -28,6 +28,7 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.loading = true;
     this.categoryMode = '';
     this.productService.fetchProductListData(this.categoryMode)

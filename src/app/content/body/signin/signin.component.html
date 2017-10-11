@@ -1,0 +1,53 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div style="height: 70px;"></div>
+<section id="preview">
+  <div class="container">
+    <alerts></alerts>
+    <div class="col-lg-8 col-md-12 col-centered content-margint">
+      <div class="row col-12 input-bg none-margin">
+        <div class="col-12 box-header">
+          <h2>
+            <i class="fa fa-sign-in"
+               aria-hidden="true"></i> เข้าสู่ระบบ</h2>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="col-12 margin-vertical10">
+            <label class="fontwei200"><i class="fa fa-user" aria-hidden="true"></i> ชื่อผู้ใช้</label>
+            <input type="text"
+                   name="firstname"
+                   class="form-control">
+          </div>
+          <div class="col-12 margin-vertical10">
+            <label class="fontwei200"><i class="fa fa-unlock-alt" aria-hidden="true"></i> รหัสผ่าน</label>
+            <input type="password"
+                   name="password"
+                   class="form-control">
+          </div>
+          <div class="col-12">
+            <button type="submit"
+                    class="button-bg primary btn-block size-btn no-side-margin">
+                          <i class="fa fa-rocket" aria-hidden="true"></i> เข้าสู่ระบบ</button>
+          </div>
+        </div>
+        <div class="col-1">
+          <div class="vertical-line"></div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-12">
+          <div class="col-12 space"></div>
+          <div class="col-12">
+            <button type="button"
+                    (click)="loginWithFacebook()"
+                    class="button-bg facebook btn-block size-btn no-side-margin">
+                              <i class="fa fa-facebook-f" aria-hidden="true"></i> Facebook</button>
+          </div>
+          <div class="col-12">
+            <button type="button"
+                    (click)="loginWithGoogle()"
+                    class="button-bg google btn-block size-btn no-side-margin">
+                                <i class="fa fa-google-plus" aria-hidden="true"></i> Google</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

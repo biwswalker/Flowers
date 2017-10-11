@@ -1,4 +1,7 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+  displayName: any;
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.displayName = user.displayName;
+      }
+    })
+  }
 
   ngOnInit() {
   }
 
+  logout() {
+    window.scrollTo(0, 0);
+    this.authService.signout()
+      .then(res => {
+        this.router.navigateByUrl('/');
+        window.location.reload();
+      }).catch(error => {
+        console.log(error.message);
+      });
+  }
 }

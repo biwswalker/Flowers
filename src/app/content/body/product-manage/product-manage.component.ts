@@ -41,6 +41,7 @@ export class ProductManageComponent implements OnInit {
     public categoryService: CategoryService) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.loading = true;
     this.productService.fetchProductListData('')
       .then((products: Product[]) => {

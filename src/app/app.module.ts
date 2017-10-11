@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { UtilsService } from './services/utils.service';
 import { LocalStorageService, StorageService } from './services/local-storage.service';
 import { CartService } from './services/cart.service';
@@ -26,6 +27,7 @@ import { CheckoutComponent } from './content/body/checkout/checkout.component';
 import { ConfirmationComponent } from './content/body/confirmation/confirmation.component';
 import { CompleteOrderComponent } from './content/body/complete-order/complete-order.component';
 import { CustomComponent } from './content/body/custom/custom.component';
+import { SigninComponent } from './content/body/signin/signin.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { CustomComponent } from './content/body/custom/custom.component';
     ConfirmationComponent,
     CompleteOrderComponent,
     CustomComponent,
+    SigninComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { CustomComponent } from './content/body/custom/custom.component';
     CartService,
     LocalStorageService,
     UtilsService,
+    AuthService,
     { provide: StorageService, useClass: LocalStorageService }
   ],
   bootstrap: [AppComponent]

@@ -1,3 +1,4 @@
+import { SigninComponent } from './content/body/signin/signin.component';
 import { CustomComponent } from './content/body/custom/custom.component';
 import { CompleteOrderComponent } from './content/body/complete-order/complete-order.component';
 import { ConfirmationComponent } from './content/body/confirmation/confirmation.component';
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'confirmation', component: ConfirmationComponent },
   { path: 'completeOrder', component: CompleteOrderComponent },
-  { path: 'custom', component: CustomComponent}
+  { path: 'custom', component: CustomComponent},
+  { path: 'signin', component: SigninComponent}
 ];
 
 @NgModule({
