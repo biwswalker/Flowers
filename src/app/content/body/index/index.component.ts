@@ -30,13 +30,13 @@ export class IndexComponent implements OnInit {
           form = new ProductForm();
           form.product = pd;
           if (pd.productSizeS) {
-            form.imageShowPath = pd.productImagePathS;
+            form.imageShowPath = this.getImageUrl(pd.productImagePathS);
             form.priceShow = pd.productPriceS;
           } else if (pd.productSizeM) {
-            form.imageShowPath = pd.productImagePathM;
+            form.imageShowPath = this.getImageUrl(pd.productImagePathM);
             form.priceShow = pd.productPriceM;
           } else if (pd.productSizeL) {
-            form.imageShowPath = pd.productImagePathL;
+            form.imageShowPath = this.getImageUrl(pd.productImagePathL);
             form.priceShow = pd.productPriceL;
           }
           this.productFormList.push(form);
@@ -48,4 +48,9 @@ export class IndexComponent implements OnInit {
       });
   }
 
+  getImageUrl(url) {
+    return new Promise((resolve, reject) => {
+      resolve(url);
+    });
+  }
 }

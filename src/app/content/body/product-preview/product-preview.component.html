@@ -10,17 +10,16 @@
     </div>
     <div class="row col-12">
       <div class="col-lg-7 col-12">
-        <img src="{{productForm.imageShowPath}}"
+        <img [src]="productForm.imageShowPath | async"
              style="min-width: 100%;max-width: 100%;">
       </div>
       <div class="col-lg-5 col-12">
         <table class="table-parent">
           <thead>
             <tr>
-              <th>
+              <th colspan="2">
                 <h2>{{ productForm.product.productName }}</h2>
               </th>
-              <th></th>
             </tr>
             <tr class="space"></tr>
           </thead>

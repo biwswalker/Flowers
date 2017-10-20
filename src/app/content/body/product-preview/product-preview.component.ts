@@ -41,15 +41,15 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
           if (productObj) {
             this.productForm.product = productObj;
             if (productObj.productSizeS) {
-              this.productForm.imageShowPath = productObj.productImagePathS;
+              this.productForm.imageShowPath = this.getImageUrl(productObj.productImagePathS);
               this.productForm.priceShow = productObj.productPriceS;
               this.size = 'S';
             } else if (productObj.productSizeM) {
-              this.productForm.imageShowPath = productObj.productImagePathM;
+              this.productForm.imageShowPath = this.getImageUrl(productObj.productImagePathM);
               this.productForm.priceShow = productObj.productPriceM;
               this.size = 'M';
             } else if (productObj.productSizeL) {
-              this.productForm.imageShowPath = productObj.productImagePathL;
+              this.productForm.imageShowPath = this.getImageUrl(productObj.productImagePathL);
               this.productForm.priceShow = productObj.productPriceL;
               this.size = 'L';
             }
@@ -59,6 +59,12 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
         .catch(error => {
           console.log(error.message)
         });
+    });
+  }
+
+  getImageUrl(url) {
+    return new Promise((resolve, reject) => {
+      resolve(url);
     });
   }
 
@@ -73,15 +79,15 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
 
   onChangeSize() {
     if (this.size === 'S') {
-      this.productForm.imageShowPath = this.productForm.product.productImagePathS;
+      this.productForm.imageShowPath = this.getImageUrl(this.productForm.product.productImagePathS);
       this.productForm.priceShow = this.productForm.product.productPriceS;
       this.size = 'S';
     } else if (this.size === 'M') {
-      this.productForm.imageShowPath = this.productForm.product.productImagePathM;
+      this.productForm.imageShowPath = this.getImageUrl(this.productForm.product.productImagePathM);
       this.productForm.priceShow = this.productForm.product.productPriceM;
       this.size = 'M';
     } else if (this.size === 'L') {
-      this.productForm.imageShowPath = this.productForm.product.productImagePathL;
+      this.productForm.imageShowPath = this.getImageUrl(this.productForm.product.productImagePathL);
       this.productForm.priceShow = this.productForm.product.productPriceL;
       this.size = 'L';
     }

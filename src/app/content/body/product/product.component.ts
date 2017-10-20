@@ -28,6 +28,16 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    let firstPromise = Promise.resolve(10);
+    let secondPromise = Promise.resolve(5);
+    let thirdPromise = Promise.resolve(20);
+
+    Promise
+      .all([firstPromise, secondPromise, thirdPromise])
+      .then(values => {
+        console.log(values);
+      });
+
     window.scrollTo(0, 0);
     this.loading = true;
     this.categoryMode = '';
@@ -40,13 +50,13 @@ export class ProductComponent implements OnInit {
           form.product = pd;
           if (pd.productType === 'S') {
             if (pd.productSizeS) {
-              form.imageShowPath = pd.productImagePathS;
+              form.imageShowPath = this.getImageUrl(pd.productImagePathS);
               form.priceShow = pd.productPriceS;
             } else if (pd.productSizeM) {
-              form.imageShowPath = pd.productImagePathM;
+              form.imageShowPath = this.getImageUrl(pd.productImagePathM);
               form.priceShow = pd.productPriceM;
             } else if (pd.productSizeL) {
-              form.imageShowPath = pd.productImagePathL;
+              form.imageShowPath = this.getImageUrl(pd.productImagePathL);
               form.priceShow = pd.productPriceL;
             }
             this.productFormList.push(form);
@@ -63,6 +73,12 @@ export class ProductComponent implements OnInit {
       });
   }
 
+  getImageUrl(url) {
+    return new Promise((resolve, reject) => {
+      resolve(url);
+    });
+  }
+
   onChangeCategory(category: string) {
     this.loading = true;
     this.categoryMode = category;
@@ -75,13 +91,13 @@ export class ProductComponent implements OnInit {
           form.product = pd;
           if (pd.productType === 'S') {
             if (pd.productSizeS) {
-              form.imageShowPath = pd.productImagePathS;
+              form.imageShowPath = this.getImageUrl(pd.productImagePathS);
               form.priceShow = pd.productPriceS;
             } else if (pd.productSizeM) {
-              form.imageShowPath = pd.productImagePathM;
+              form.imageShowPath = this.getImageUrl(pd.productImagePathM);
               form.priceShow = pd.productPriceM;
             } else if (pd.productSizeL) {
-              form.imageShowPath = pd.productImagePathL;
+              form.imageShowPath = this.getImageUrl(pd.productImagePathL);
               form.priceShow = pd.productPriceL;
             }
             this.productFormList.push(form);

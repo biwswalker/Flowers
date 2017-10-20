@@ -151,7 +151,7 @@
          [routerLink]="['/preview', productObj.product.productId]">
         <div class="service-box border">
           <img class="img-fluid"
-               src="{{ productObj.imageShowPath }}">
+               [src]="productObj.imageShowPath | async">
           <p class="item-label name">{{ productObj.product.productName }}</p>
           <p class="item-label price">ราคา {{ productObj.priceShow }} บาท</p>
         </div>

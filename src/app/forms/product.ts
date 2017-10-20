@@ -7,7 +7,13 @@ export class ProductForm {
 
   constructor(){
     this.product = new Product();
-    this.imageShowPath = './assets/img/empty.png';
+    this.imageShowPath = this.getImageUrl();
     this.priceShow = 0;
+  }
+
+  getImageUrl() {
+    return new Promise((resolve, reject) => {
+      resolve('./assets/img/empty.png');
+    });
   }
 }

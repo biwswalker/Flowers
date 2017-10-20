@@ -37,12 +37,12 @@ export class CategoryService {
     this.categoryList.push(cate);
     cate = new Category();
     cate.categoryId = '2';
-    cate.categoryName = 'กระเช้าดอกไม้';
+    cate.categoryName = 'แจกันดอกไม้';
     cate.categoryFlag = 'Y';
     this.categoryList.push(cate);
     cate = new Category();
     cate.categoryId = '3';
-    cate.categoryName = 'ขวดแก้ว';
+    cate.categoryName = 'กระเช้าดอกไม้';
     cate.categoryFlag = 'Y';
     this.categoryList.push(cate);
   }
