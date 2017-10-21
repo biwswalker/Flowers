@@ -1,3 +1,4 @@
+import { OrderService } from './../../../services/order.service';
 import { PaymentService } from "./../../../services/payment.service";
 import { Payment } from "./../../../models/payment";
 import { UtilsService } from "./../../../services/utils.service";
@@ -25,7 +26,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private utilsService: UtilsService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private orderService: OrderService
   ) {}
 
   ngOnInit() {
@@ -122,7 +124,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       this.payment.transTime = this.group.value.transTime;
 
       Promise.resolve(
-        this.paymentService
+        this.orderService
           .findAlreadyExistOrder(this.payment.orderId)
           .then(snapshot => {
             if (snapshot.val()) {
@@ -132,7 +134,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
               ) {
                 Promise.all([
                   this.paymentService.addPaymentConfermation(this.payment),
-                  this.paymentService.changePaymentStatus(this.payment.orderId)
+                  this.orderService.changePaymentStatus(this.payment.orderId, 'W')
                 ])
                   .then(snapshot => {
                     this.loading = false;

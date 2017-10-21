@@ -1,0 +1,61 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div style="height: 70px;"></div>
+<section id="preview">
+  <div class="container">
+    <div class="row col-12 header-label">
+      <h2 class="header">TRACKING</h2>
+    </div>
+    <div class="row col-12 content-margint">
+      <div class="row col-lg-11 col-md-11 col-centered content-margint">
+        <div class="row col-12 input-bg">
+          <div class="col-12 box-header">
+            <h2>
+              <i class="fa fa-search"
+                 aria-hidden="true"></i> ค้นหา</h2>
+          </div>
+          <div class="col-lg-4 col-md-5 margin-vertical10">
+            <label class="fontwei200">Order ID</label>
+            <input type="text"
+                   name="orderId"
+                   [(ngModel)]="orderId"
+                   class="form-control">
+          </div>
+          <div class="col-lg-8 col-md-7 margin-vertical10">
+            <button type="submit"
+                    class="button-bg primary size-btn"
+                    (click)="onSearch()">
+              <i class="fa fa-search"
+                 aria-hidden="true"></i> ค้นหา</button>
+          </div>
+          <div class="col-12 box-header"
+               style="margin-top: 20px;">
+          </div>
+          <div class="col-12 margin-vertical10"
+               *ngIf="searched">
+            <p class="fw">
+              ไม่พบผลการค้าหา กรุณาตรวจสอบ #Order ID ใหม่
+            </p>
+          </div>
+          <div class="col-lg-4 col-md-5 col-sm-12 margin-vertical10"
+               *ngIf="order.orderId">
+            <p class="fw">
+              <b>#Order ID : </b> {{ order.orderId }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-md-7 col-sm-12 margin-vertical10"
+               *ngIf="order.orderId">
+            <p class="fw">
+              <b>ชื่อ : </b> {{ order.firstname }} {{ order.lastname }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-md-12 col-sm-12 margin-vertical10"
+               *ngIf="order.orderId">
+            <p class="fw">
+              <b>สถานะ : </b> {{ status }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,3 +1,4 @@
+import { OrderService } from './services/order.service';
 import { PaymentService } from './services/payment.service';
 import { AuthService } from './services/auth.service';
 import { UtilsService } from './services/utils.service';
@@ -27,10 +28,9 @@ import { CartComponent } from './content/body/cart/cart.component';
 import { CheckoutComponent } from './content/body/checkout/checkout.component';
 import { ConfirmationComponent } from './content/body/confirmation/confirmation.component';
 import { CompleteOrderComponent } from './content/body/complete-order/complete-order.component';
-import { CustomComponent } from './content/body/custom/custom.component';
 import { SigninComponent } from './content/body/signin/signin.component';
 import { PaymentComponent } from './content/body/payment/payment.component';
-import { TrackingComponent } from './content/tracking/tracking.component';
+import { TrackingComponent } from './content/body/tracking/tracking.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,6 @@ import { TrackingComponent } from './content/tracking/tracking.component';
     CheckoutComponent,
     ConfirmationComponent,
     CompleteOrderComponent,
-    CustomComponent,
     SigninComponent,
     PaymentComponent,
     TrackingComponent,
@@ -77,6 +76,7 @@ import { TrackingComponent } from './content/tracking/tracking.component';
     UtilsService,
     AuthService,
     PaymentService,
+    OrderService,
     { provide: StorageService, useClass: LocalStorageService }
   ],
   bootstrap: [AppComponent]

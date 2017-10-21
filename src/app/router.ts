@@ -1,7 +1,6 @@
-import { TrackingComponent } from "./content/tracking/tracking.component";
+import { TrackingComponent } from "./content/body/tracking/tracking.component";
 import { PaymentComponent } from "./content/body/payment/payment.component";
 import { SigninComponent } from "./content/body/signin/signin.component";
-import { CustomComponent } from "./content/body/custom/custom.component";
 import { CompleteOrderComponent } from "./content/body/complete-order/complete-order.component";
 import { ConfirmationComponent } from "./content/body/confirmation/confirmation.component";
 import { CheckoutComponent } from "./content/body/checkout/checkout.component";
@@ -23,7 +22,6 @@ const appRoutes: Routes = [
   { path: "checkout", component: CheckoutComponent },
   { path: "confirmation", component: ConfirmationComponent },
   { path: "completeOrder", component: CompleteOrderComponent },
-  { path: "custom", component: CustomComponent },
   { path: "signin", component: SigninComponent },
   { path: "payment", component: PaymentComponent },
   { path: "tracking", component: TrackingComponent }
