@@ -94,7 +94,6 @@ export class CartService {
 
   createOrder(cart: CartForm) {
     if (cart) {
-      const uuid = this.utilsService.generateUUID();
       const orderId = this.utilsService.generateOrderID(10);
       const nowdate = new Date();
       cart.order.orderId = orderId;
@@ -108,7 +107,7 @@ export class CartService {
         products.push(pd.productOrder);
       });
       let cartOrder: CartOrder = new CartOrder(cart.order, cart.address, products);
-      return firebase.database().ref('order/' + uuid).set(cartOrder)
+      return firebase.database().ref('order/' + orderId).set(cartOrder)
         .then((snap) => {
           this.empty();
           return orderId;

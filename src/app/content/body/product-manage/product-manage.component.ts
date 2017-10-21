@@ -1,8 +1,9 @@
+import { UtilsService } from './../../../services/utils.service';
 import { AlertService } from '../../../services/alert.service';
 import { ManageProductForm } from '../../../forms/manage-product';
 import { ProductService } from '../../../services/product.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Product } from "../../../models/product";
 import { CategoryService } from "../../../services/category.service";
 
@@ -11,7 +12,7 @@ import { CategoryService } from "../../../services/category.service";
   templateUrl: './product-manage.component.html',
   styleUrls: ['./product-manage.component.css']
 })
-export class ProductManageComponent implements OnInit {
+export class ProductManageComponent implements OnInit, OnDestroy {
 
   // FormGroup
   group: FormGroup;
@@ -33,6 +34,7 @@ export class ProductManageComponent implements OnInit {
   loading = false;
 
   constructor(
+    private utilsService: UtilsService,
     private productService: ProductService,
     private alertService: AlertService,
     public categoryService: CategoryService) { }
@@ -164,7 +166,7 @@ export class ProductManageComponent implements OnInit {
       if (file.size < 5000000) {
         this.productForm.product.productImageName = imageName;
         Promise.all([Promise.resolve(
-          this.productService.addProductImage(file, imageName)
+          this.utilsService.uploadImage(file, imageName)
             .then((data) => {
               this.imagePath = data;
               this.productForm.product.productImagePath = data;
@@ -185,7 +187,7 @@ export class ProductManageComponent implements OnInit {
     this.imagePath = './assets/img/empty.png';
     if (this.productForm.product.productImageName) {
       if (this.mode === 'I') {
-        this.productService.deleteProductImage(this.productForm.product.productImageName);
+        this.utilsService.deleteImage(this.productForm.product.productImageName);
       }
       this.productForm.product.productImageName = '';
       this.productForm.product.productImagePath = '';
@@ -205,7 +207,7 @@ export class ProductManageComponent implements OnInit {
   ngOnDestroy() {
     if (this.mode === 'I') {
       if (this.productForm.product.productImageName) {
-        this.productService.deleteProductImage(this.productForm.product.productImageName);
+        this.utilsService.deleteImage(this.productForm.product.productImageName);
       }
     }
   }

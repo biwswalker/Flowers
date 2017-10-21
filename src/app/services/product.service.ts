@@ -12,22 +12,6 @@ export class ProductService {
 
   constructor(private utilService: UtilsService) { }
 
-  addProductImage(imageData: File, imageName: string) {
-    return firebase.storage().ref().child(imageName).put(imageData)
-      .then((url) => {
-        return url.downloadURL;
-      })
-      .catch(error => {
-        console.log('Error ' + error);
-      });
-  }
-
-  deleteProductImage(imageName) {
-    firebase.storage().ref().child(imageName).delete().catch(function (error) {
-      console.log('error ' + error.message)
-    });
-  }
-
   addProduct(form: ManageProductForm) {
     form.product.productId = this.utilService.generateUUID();
     form.product.createDatetime = String(Date.now());
