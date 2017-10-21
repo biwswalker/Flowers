@@ -1,3 +1,4 @@
+import { UtilsService } from './utils.service';
 import { Injectable } from '@angular/core';
 import { ManageProductForm } from "../forms/manage-product";
 import * as firebase from 'firebase';
@@ -9,7 +10,7 @@ export class ProductService {
 
   productList: Product[] = [];
 
-  constructor() { }
+  constructor(private utilService: UtilsService) { }
 
   addProductImage(imageData: File, imageName: string) {
     return firebase.storage().ref().child(imageName).put(imageData)
@@ -28,8 +29,8 @@ export class ProductService {
   }
 
   addProduct(form: ManageProductForm) {
-    form.product.productId = String(Date.now());
-    form.product.createDatetime = String(form.product.productId);
+    form.product.productId = this.utilService.generateUUID();
+    form.product.createDatetime = String(Date.now());
     form.product.createUser = 'biwswalker';
     this.productList.push(form.product);
     return firebase.database().ref('product/' + form.product.productId).set(form.product);
@@ -74,10 +75,7 @@ export class ProductService {
       .then(list => {
         this.productList = [];
         list.forEach(data => {
-          const pd: Product = data.val();
-          if (pd.productType == 'S') {
-            this.productList.push(pd);
-          }
+          this.productList.push(data.val());
         });
         return this.productList;
       })

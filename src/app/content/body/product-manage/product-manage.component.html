@@ -47,252 +47,83 @@
     <div class="container">
       <button class="btn btn-danger"
               (click)="onBack()">ยกเลิก</button>
-      <div class="input-bg">
-
-        <div class="row col-lg-12 col-sm-12 col-xs-12 padding-form">
-          <div class="col-lg-12 col-sm-12 col-xs-12">
-            <label for="">ชนิด</label>
-            <div>
-              <ul class="radio">
-                <li class="radio"
-                    style="width:70px;">
-                  <input formControlName="productType"
-                         checked
-                         type="radio"
-                         value="S"
-                         name="productType">
-                  <label class="radio">เซ็ท</label>
-                  <div class="bullet">
-                  </div>
-                </li>
-                <li class="radio"
-                    style="width:70px;">
-                  <input formControlName="productType"
-                         type="radio"
-                         value="P"
-                         name="productType">
-                  <label class="radio">ชิ้น</label>
-                  <div class="bullet">
-                  </div>
-                </li>
-              </ul>
+      <div class="row">
+        <div class="col-lg-5 col-md-6 col-12"
+             style="margin-top: 20px">
+          <img src="{{imagePath}}"
+               class="maxwidth">
+          <div class="upload-btn">
+            <label *ngIf="!this.productForm.product.productImagePath"
+                   class="btn btn-primary cursor-btn">อัพโหลดไฟล์รูป
+              <input (change)="onUploadImage($event)"
+                     formControlName="file"
+                     type="file"
+                     name="file"
+                     accept="image/*"
+                     style="display: none;">
+            </label>
+            <button *ngIf="this.productForm.product.productImagePath"
+                    class="btn btn-danger"
+                    (click)="onDeleteImage()">ลบรูป</button>
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6 col-12 input-bg">
+          <div class="row col-12 padding-form nomargin">
+            <div class="col-lg-8 col-sm-8 col-9">
+              <label for="">ชื่อสินค้า</label>
+              <input formControlName="productName"
+                     name="productName"
+                     type="text"
+                     class="form-control">
+            </div>
+            <div class="col-lg-4 col-md-4 col-3">
+              <label for="">สถานะ</label>
+              <select formControlName="status"
+                      name="status"
+                      class="form-control">
+                <option value="Y">ใช้งาน</option>
+                <option value="N">ไม่ใช้งาน</option>
+              </select>
             </div>
           </div>
-        </div>
 
-        <div class="row col-lg-12 col-sm-12 padding-form">
-          <div class="col-lg-6 col-sm-6 col-xs-6">
-            <label for="">ชื่อสินค้า</label>
-            <input formControlName="productName"
-                   name="productName"
-                   type="text"
-                   class="form-control">
+          <div class="row col-12 padding-form nomargin">
+            <div class="col-lg-6 col-md-6 col-12">
+              <label for="">ประเถทสินค้า</label>
+              <select formControlName="productCategory"
+                      name="productCategory"
+                      class="form-control">
+                <option *ngFor="let category of categoryService.getCategoryList()"
+                        value="{{category.categoryId}}">{{category.categoryName}}</option>
+              </select>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+              <label for="">ราคา</label>
+              <input formControlName="productPrice"
+                     name="productPrice"
+                     type="number"
+                     class="form-control">
+            </div>
           </div>
-          <div class="col-lg-4 col-sm-4 col-xs-4">
-            <label for="">ประเถทสินค้า</label>
-            <select formControlName="productCategory"
-                    name="productCategory"
-                    class="form-control">
-                          <option *ngFor="let category of categoryService.getCategoryList()" value="{{category.categoryId}}">{{category.categoryName}}</option>
-                        </select>
+
+          <div class="row col-12 padding-form nomargin">
+            <div class="col-12">
+              <label for="">รายละเอียด</label>
+              <textarea formControlName="productDetail"
+                        name="productDetail"
+                        rows="5"
+                        class="form-control"></textarea>
+            </div>
           </div>
-          <div class="col-lg-2 col-sm-2 col-xs-2">
-            <label for="">สถานะ</label>
-            <select formControlName="status"
-                    name="status"
-                    class="form-control">
-                            <option value="Y">ใช้งาน</option>
-                            <option value="N">ไม่ใช้งาน</option>
-                          </select>
+
+          <div class="row col-12 padding-t nomargin">
+            <div class="col-12">
+              <button type="submit"
+                      class="button-bg primary btn-block size-btn nomargin"
+                      [disabled]="!group.valid">บันทึก</button>
+            </div>
           </div>
-        </div>
 
-        <div class="row col-lg-12 col-sm-12 padding-form">
-          <div class="col-lg-12 col-sm-12 col-xs-12">
-            <label for="">รายละเอียด</label>
-            <textarea formControlName="productDetail"
-                      name="productDetail"
-                      rows="5"
-                      class="form-control">This one.&#10;This is my statement2</textarea>
-          </div>
-        </div>
-
-        <div class="row col-lg-12 col-sm-12 col-xs-12 margin-t col-centered padding-side">
-          <ngx-loading [show]="loadingImage"></ngx-loading>
-          <table class="table table-responsive">
-            <thead>
-              <tr>
-                <th class="none-border"></th>
-                <th class="none-border">ขนาด</th>
-                <th class="none-border">ราคา</th>
-                <th class="none-border">สถานะ</th>
-                <th class="none-border"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="mid">
-                  <div class="checkbox">
-                    <input [(ngModel)]="productForm.product.productSizeS"
-                           formControlName="sizeS"
-                           name="sizeS"
-                           id="sizeS"
-                           type="checkbox"
-                           value="S"
-                           (change)="onChkSize('S',productForm.product.productSizeS)">
-                    <label class="chkl"
-                           for="sizeS"><div class="chkv"><i class="fa fa-check"></i></div></label>
-                  </div>
-                </td>
-                <td class="mid">Small</td>
-                <td class="mid">
-                  <input [disabled]="true"
-                         formControlName="productPriceS"
-                         name="productPriceS"
-                         placeholder="ราคา"
-                         type="number"
-                         class="form-control"
-                         style="margin-top: 5px;text-align: center;">
-                </td>
-                <td class="mid">
-                  <select formControlName="statusS"
-                          name="statusS"
-                          class="form-control">
-                        <option value="Y">ใช้งาน</option>
-                        <option value="N">ไม่ใช้งาน</option>
-                      </select>
-                </td>
-                <td class="mid">
-                  <img src="{{imagePathS}}"
-                       class="h200">
-                  <label *ngIf="!this.productForm.product.productImagePathS"
-                         class="btn btn-primary">อัพโหลดไฟล์รูป
-                    <input
-                    (change)="onUploadImage($event, 'S')"
-                    formControlName="fileS"
-                    type="file"
-                    name="fileS"
-                    accept="image/*"
-                    style="display: none;">
-                  </label>
-                  <button *ngIf="this.productForm.product.productImagePathS"
-                          class="btn btn-danger"
-                          (click)="onDeleteImage('S')">ลบรูป</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="mid">
-                  <div class="checkbox">
-                    <input [(ngModel)]="productForm.product.productSizeM"
-                           formControlName="sizeM"
-                           name="sizeM"
-                           id="sizeM"
-                           type="checkbox"
-                           value="M"
-                           (change)="onChkSize('M',productForm.product.productSizeM)">
-                    <label class="chkl"
-                           for="sizeM"><div class="chkv"><i class="fa fa-check"></i></div></label>
-                  </div>
-                </td>
-                <td class="mid">Medium</td>
-                <td class="mid">
-                  <input [disabled]="true"
-                         formControlName="productPriceM"
-                         name="productPriceM"
-                         placeholder="ราคา"
-                         type="number"
-                         class="form-control"
-                         style="margin-top: 5px;text-align: center;">
-                </td>
-                <td class="mid">
-                  <select formControlName="statusM"
-                          name="statusM"
-                          class="form-control">
-                        <option value="Y">ใช้งาน</option>
-                        <option value="N">ไม่ใช้งาน</option>
-                      </select>
-                </td>
-                <td class="mid">
-                  <img src="{{imagePathM}}"
-                       class="h200">
-                  <label *ngIf="!this.productForm.product.productImagePathM"
-                         class="btn btn-primary">อัพโหลดไฟล์รูป
-                    <input
-                    (change)="onUploadImage($event, 'M')"
-                    formControlName="fileM"
-                    type="file"
-                    name="fileM"
-                    accept="image/*"
-                    style="display: none;">
-                  </label>
-                  <button *ngIf="this.productForm.product.productImagePathM"
-                          class="btn btn-danger"
-                          (click)="onDeleteImage('M')">ลบรูป</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="mid">
-                  <div class="checkbox">
-                    <input [(ngModel)]="productForm.product.productSizeL"
-                           formControlName="sizeL"
-                           name="sizeL"
-                           id="sizeL"
-                           type="checkbox"
-                           value="L"
-                           (change)="onChkSize('L',productForm.product.productSizeL)">
-                    <label class="chkl"
-                           for="sizeL"><div class="chkv"><i class="fa fa-check"></i></div></label>
-                  </div>
-                </td>
-                <td class="mid">Large</td>
-                <td class="mid">
-                  <input [disabled]="true"
-                         formControlName="productPriceL"
-                         name="productPriceL"
-                         placeholder="ราคา"
-                         type="number"
-                         class="form-control"
-                         style="margin-top: 5px;text-align: center;">
-                </td>
-                <td class="mid">
-                  <select formControlName="statusL"
-                          name="statusL"
-                          class="form-control">
-                        <option value="Y">ใช้งาน</option>
-                        <option value="N">ไม่ใช้งาน</option>
-                      </select>
-                </td>
-                <td class="mid">
-                  <img src="{{imagePathL}}"
-                       class="h200">
-                  <label *ngIf="!this.productForm.product.productImagePathL"
-                         class="btn btn-primary">อัพโหลดไฟล์รูป
-                    <input
-                    (change)="onUploadImage($event, 'L')"
-                    formControlName="fileL"
-                    type="file"
-                    name="fileL"
-                    accept="image/*"
-                    style="display: none;">
-                  </label>
-                  <button *ngIf="this.productForm.product.productImagePathL"
-                          class="btn btn-danger"
-                          (click)="onDeleteImage('L')">ลบรูป</button>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-
-        <div class="row col-lg-12 col-sm-12 padding-t">
-          <div class="col-lg-12 col-sm-12 col-xs-12">
-            <button type="submit"
-                    class="button-outline normal"
-                    [disabled]="!group.valid">บันทึก</button>
-          </div>
         </div>
       </div>
     </div>

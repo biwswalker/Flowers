@@ -313,7 +313,11 @@ input[type="checkbox"]:checked+label.chkl div.chkv {
 }
 
 .space {
-    height: 50px;
+    height: 56px;
+}
+
+.space-medium {
+    height: 30px;
 }
 
 .none-margin {
@@ -408,3 +412,49 @@ header.pdhead .header-content .header-content-inner p {
     float: none;
     margin: 0 auto;
 }
+
+
+/* SIDE MENU */
+
+.menu-side {
+    border-bottom: solid #e9ecef 1px;
+}
+
+p.header-menuside {
+    border-bottom: solid #e9ecef 1px;
+    padding-top: 15px;
+    margin: 0px;
+}
+
+ul.sidemenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: transparent;
+}
+
+.sidemenu>li a {
+    font-weight: 200;
+    cursor: pointer;
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+
+/* Change the link color on hover */
+
+.sidemenu>li a:hover {
+    font-weight: 400;
+    background-color: transparent;
+}
+
+.sidemenu>li a.active {
+    font-weight: 400;
+    background-color: transparent;
+}
+
+
+/* END SIDE MENU */

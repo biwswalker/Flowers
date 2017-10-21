@@ -36,30 +36,19 @@ export class CartService {
     this.save(cart);
   }
 
-  addItem(product: Product, size: string): void {
+  addItem(product: Product, qty: number): void {
     const cart = this.retrieve();
     let item = cart.cartItems.find((p) => p.product.productId === product.productId);
     if (!item) {
       item = new CartItem();
       item.product = product
       item.productOrder.productId = product.productId;
-      item.productOrder.productSize = size;
-      item.productOrder.productQty = 1;
-      let price: number = 0;
-      if (size === 'S') {
-        price = product.productPriceS;
-        item.imagePath = product.productImagePathS;
-      } else if (size === 'M') {
-        price = product.productPriceM;
-        item.imagePath = product.productImagePathM;
-      } else if (size === 'L') {
-        price = product.productPriceL;
-        item.imagePath = product.productImagePathL;
-      }
-      item.productOrder.productTotalPrice = price;
+      item.productOrder.productSize = 'N';
+      item.productOrder.productQty = qty;
+      item.productOrder.productTotalPrice = product.productPrice * qty;
       cart.cartItems.push(item);
     } else {
-      item = this.updateCart(item, 1, '+');
+      item = this.updateCart(item, qty, '+');
     }
     cart.cartItems = cart.cartItems.filter((cartItem) => cartItem.productOrder.productQty > 0);
     this.calculatePrice(cart);
@@ -72,15 +61,7 @@ export class CartService {
     } else {
       item.productOrder.productQty = qty;
     }
-    let price: number = 0;
-    if (item.productOrder.productSize === 'S') {
-      price = item.product.productPriceS * item.productOrder.productQty;
-    } else if (item.productOrder.productSize === 'M') {
-      price = item.product.productPriceM * item.productOrder.productQty;
-    } else if (item.productOrder.productSize === 'L') {
-      price = item.product.productPriceL * item.productOrder.productQty;
-    }
-    item.productOrder.productTotalPrice = price;
+    item.productOrder.productTotalPrice = item.product.productPrice * item.productOrder.productQty;
     return item;
   }
 
@@ -119,7 +100,7 @@ export class CartService {
       cart.order.orderId = orderId;
       cart.order.orderDate = nowdate;
       cart.order.createDate = nowdate;
-      cart.order.createUser = 'biwswalker';
+      cart.order.createUser = cart.order.firstname;
       cart.order.paymentStatus = 'N';
       cart.order.orderStatus = 'W';
       let products: ProductOrder[] = [];

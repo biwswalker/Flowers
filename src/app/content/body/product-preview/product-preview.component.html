@@ -10,88 +10,61 @@
     </div>
     <div class="row col-12">
       <div class="col-lg-7 col-12">
-        <img [src]="productForm.imageShowPath | async"
-             style="min-width: 100%;max-width: 100%;">
+        <img [src]="productForm.product.productImagePath"
+             style="width:100%;padding: 30px;">
       </div>
       <div class="col-lg-5 col-12">
-        <table class="table-parent">
-          <thead>
-            <tr>
-              <th colspan="2">
-                <h2>{{ productForm.product.productName }}</h2>
-              </th>
-            </tr>
-            <tr class="space"></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="label-showing label">ขนาด</div>
-              </td>
-              <td style="text-align: right">
-                <ul class="radio paddingl0 marginTB15">
-                  <li class="radio"
-                      style="width:60px;"
-                      *ngIf="productForm.product.productSizeS">
-                    <input [(ngModel)]="size"
-                           [disabled]="!productForm.product.productSizeS"
-                           type="radio"
-                           value="S"
-                           name="size"
-                           (change)="onChangeSize()">
-                    <label class="radio customr">S</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                  <li class="radio"
-                      style="width:60px;"
-                      *ngIf="productForm.product.productSizeM">
-                    <input [(ngModel)]="size"
-                           [disabled]="!productForm.product.productSizeM"
-                           type="radio"
-                           value="M"
-                           name="size"
-                           (change)="onChangeSize()">
-                    <label class="radio customr">M</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                  <li class="radio"
-                      style="width:60px;"
-                      *ngIf="productForm.product.productSizeL">
-                    <input [(ngModel)]="size"
-                           [disabled]="!productForm.product.productSizeL"
-                           type="radio"
-                           value="L"
-                           name="size"
-                           (change)="onChangeSize()">
-                    <label class="radio customr">L</label>
-                    <div class="bullet">
-                    </div>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="label-showing label">ราคา</div>
-              </td>
-              <td class="label-showing value"
-                  style="text-align: right">฿ {{ productForm.priceShow }}</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="2">
-                <button type="button"
-                        (click)="onAddToCart()"
-                        class="button-bg primary btn-block size-btn nomargin">
-                  <i class="fa fa-archive"
-                     aria-hidden="true"></i> เพิ่มรายการ</button>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+        <form [formGroup]="group"
+              (ngSubmit)="onAddToCart(group)">
+          <table class="table-parent">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <h2>{{ productForm.product.productName }}</h2>
+                </th>
+              </tr>
+              <tr>
+                <th colspan="2">
+                  <p style="font-weight: 200;color: rgb(159, 159, 159);">{{ productForm.product.productDetail }}เทสข้อความยาวนิดนึงน่ะครับเทสข้อความยาวนิดนึงน่ะครับ
+                    <br>เทสข้อความยาวนิดนึงน่ะครับเทสข้อความยาวนิดนึงน่ะครับเทสข้อความยาวนิดนึงน่ะครับ</p>
+                </th>
+              </tr>
+              <tr class="space"></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="label-showing label">จำนวน :</div>
+                </td>
+                <td style="text-align: right">
+                  <input type="number"
+                         size="2"
+                         class="form-control"
+                         style="width: 60px;float: right;"
+                         name="productQty"
+                         formControlName="productQty">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="label-showing label">ราคา :</div>
+                </td>
+                <td class="label-showing value"
+                    style="text-align: right">฿ {{ productForm.product.productPrice }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <button type="submit"
+                          class="button-bg primary btn-block size-btn nomargin">
+                    <i class="fa fa-archive"
+                       aria-hidden="true"></i> เพิ่มรายการ</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
       </div>
     </div>
   </div>

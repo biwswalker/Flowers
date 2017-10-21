@@ -17,24 +17,30 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger"
-             routerLink="/product"><i class="fa fa-tags" aria-hidden="true"></i> รายการสินค้า</a>
+             routerLink="/product"
+             routerLinkActive="active"
+             ><i class="fa fa-tags" aria-hidden="true"></i> รายการสินค้า</a>
         </li>
         <li class="nav-item" *ngIf="1 == 0">
           <a class="nav-link js-scroll-trigger"
-             routerLink="/product-manage"><i class="fa fa-tasks" aria-hidden="true"></i> จัดการสินค้า</a>
+             routerLink="/product-manage"
+             routerLinkActive="active"><i class="fa fa-tasks" aria-hidden="true"></i> จัดการสินค้า</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger"
-             routerLink="/"><i class="fa fa-search" aria-hidden="true"></i> ติดตามสถานะ</a>
+             routerLink="/tracking"
+             routerLinkActive="active"><i class="fa fa-search" aria-hidden="true"></i> ติดตามสถานะ</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger"
-             routerLink="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> ตะกร้าสินค้า</a>
+             routerLink="/cart"
+             routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i> ตะกร้าสินค้า</a>
         </li>
         <li class="nav-item"
             *ngIf="!displayName">
           <a class="nav-link js-scroll-trigger"
-             routerLink="/signin"><i class="fa fa-sign-in" aria-hidden="true"></i> เข้าสู่ระบบ</a>
+             routerLink="/signin"
+             routerLinkActive="active"><i class="fa fa-sign-in" aria-hidden="true"></i> เข้าสู่ระบบ</a>
         </li>
         <li class="nav-item d-lg-block d-none"
             *ngIf="displayName"

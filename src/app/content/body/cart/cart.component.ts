@@ -31,7 +31,7 @@ export class CartComponent implements OnInit {
   onChangeQty(pid: string, qty: number) {
     this.loading = true;
     let item = this.cart.cartItems.find((cartItem) => cartItem.product.productId === pid);
-    if(item){
+    if (item) {
       item = this.cartService.updateCart(item, qty, '');
       this.cart.cartItems = this.cart.cartItems.filter((cartItem) => cartItem.productOrder.productQty > 0);
       this.cartService.calculatePrice(this.cart);
@@ -40,13 +40,13 @@ export class CartComponent implements OnInit {
     this.loading = false;
   }
 
-  onDeleteItem(pid: string){
+  onDeleteItem(pid: string) {
     this.cart.cartItems = this.cart.cartItems.filter((cartItem) => cartItem.product.productId !== pid);
     this.cartService.calculatePrice(this.cart);
     this.cartService.save(this.cart);
   }
 
-  onCheckOut(){
+  onCheckOut() {
     this.router.navigateByUrl('/checkout')
   }
 }

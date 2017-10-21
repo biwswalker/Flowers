@@ -28,89 +28,41 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let firstPromise = Promise.resolve(10);
-    let secondPromise = Promise.resolve(5);
-    let thirdPromise = Promise.resolve(20);
-
-    Promise
-      .all([firstPromise, secondPromise, thirdPromise])
-      .then(values => {
-        console.log(values);
-      });
-
     window.scrollTo(0, 0);
-    this.loading = true;
-    this.categoryMode = '';
-    this.productService.fetchProductListData(this.categoryMode)
-      .then((products: Product[]) => {
-        this.productFormList = [];
-        let form: ProductForm;
-        products.forEach((pd: Product) => {
-          form = new ProductForm();
-          form.product = pd;
-          if (pd.productType === 'S') {
-            if (pd.productSizeS) {
-              form.imageShowPath = this.getImageUrl(pd.productImagePathS);
-              form.priceShow = pd.productPriceS;
-            } else if (pd.productSizeM) {
-              form.imageShowPath = this.getImageUrl(pd.productImagePathM);
-              form.priceShow = pd.productPriceM;
-            } else if (pd.productSizeL) {
-              form.imageShowPath = this.getImageUrl(pd.productImagePathL);
-              form.priceShow = pd.productPriceL;
-            }
-            this.productFormList.push(form);
-          }
-        })
-        this.loading = false;
-      })
-      .catch(error => {
-        this.loading = false;
-        this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ')
-        setTimeout(() => {
-          this.alertService.clear();
-        }, 5000);
-      });
+    let setCategory = Promise.resolve(this.categoryMode = '');
+    Promise
+      .all([this.loadProductList(this.categoryMode), setCategory]);
   }
 
-  getImageUrl(url) {
-    return new Promise((resolve, reject) => {
-      resolve(url);
-    });
+  loadProductList(category: string): Promise<boolean> {
+    this.loading = true;
+    return Promise.resolve(
+      this.productService.fetchProductListData(category)
+        .then((products: Product[]) => {
+          this.productFormList = [];
+          let form: ProductForm;
+          products.forEach((pd: Product) => {
+            form = new ProductForm();
+            form.product = pd;
+            this.productFormList.push(form);
+          })
+          this.loading = false;
+          return false;
+        })
+        .catch(error => {
+          this.loading = false;
+          this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ');
+          setTimeout(() => {
+            this.alertService.clear();
+          }, 5000);
+          return false;
+        })
+    );
   }
 
   onChangeCategory(category: string) {
-    this.loading = true;
-    this.categoryMode = category;
-    this.productService.fetchProductListData(category)
-      .then((products: Product[]) => {
-        this.productFormList = [];
-        let form: ProductForm;
-        products.forEach((pd: Product) => {
-          form = new ProductForm();
-          form.product = pd;
-          if (pd.productType === 'S') {
-            if (pd.productSizeS) {
-              form.imageShowPath = this.getImageUrl(pd.productImagePathS);
-              form.priceShow = pd.productPriceS;
-            } else if (pd.productSizeM) {
-              form.imageShowPath = this.getImageUrl(pd.productImagePathM);
-              form.priceShow = pd.productPriceM;
-            } else if (pd.productSizeL) {
-              form.imageShowPath = this.getImageUrl(pd.productImagePathL);
-              form.priceShow = pd.productPriceL;
-            }
-            this.productFormList.push(form);
-          }
-        })
-        this.loading = false;
-      })
-      .catch(error => {
-        this.loading = false;
-        this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ')
-        setTimeout(() => {
-          this.alertService.clear();
-        }, 5000);
-      });
+    Promise
+      .all([this.loadProductList(category)]);
+      this.categoryMode = category;
   }
 }

@@ -5,25 +5,11 @@ import { Category } from "../models/category";
 export class CategoryService {
 
   categoryList: Category[] = [];
-  constructor() { }
-
-  fetchCategoryListData() {
-    return firebase.database().ref('category').once('value')
-      .then(list => {
-        this.categoryList = [];
-        list.forEach(data => {
-          this.categoryList.push(data.val());
-        });
-        return this.categoryList;
-      })
-      .catch(error => {
-        console.log('Error ' + error);
-        return [];
-      });
+  constructor() {
+    this.getDataList();
   }
 
   getCategoryList() {
-    this.getDataList();
     return this.categoryList;
   }
 
@@ -32,46 +18,38 @@ export class CategoryService {
     let cate: Category;
     cate = new Category();
     cate.categoryId = '1';
-    cate.categoryName = 'ช่อดอกไม้';
-    cate.categoryFlag = 'Y';
+    cate.categoryName = 'ช่อดอกไม้สด';
     this.categoryList.push(cate);
     cate = new Category();
     cate.categoryId = '2';
-    cate.categoryName = 'แจกันดอกไม้';
-    cate.categoryFlag = 'Y';
+    cate.categoryName = 'ช่อดอกไม้แห้ง';
     this.categoryList.push(cate);
     cate = new Category();
     cate.categoryId = '3';
+    cate.categoryName = 'แจกันดอกไม้สด';
+    this.categoryList.push(cate);
+    cate = new Category();
+    cate.categoryId = '4';
+    cate.categoryName = 'แจกันดอกไม้แห้ง';
+    this.categoryList.push(cate);
+    cate = new Category();
+    cate.categoryId = '5';
     cate.categoryName = 'กระเช้าดอกไม้';
-    cate.categoryFlag = 'Y';
+    this.categoryList.push(cate);
+    cate = new Category();
+    cate.categoryId = '6';
+    cate.categoryName = 'พวงหรีด';
     this.categoryList.push(cate);
   }
 
   getCategoryByKey(id: string): Category {
-    let cList: Category[] = [];
-    let cate: Category;
-    let c: Category = new Category();
-    cate = new Category();
-    cate.categoryId = '1';
-    cate.categoryName = 'ช่อดอกไม้';
-    cate.categoryFlag = 'Y';
-    cList.push(cate);
-    cate = new Category();
-    cate.categoryId = '2';
-    cate.categoryName = 'แจกันดอกไม้';
-    cate.categoryFlag = 'Y';
-    cList.push(cate);
-    cate = new Category();
-    cate.categoryId = '3';
-    cate.categoryName = 'กระเช้าดอกไม้';
-    cate.categoryFlag = 'Y';
-    cList.push(cate);
-    cList.forEach((category: Category) => {
-      if (category.categoryId === id) {
-        c = category
+    let category = new Category();
+    this.categoryList.forEach((categoryObj: Category) => {
+      if (categoryObj.categoryId === id) {
+        category = categoryObj
       }
     })
-    return c;
+    return category;
   }
 
 }

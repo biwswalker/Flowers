@@ -11,19 +11,32 @@
     padding-top: 10px;
 }
 
-.h200 {
-  max-height: 200px;
-  max-width: 260px;
-}
-
 .mid {
-  vertical-align: middle;
+    vertical-align: middle;
 }
 
 .none-border {
-  border: none;
+    border: none;
 }
 
 .padding-side {
-  padding: 0 40px;
+    padding: 0 40px;
+}
+
+.maxwidth {
+    width: 100%;
+}
+
+.upload-btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.cursor-btn {
+  cursor: pointer;
+}
+
+.nomargin {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }

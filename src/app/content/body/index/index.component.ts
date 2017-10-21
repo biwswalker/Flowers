@@ -29,16 +29,16 @@ export class IndexComponent implements OnInit {
         products.forEach((pd: Product) => {
           form = new ProductForm();
           form.product = pd;
-          if (pd.productSizeS) {
-            form.imageShowPath = this.getImageUrl(pd.productImagePathS);
-            form.priceShow = pd.productPriceS;
-          } else if (pd.productSizeM) {
-            form.imageShowPath = this.getImageUrl(pd.productImagePathM);
-            form.priceShow = pd.productPriceM;
-          } else if (pd.productSizeL) {
-            form.imageShowPath = this.getImageUrl(pd.productImagePathL);
-            form.priceShow = pd.productPriceL;
-          }
+          // if (pd.productSizeS) {
+          //   form.imageShowPath = this.getImageUrl(pd.productImagePathS);
+          //   form.priceShow = pd.productPriceS;
+          // } else if (pd.productSizeM) {
+          //   form.imageShowPath = this.getImageUrl(pd.productImagePathM);
+          //   form.priceShow = pd.productPriceM;
+          // } else if (pd.productSizeL) {
+          //   form.imageShowPath = this.getImageUrl(pd.productImagePathL);
+          //   form.priceShow = pd.productPriceL;
+          // }
           this.productFormList.push(form);
         })
         this.loading = false;
