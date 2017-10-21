@@ -16,10 +16,12 @@ export class ProductService {
     form.product.productId = this.utilService.generateUUID();
     form.product.createDatetime = String(Date.now());
     form.product.createUser = 'biwswalker';
-    this.productList.push(form.product);
     return firebase.database().ref('product/' + form.product.productId).set(form.product);
   }
 
+  updateProduct(form: ManageProductForm) {
+    return firebase.database().ref('product/' + form.product.productId).set(form.product);
+  }
 
   fetchProductListData(productCategory: string) {
     return firebase.database().ref('product').once('value')
@@ -41,10 +43,6 @@ export class ProductService {
         console.log('Error ' + error);
         return [];
       });
-  }
-
-  getProductList() {
-    return this.productList.slice();
   }
 
   getProductByKey(productId: string) {

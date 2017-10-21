@@ -1,6 +1,6 @@
+import { AdminComponent } from "./content/body/admin/admin.component";
 import { TrackingComponent } from "./content/body/tracking/tracking.component";
 import { PaymentComponent } from "./content/body/payment/payment.component";
-import { SigninComponent } from "./content/body/signin/signin.component";
 import { CompleteOrderComponent } from "./content/body/complete-order/complete-order.component";
 import { ConfirmationComponent } from "./content/body/confirmation/confirmation.component";
 import { CheckoutComponent } from "./content/body/checkout/checkout.component";
@@ -16,15 +16,20 @@ import { ProductComponent } from "./content/body/product/product.component";
 const appRoutes: Routes = [
   { path: "", component: IndexComponent },
   { path: "product", component: ProductComponent },
-  { path: "product-manage", component: ProductManageComponent },
   { path: "preview/:pd", component: ProductPreviewComponent },
   { path: "cart", component: CartComponent },
   { path: "checkout", component: CheckoutComponent },
   { path: "confirmation", component: ConfirmationComponent },
   { path: "completeOrder", component: CompleteOrderComponent },
-  { path: "signin", component: SigninComponent },
+  { path: "signin", component: AdminComponent },
   { path: "payment", component: PaymentComponent },
-  { path: "tracking", component: TrackingComponent }
+  { path: "tracking", component: TrackingComponent },
+  { path: "signin", component: AdminComponent },
+  {
+    path: "admin",
+    component: AdminComponent,
+    children: [{ path: "product-manage", component: ProductManageComponent }]
+  }
 ];
 
 @NgModule({

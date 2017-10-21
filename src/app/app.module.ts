@@ -31,6 +31,7 @@ import { CompleteOrderComponent } from './content/body/complete-order/complete-o
 import { SigninComponent } from './content/body/signin/signin.component';
 import { PaymentComponent } from './content/body/payment/payment.component';
 import { TrackingComponent } from './content/body/tracking/tracking.component';
+import { AdminComponent } from './content/body/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { TrackingComponent } from './content/body/tracking/tracking.component';
     SigninComponent,
     PaymentComponent,
     TrackingComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

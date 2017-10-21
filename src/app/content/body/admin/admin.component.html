@@ -1,0 +1,72 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div style="height: 70px;"></div>
+<section id="preview">
+  <div class="container">
+    <alerts></alerts>
+    <div class="col-lg-6 col-md-12 col-centered content-margint"
+         *ngIf="!isLoggedin">
+      <form [formGroup]="group"
+            (ngSubmit)="onSignin()">
+        <div class="row col-12 input-bg none-margin">
+          <div class="col-12 box-header">
+            <h2>
+              <i class="fa fa-sign-in"
+                 aria-hidden="true"></i> เข้าสู่ระบบ</h2>
+          </div>
+          <div class="col-12">
+            <div class="col-12 margin-vertical10">
+              <label class="fontwei200">
+                <i class="fa fa-user"
+                   aria-hidden="true"></i> ชื่อผู้ใช้</label>
+              <input type="text"
+                     formControlName="username"
+                     name="username"
+                     class="form-control">
+            </div>
+            <div class="col-12 margin-vertical10">
+              <label class="fontwei200">
+                <i class="fa fa-unlock-alt"
+                   aria-hidden="true"></i> รหัสผ่าน</label>
+              <input type="password"
+                     formControlName="password"
+                     name="password"
+                     class="form-control">
+            </div>
+            <div class="col-12">
+              <button type="submit"
+                      [disabled]="!group.valid"
+                      class="button-bg primary btn-block size-btn no-side-margin">
+                <i class="fa fa-rocket"
+                   aria-hidden="true"></i> เข้าสู่ระบบ</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="row"
+         *ngIf="!isLoggedin">
+      <div class="col-lg-2">
+        <div class="menu-side">
+          <p class="header-menuside">ประเภทสินค้า</p>
+          <ul class="sidemenu">
+            <li>
+              <a >
+                <i class="fa fa-angle-right"
+                   aria-hidden="true"></i> ช่อดอกไม้สด</a>
+            </li>
+            <li>
+              <a >
+                <i class="fa fa-angle-right"
+                   aria-hidden="true"></i> ช่อดอกไม้แห้ง</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-10 row nonmargin">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</section>

@@ -6,32 +6,41 @@
 <section id="product-table"
          *ngIf="mode === 'S'">
   <div class="container">
-    <button class="btn btn-primary"
-            (click)="onChangePage('I')">เพิ่มรายการสินค้า</button>
-    <table datatable
-           [dtOptions]="dtOptions"
-           class="row-border hover table-responsive">
-      <thead>
-        <tr>
-          <th>ชื่อสินค้า</th>
-          <th>ประเภทสินค้า</th>
-          <th>ชนิด</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let productObj of productListForm"
-            (click)="onSelectRow(productObj)">
-          <td>
-            <div>{{ productObj.product.productName }}</div>
-          </td>
-          <td>
-            <div>{{ productObj.category.categoryName }}</div>
-          </td>
-          <td>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row col-12 header-label">
+      <h2 class="header">PRODUCT MANAGEMENT</h2>
+    </div>
+    <div class="content-margint">
+      <button class="btn btn-primary"
+              (click)="onChangePage('I')">เพิ่มรายการสินค้า</button>
+      <table datatable
+             [dtOptions]="dtOptions"
+             class="row-border hover table-responsive">
+        <thead>
+          <tr>
+            <th class="head">ชื่อสินค้า</th>
+            <th class="head">ประเภทสินค้า</th>
+            <th class="head">ชนิด</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let productObj of productListForm"
+              (click)="onSelectRow(productObj)">
+            <td>
+              <div class="body-text">{{ productObj.product.productName }}</div>
+            </td>
+            <td>
+              <div class="body-text">{{ productObj.category.categoryName }}</div>
+            </td>
+            <td>
+              <div *ngIf="productObj.product.status === 'Y'"
+                   class="body-text">ใช้งาน</div>
+              <div *ngIf="productObj.product.status === 'N'"
+                   class="body-text">ไม่ใช้งาน</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 <!-- End Search -->
@@ -43,6 +52,10 @@
   <form [formGroup]="group"
         (ngSubmit)="onClickSubmit()">
     <div class="container">
+      <div class="row col-12 header-label">
+        <h2 class="header">PRODUCT MANAGEMENT</h2>
+      </div>
+      <div class="content-margint"></div>
       <button class="btn btn-danger"
               (click)="onBack()">ยกเลิก</button>
       <div class="row">
@@ -65,63 +78,69 @@
                     (click)="onDeleteImage()">ลบรูป</button>
           </div>
         </div>
-        <div class="col-lg-7 col-md-6 col-12 input-bg">
-          <div class="row col-12 padding-form nomargin">
-            <div class="col-lg-8 col-sm-8 col-9">
-              <label for="">ชื่อสินค้า</label>
-              <input formControlName="productName"
-                     name="productName"
-                     type="text"
-                     class="form-control">
+        <div class="col-lg-7 col-md-6 col-12">
+          <div class="input-bg">
+            <div class="row col-12 padding-form nomargin">
+              <div class="col-lg-8 col-sm-8 col-9">
+                <label for="">ชื่อสินค้า</label>
+                <input formControlName="productName"
+                       name="productName"
+                       type="text"
+                       class="form-control">
+              </div>
+              <div class="col-lg-4 col-md-4 col-3">
+                <label for="">สถานะ</label>
+                <select formControlName="status"
+                        name="status"
+                        class="form-control">
+                  <option value="Y">ใช้งาน</option>
+                  <option value="N">ไม่ใช้งาน</option>
+                </select>
+              </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-3">
-              <label for="">สถานะ</label>
-              <select formControlName="status"
-                      name="status"
-                      class="form-control">
-                <option value="Y">ใช้งาน</option>
-                <option value="N">ไม่ใช้งาน</option>
-              </select>
+
+            <div class="row col-12 padding-form nomargin">
+              <div class="col-lg-6 col-md-6 col-12">
+                <label for="">ประเถทสินค้า</label>
+                <select formControlName="productCategory"
+                        name="productCategory"
+                        class="form-control">
+                  <option *ngFor="let category of categoryService.getCategoryList()"
+                          value="{{category.categoryId}}">{{category.categoryName}}</option>
+                </select>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <label for="">ราคา</label>
+                <input formControlName="productPrice"
+                       name="productPrice"
+                       type="number"
+                       class="form-control">
+              </div>
+            </div>
+
+            <div class="row col-12 padding-form nomargin">
+              <div class="col-12">
+                <label for="">รายละเอียด</label>
+                <textarea formControlName="productDetail"
+                          name="productDetail"
+                          rows="5"
+                          class="form-control"></textarea>
+              </div>
+            </div>
+
+            <div class="row col-12 padding-t nomargin">
+              <div class="col-12">
+                <button type="submit"
+                        class="button-bg primary btn-block size-btn nomargin"
+                        *ngIf="mode === 'I'"
+                        [disabled]="!group.valid">บันทึก</button>
+                <button type="submit"
+                        class="button-bg primary btn-block size-btn nomargin"
+                        *ngIf="mode === 'U'"
+                        [disabled]="!group.valid">แก้ไข</button>
+              </div>
             </div>
           </div>
-
-          <div class="row col-12 padding-form nomargin">
-            <div class="col-lg-6 col-md-6 col-12">
-              <label for="">ประเถทสินค้า</label>
-              <select formControlName="productCategory"
-                      name="productCategory"
-                      class="form-control">
-                <option *ngFor="let category of categoryService.getCategoryList()"
-                        value="{{category.categoryId}}">{{category.categoryName}}</option>
-              </select>
-            </div>
-            <div class="col-lg-6 col-md-6 col-12">
-              <label for="">ราคา</label>
-              <input formControlName="productPrice"
-                     name="productPrice"
-                     type="number"
-                     class="form-control">
-            </div>
-          </div>
-
-          <div class="row col-12 padding-form nomargin">
-            <div class="col-12">
-              <label for="">รายละเอียด</label>
-              <textarea formControlName="productDetail"
-                        name="productDetail"
-                        rows="5"
-                        class="form-control"></textarea>
-            </div>
-          </div>
-
-          <div class="row col-12 padding-t nomargin">
-            <div class="col-12">
-              <button type="submit"
-                      class="button-bg primary btn-block size-btn nomargin"
-                      [disabled]="!group.valid">บันทึก</button>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
