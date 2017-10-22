@@ -26,7 +26,7 @@
               <div class="row">
                 <div class="col-lg-4 col-md-3 col-sm-4 col-4"><img src="{{cart.product.productImagePath}}"
                        style="max-width: 100%;"></div>
-                <div class="col-lg-8 col-md-9 col-sm-8 col-8">{{ cart.product.productName }}</div>
+                <div class="col-lg-8 col-md-9 col-sm-8 col-8">{{ cart.product.productName }} <b *ngIf="cart.product.productSize">({{ cart.product.productSize }})</b></div>
               </div>
             </div>
             <div class="col-12 d-block d-lg-none h20"></div>

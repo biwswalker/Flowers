@@ -23,6 +23,7 @@
             "assets/lib/font-awesome/css/font-awesome.min.css",
             "assets/lib/magnific-popup/magnific-popup.css",
             "assets/css/creative.css",
+            "assets/css/icomoon.css",
             "../node_modules/datatables.net-dt/css/jquery.dataTables.css"
         ],
         "scripts": [

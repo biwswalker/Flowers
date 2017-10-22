@@ -112,7 +112,7 @@
                     <div class="bullet">
                     </div>
                   </li>
-                  <li class="radio">
+                  <!-- <li class="radio">
                     <input type="radio"
                            value="C"
                            formControlName="paymentType"
@@ -121,7 +121,7 @@
                     <label class="radio customr">Credit Card/Debit Card</label>
                     <div class="bullet">
                     </div>
-                  </li>
+                  </li> -->
                   <li class="radio">
                     <input type="radio"
                            value="D"
@@ -152,10 +152,10 @@
                   </tr>
                   <tr *ngFor="let cartObj of cart.cartItems">
                     <td>
-                      <div><img src="{{cartObj.imagePath}}"
+                      <div><img src="{{cartObj.product.productImagePath }}"
                              style="max-width: 50%;">
                       </div>
-                      <div>{{ cartObj.product.productName }} ({{ cartObj.productOrder.productSize }})
+                      <div>{{ cartObj.product.productName }} <b *ngIf="cartObj.product.productSize">({{ cartObj.product.productSize }})</b>
                       </div>
                     </td>
                     <td style="text-align: center;">{{ cartObj.productOrder.productQty }}</td>

@@ -19,7 +19,8 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-lg-2">
+      <div class="col-lg-2 nopadding"
+           style="padding-left: 5px;">
         <div class="menu-side">
           <p class="header-menuside">ประเภทสินค้า</p>
           <ul class="sidemenu">
@@ -63,13 +64,35 @@
         </div>
       </div>
       <div class="col-lg-10 row nonmargin">
+        <div class="col-lg-12 row nonmargin margint nopadding"
+             *ngIf="categoryMode === '6'">
+          <div class="col-lg-10 col-md-9"></div>
+          <div class="col-lg-2 col-md-3">
+            Size:
+            <select [(ngModel)]="productSize"
+                    (change)="onChangeSize()"
+                    name="productSize"
+                    class="form-control">
+              <option value="">ทั้งหมด</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+              <option value="SU">SU</option>
+              <option value="SP">SP</option>
+            </select>
+          </div>
+        </div>
         <a class="col-lg-3 col-md-6 col-6 text-center col-centered a-underline"
            *ngFor="let productObj of productFormList"
            [routerLink]="['/preview', productObj.product.productId]">
           <div class="service-box border">
             <img class="img-fluid"
                  [src]="productObj.product.productImagePath">
-            <p class="item-label name">{{ productObj.product.productName }}</p>
+            <p class="item-label name">{{ productObj.product.productName }}
+              <b *ngIf="productObj.product.productSize">({{productObj.product.productSize}})</b>
+            </p>
             <p class="item-label price">ราคา {{ productObj.product.productPrice }} บาท</p>
           </div>
         </a>

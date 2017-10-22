@@ -13,13 +13,17 @@
       <button class="btn btn-primary"
               (click)="onChangePage('I')">เพิ่มรายการสินค้า</button>
       <table datatable
+             *ngIf="loaded"
              [dtOptions]="dtOptions"
-             class="row-border hover table-responsive">
+             class="table table-striped hover table-responsive">
         <thead>
           <tr>
-            <th class="head">ชื่อสินค้า</th>
-            <th class="head">ประเภทสินค้า</th>
-            <th class="head">ชนิด</th>
+            <th class="head"
+                style="min-width: 100px;">ชื่อสินค้า</th>
+            <th class="head"
+                style="min-width: 100px;">ประเภทสินค้า</th>
+            <th class="head"
+                style="min-width: 100px;">ชนิด</th>
           </tr>
         </thead>
         <tbody>
@@ -103,8 +107,10 @@
               <div class="col-lg-6 col-md-6 col-12">
                 <label for="">ประเถทสินค้า</label>
                 <select formControlName="productCategory"
+                        [(ngModel)]="category"
                         name="productCategory"
-                        class="form-control">
+                        class="form-control"
+                        (change)="onChangeCategory()">
                   <option *ngFor="let category of categoryService.getCategoryList()"
                           value="{{category.categoryId}}">{{category.categoryName}}</option>
                 </select>
@@ -115,6 +121,24 @@
                        name="productPrice"
                        type="number"
                        class="form-control">
+              </div>
+            </div>
+
+            <div class="row col-12 padding-form nomargin"
+                 *ngIf="category === '6'">
+              <div class="col-lg-6 col-md-6 col-12">
+                <label for="">ขนาด</label>
+                <select formControlName="productSize"
+                        name="productSize"
+                        class="form-control">
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                  <option value="SU">SU</option>
+                  <option value="SP">SP</option>
+                </select>
               </div>
             </div>
 

@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit {
   imagePath: any;
 
   categoryMode = "";
-
+  productSize = "";
   constructor(
     private productService: ProductService,
     private alertService: AlertService
@@ -29,10 +29,10 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     window.scrollTo(0, 0);
     let setCategory = Promise.resolve((this.categoryMode = ""));
-    Promise.all([this.loadProductList(this.categoryMode), setCategory]);
+    Promise.all([this.loadProductList(this.categoryMode, ""), setCategory]);
   }
 
-  loadProductList(category: string): Promise<boolean> {
+  loadProductList(category: string, size: string): Promise<boolean> {
     this.loading = true;
     return Promise.resolve(
       this.productService
@@ -44,7 +44,20 @@ export class ProductComponent implements OnInit {
             if (pd.status === "Y") {
               form = new ProductForm();
               form.product = pd;
-              this.productFormList.push(form);
+
+              if (size) {
+                if (form.product.productSize === size) {
+                  this.productFormList.push(form);
+                }
+              } else {
+                if (!category) {
+                  if(form.product.productCategory !== '6'){
+                    this.productFormList.push(form);
+                  }
+                } else {
+                  this.productFormList.push(form);
+                }
+              }
             }
           });
           this.loading = false;
@@ -62,7 +75,12 @@ export class ProductComponent implements OnInit {
   }
 
   onChangeCategory(category: string) {
-    Promise.all([this.loadProductList(category)]);
+    Promise.all([this.loadProductList(category, "")]);
     this.categoryMode = category;
+    this.productSize = "";
+  }
+
+  onChangeSize() {
+    Promise.all([this.loadProductList(this.categoryMode, this.productSize)]);
   }
 }

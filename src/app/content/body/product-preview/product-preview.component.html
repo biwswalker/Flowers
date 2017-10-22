@@ -20,7 +20,7 @@
             <thead>
               <tr>
                 <th colspan="2">
-                  <h2>{{ productForm.product.productName }}</h2>
+                  <h2>{{ productForm.product.productName }} <b *ngIf="productForm.product.productSize">({{ productForm.product.productSize }})</b> </h2>
                 </th>
               </tr>
               <tr>

@@ -31,6 +31,9 @@ export class ProductManageComponent implements OnInit, OnDestroy {
 
   // Loading
   loading = false;
+  loaded = false;
+
+  category: string;
 
   constructor(
     private utilsService: UtilsService,
@@ -70,6 +73,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
             );
             this.productListForm.push(form);
           });
+          this.loaded = true;
           return false;
         })
         .catch(error => {
@@ -102,16 +106,28 @@ export class ProductManageComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.pattern("[0-9]+")
       ]),
-      file: new FormControl(null)
+      file: new FormControl(null),
+      productSize: new FormControl(this.productForm.product.productSize, Validators.required)
     });
+  }
+
+  onChangeCategory() {
+    if (this.category === "6") {
+      this.group.controls["productSize"].enable();
+    } else {
+      this.group.controls["productSize"].disable();
+    }
   }
 
   onChangePage(mode: string) {
     if (mode === "I") {
+      this.imagePath = "./assets/img/empty.png";
       this.mode = "I";
       this.productForm = new ManageProductForm();
+      this.category = "1";
       this.productForm.product.productCategory = "1";
       this.productForm.product.status = "Y";
+      this.productForm.product.productSize = 'S';
       this.resetFormGroup();
     } else if (mode === "U") {
       this.mode = "U";
@@ -142,12 +158,14 @@ export class ProductManageComponent implements OnInit, OnDestroy {
         window.scrollTo(0, 0);
         return;
       }
+
       this.loading = true;
       this.productForm.product.productName = this.group.value.productName;
       this.productForm.product.productCategory = this.group.value.productCategory;
       this.productForm.product.productDetail = this.group.value.productDetail;
       this.productForm.product.status = this.group.value.status;
       this.productForm.product.productPrice = this.group.value.productPrice;
+      this.productForm.product.productSize = this.group.value.productSize;
       if (this.mode === "I") {
         this.productService
           .addProduct(this.productForm)
@@ -254,6 +272,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
         Promise.resolve((this.imagePath = "./assets/img/empty.png"))
       ]);
     }
+    this.category = this.productForm.product.productCategory;
     this.onChangePage("U");
   }
 

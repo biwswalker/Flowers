@@ -44,7 +44,6 @@ export class CartService {
       item = new CartItem();
       item.product = product
       item.productOrder.productId = product.productId;
-      item.productOrder.productSize = 'N';
       item.productOrder.productQty = qty;
       item.productOrder.productTotalPrice = product.productPrice * qty;
       cart.cartItems.push(item);

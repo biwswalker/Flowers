@@ -10,5 +10,5 @@ export class Product {
   public productImagePath: any;
   public createUser: string;
   public createDatetime: string;
-
+  public productSize: string;
 }

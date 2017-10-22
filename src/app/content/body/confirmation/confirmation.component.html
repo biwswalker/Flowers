@@ -122,7 +122,7 @@
               <th style="width:70px; text-align: right;">ราคา</th>
             </tr>
             <tr *ngFor="let cartObj of cart.cartItems">
-              <td>{{ cartObj.product.productName }}</td>
+              <td>{{ cartObj.product.productName }} <b *ngIf="cartObj.product.productSize">({{ cartObj.product.productSize }})</b></td>
               <td style="text-align: center;">{{ cartObj.productOrder.productQty }}</td>
               <td style="text-align: right;">฿ {{ cartObj.productOrder.productTotalPrice }}</td>
             </tr>

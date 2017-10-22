@@ -1,73 +1,23 @@
-footer.mastfooter {
-  position: relative;
-  width: 100%;
-  min-height: auto;
-  text-align: center;
-  color: #242424;
-  background-image: url("../../../assets/img/flowe_4.jpg");
-  background-position: center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+#footer {
+  background-color: #f8f9fa;
+  padding: 60px 0 40px;
+}
+#footer p {
+  font-size: 14px;
+}
+#footer p i.love {
+  color: red;
 }
 
-footer.mastfooter .footer-content {
-  position: relative;
-  width: 100%;
-  padding: 150px 15px 100px;
-  text-align: center;
+.fh5co-social-icons a {
+  padding: 4px 8px;
+  color: rgba(0, 0, 0, 0.7);
 }
-
-footer.mastfooter .footer-content .footer-content-inner h1 {
-  font-size: 30px;
-  font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 0;
-  text-transform: uppercase;
+.fh5co-social-icons a i {
+  font-size: 34px;
 }
-
-footer.mastfooter .footer-content .footer-content-inner hr {
-  margin: 30px auto;
-}
-
-footer.mastfooter .footer-content .footer-content-inner p {
-  font-size: 16px;
-  font-weight: 300;
-  margin-bottom: 50px;
-  color: rgba(80, 80, 80, 0.66);
-}
-
-@media (min-width: 768px) {
-  footer.mastfooter {
-      /* height: 100%; */
-      min-height: 400px;
-  }
-  footer.mastfooter .footer-content {
-      position: absolute;
-      top: 50%;
-      padding: 0 50px;
-      -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-  }
-  footer.mastfooter .footer-content .footer-content-inner {
-      max-width: 1000px;
-      margin-right: auto;
-      margin-left: auto;
-  }
-  footer.mastfooter .footer-content .footer-content-inner h1 {
-      font-size: 50px;
-  }
-  footer.mastfooter .footer-content .footer-content-inner p {
-      font-size: 18px;
-      max-width: 80%;
-      margin-right: auto;
-      margin-left: auto;
-  }
-}
-
-.section-heading {
-  font-weight: 200;
-  font-size: 3em;
+.fh5co-social-icons a:hover, .fh5co-social-icons a:focus, .fh5co-social-icons a:active {
+  text-decoration: none;
+  color: #000;
+  text-decoration: none !important;
 }
