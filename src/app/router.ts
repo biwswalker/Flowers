@@ -1,3 +1,4 @@
+import { OrderManageComponent } from './content/body/order-manage/order-manage.component';
 import { AdminComponent } from "./content/body/admin/admin.component";
 import { TrackingComponent } from "./content/body/tracking/tracking.component";
 import { PaymentComponent } from "./content/body/payment/payment.component";
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   { path: "payment", component: PaymentComponent },
   { path: "tracking", component: TrackingComponent },
   { path: "signin", component: AdminComponent },
+  { path: "order-manage", component: OrderManageComponent },
   {
     path: "admin",
     component: AdminComponent,

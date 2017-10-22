@@ -456,5 +456,14 @@ ul.sidemenu {
     background-color: transparent;
 }
 
+.dataTables_filter {
+    float: right !important;
+    text-align: right !important;
+}
+.dataTables_filter input {
+  border: solid rgb(141, 141, 141) 1px;
+  border-radius: 3px;
+}
+
 
 /* END SIDE MENU */

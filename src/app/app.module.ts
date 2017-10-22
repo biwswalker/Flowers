@@ -32,6 +32,7 @@ import { SigninComponent } from './content/body/signin/signin.component';
 import { PaymentComponent } from './content/body/payment/payment.component';
 import { TrackingComponent } from './content/body/tracking/tracking.component';
 import { AdminComponent } from './content/body/admin/admin.component';
+import { OrderManageComponent } from './content/body/order-manage/order-manage.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AdminComponent } from './content/body/admin/admin.component';
     PaymentComponent,
     TrackingComponent,
     AdminComponent,
+    OrderManageComponent,
   ],
   imports: [
     BrowserModule,

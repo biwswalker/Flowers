@@ -1,3 +1,4 @@
+import { CartOrderForm } from '../forms/cart-order';
 import { UtilsService } from './utils.service';
 import { ProductOrder } from './../models/product-order';
 import { Order } from './../models/order';
@@ -95,10 +96,8 @@ export class CartService {
   createOrder(cart: CartForm) {
     if (cart) {
       const orderId = this.utilsService.generateOrderID(10);
-      const nowdate = new Date();
       cart.order.orderId = orderId;
-      cart.order.orderDate = nowdate;
-      cart.order.createDate = nowdate;
+      cart.order.createDatetime = String(new Date());
       cart.order.createUser = cart.order.firstname;
       cart.order.paymentStatus = 'N';
       cart.order.orderStatus = 'W';
@@ -106,7 +105,8 @@ export class CartService {
       cart.cartItems.forEach(pd => {
         products.push(pd.productOrder);
       });
-      let cartOrder: CartOrder = new CartOrder(cart.order, cart.address, products);
+      console.log(cart.order)
+      let cartOrder: CartOrderForm = new CartOrderForm(cart.order, cart.address, products);
       return firebase.database().ref('order/' + orderId).set(cartOrder)
         .then((snap) => {
           this.empty();
@@ -119,18 +119,4 @@ export class CartService {
 }
 
 
-export class CartOrder {
-  public order: Order;
-  public address: Address;
-  public products: ProductOrder[];
 
-  constructor(
-    order: Order,
-    address: Address,
-    products: ProductOrder[]
-  ) {
-    this.order = order;
-    this.address = address;
-    this.products = products;
-  }
-}

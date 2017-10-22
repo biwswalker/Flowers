@@ -1,0 +1,22 @@
+h2.header {
+    font-size: 3rem;
+    font-weight: 200;
+}
+
+th.head {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.body-text {
+    font-weight: 200;
+}
+
+.searchtab {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.select-status {
+    width: 205px;
+}

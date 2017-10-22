@@ -6,6 +6,13 @@ export class OrderService {
 
   constructor() { }
 
+  getAllOrder() {
+    return firebase
+      .database()
+      .ref("order/")
+      .once("value");
+  }
+
   findAlreadyExistOrder(orderId: string) {
     return firebase
       .database()

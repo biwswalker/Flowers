@@ -1,0 +1,80 @@
+<div style="height: 70px;"></div>
+<alerts></alerts>
+<ngx-loading [show]="loading"></ngx-loading>
+
+<section id="order-table">
+  <div class="container">
+    <div class="row col-12 header-label">
+      <h2 class="header">ORDER MANAGEMENT</h2>
+    </div>
+    <div class="content-margint table-responsive">
+      <div class="searchtab">
+        <select name="status"
+                (change)="onChangeStatus()"
+                [(ngModel)]="orderStatus"
+                class="form-control select-status">
+          <option value="A"
+                  class="body-text">ทั้งหมด</option>
+          <option value="N"
+                  class="body-text">รอการชำระเงิน</option>
+          <option value="W"
+                  class="body-text">รอการตรวจสอบ</option>
+          <option value="P"
+                  class="body-text">กำลังดำเนินการ</option>
+          <option value="T"
+                  class="body-text">กำลังจัดส่ง</option>
+          <option value="Y"
+                  class="body-text">รับสินค้าแล้ว</option>
+        </select>
+      </div>
+      <table datatable
+             [dtOptions]="dtOptions"
+             class="table table-striped hover"
+             *ngIf="loaded">
+        <thead>
+          <tr>
+            <th class="head">#Order ID</th>
+            <th class="head">วันที่สั่งซื้อ</th>
+            <th class="head">ชื่อผู้สั่ง</th>
+            <th class="head">ยอดสั่งซื้อ</th>
+            <th class="head">สถานะ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let orderObj of cartOrderFormList"
+              (click)="onSelectRow(orderObj)">
+            <td>
+              <div class="body-text">{{ orderObj.order.orderId }}</div>
+            </td>
+            <td>
+              <div class="body-text">{{ orderObj.order.createDatetime }}</div>
+            </td>
+            <td>
+              <div class="body-text">{{ orderObj.order.firstname }} {{ orderObj.order.lastname }}</div>
+            </td>
+            <td>
+              <div class="body-text">{{ orderObj.order.totalPrice }}</div>
+            </td>
+            <td>
+              <select name="status"
+                      [(ngModel)]="orderObj.status"
+                      class="form-control">
+                <option value="N"
+                        class="body-text"
+                        disabled>รอการชำระเงิน</option>
+                <option value="W"
+                        class="body-text">รอการตรวจสอบ</option>
+                <option value="P"
+                        class="body-text">กำลังดำเนินการ</option>
+                <option value="T"
+                        class="body-text">กำลังจัดส่ง</option>
+                <option value="Y"
+                        class="body-text">รับสินค้าแล้ว</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
