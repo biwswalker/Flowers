@@ -1,0 +1,91 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div style="height: 70px;"></div>
+<alerts></alerts>
+<section id="preview">
+  <div class="container">
+    <div class="row col-lg-7 col-md-12 col-centered content-margint">
+      <button class="btn btn-danger"
+              type="button"
+              [routerLink]="['/order-manage']"
+              style="margin-bottom: 10px;">กลับ</button>
+      <div class="row col-12 input-bg none-margin">
+        <div class="col-12 box-header">
+          <h2>
+            <i class="fa fa-credit-card"
+               aria-hidden="true"></i> ใบแจ้งชำระเงิน</h2>
+        </div>
+        <div class="col-12 margin-vertical10">
+          <label class="fontwei200">Order ID</label>
+          <input type="text"
+                 name="orderId"
+                 disabled
+                 [(ngModel)]="payment.orderId"
+                 class="form-control">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 margin-vertical10">
+          <label class="fontwei200">ชื่อ</label>
+          <input type="text"
+                 name="firstname"
+                 disabled
+                 [(ngModel)]="payment.firstname"
+                 class="form-control">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 margin-vertical10">
+          <label class="fontwei200">นามสกุล</label>
+          <input type="text"
+                 name="lastname"
+                 disabled
+                 [(ngModel)]="payment.lastname"
+                 class="form-control">
+        </div>
+        <div class="col-12 margin-vertical10">
+          <label class="fontwei200">Email</label>
+          <input type="email"
+                 name="email"
+                 disabled
+                 [(ngModel)]="payment.email"
+                 class="form-control">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 margin-vertical10">
+          <label class="fontwei200">จำนวนเงิน</label>
+          <input type="number"
+                 name="amount"
+                 disabled
+                 [(ngModel)]="payment.amount"
+                 class="form-control">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 margin-vertical10">
+          <label class="fontwei200">ธนาคารที่โอน</label>
+          <select class="form-control"
+                  name="bank"
+                  disabled
+                  [(ngModel)]="payment.bank">
+            <option value="KBANK">กสิกรไทย</option>
+            <option value="TP">ไทยพานิช</option>
+          </select>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6margin-vertical10">
+          <label class="fontwei200">วันที่โอน</label>
+          <input type="date"
+                 name="transDate"
+                 disabled
+                 [(ngModel)]="payment.transDate"
+                 class="form-control">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 margin-vertical10">
+          <label class="fontwei200">เวลาโอน</label>
+          <input type="time"
+                 name="transTime"
+                 disabled
+                 [(ngModel)]="payment.transTime"
+                 class="form-control">
+        </div>
+        <div class="col-12 margin-vertical10 text-center">
+          <img [src]="payment.imagePath"
+               *ngIf="payment.imagePath"
+               class="image-show">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -5,4 +5,5 @@ export class Address {
   public province: string;
   public postcode: string;
   public tel: string;
+  public email: string;
 }

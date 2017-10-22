@@ -24,6 +24,8 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
 
   productId: string;
   private sub: any;
+  pdQty: number;
+  showingPrice: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +35,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.pdQty = 1;
     window.scrollTo(0, 0);
     this.loading = true;
     this.productForm = new ProductForm();
@@ -63,6 +66,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
         .then((productObj: Product) => {
           if (productObj) {
             this.productForm.product = productObj;
+            this.showingPrice = this.productForm.product.productPrice;
           }
         })
         .catch(error => {
@@ -82,6 +86,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangeSize() {
+  onChangeQty() {
+    this.showingPrice = this.pdQty * this.productForm.product.productPrice;
   }
 }

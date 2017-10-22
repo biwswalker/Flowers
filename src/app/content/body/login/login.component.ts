@@ -6,11 +6,11 @@ import { Component, OnInit } from "@angular/core";
 import * as firebase from "firebase";
 
 @Component({
-  selector: "app-admin",
-  templateUrl: "./admin.component.html",
-  styleUrls: ["./admin.component.css"]
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
-export class AdminComponent implements OnInit {
+export class LoginComponent implements OnInit {
   // FormGroup
   group: FormGroup;
 

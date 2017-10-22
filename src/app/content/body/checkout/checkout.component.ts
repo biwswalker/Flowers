@@ -44,6 +44,7 @@ export class CheckoutComponent implements OnInit {
       'district': new FormControl(this.cart.address.district, Validators.required),
       'province': new FormControl(this.cart.address.province, Validators.required),
       'postcode': new FormControl(this.cart.address.postcode, [Validators.required, Validators.pattern('[0-9]+')]),
+      'email': new FormControl(this.cart.address.email, [Validators.required, Validators.email]),
       'tel': new FormControl(this.cart.address.tel, Validators.required),
       'paymentType': new FormControl(this.cart.order.paymentType, Validators.required),
     });
@@ -59,6 +60,7 @@ export class CheckoutComponent implements OnInit {
     this.cart.address.district = this.group.value.district;
     this.cart.address.province = this.group.value.province;
     this.cart.address.postcode = this.group.value.postcode;
+    this.cart.address.email = this.group.value.email;
     this.cart.address.tel = this.group.value.tel;
     this.cartService.updateOrder(this.cart.order, this.cart.address);
     this.router.navigateByUrl('/confirmation');

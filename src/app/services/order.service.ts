@@ -28,5 +28,12 @@ export class OrderService {
       .update({ paymentStatus: status });
   }
 
+  changeOrderStatus(orderId: string, status: string) {
+    return firebase
+      .database()
+      .ref("order/" + orderId + "/order")
+      .update({ orderStatus: status });
+  }
+
 
 }

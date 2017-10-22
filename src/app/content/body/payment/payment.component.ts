@@ -1,4 +1,4 @@
-import { OrderService } from './../../../services/order.service';
+import { OrderService } from "./../../../services/order.service";
 import { PaymentService } from "./../../../services/payment.service";
 import { Payment } from "./../../../models/payment";
 import { UtilsService } from "./../../../services/utils.service";
@@ -96,10 +96,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.group.reset();
-    if (this.payment.imageName) {
-      this.utilsService.deleteImage(this.payment.imageName);
-      this.img = "";
-    }
+    this.img = "";
   }
 
   sentPayment() {
@@ -134,7 +131,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
               ) {
                 Promise.all([
                   this.paymentService.addPaymentConfermation(this.payment),
-                  this.orderService.changePaymentStatus(this.payment.orderId, 'W')
+                  this.orderService.changePaymentStatus(
+                    this.payment.orderId,
+                    "W"
+                  )
                 ])
                   .then(snapshot => {
                     this.loading = false;

@@ -18,5 +18,16 @@ th.head {
 }
 
 .select-status {
-    width: 205px;
+    width: 184px;
+    border: solid rgb(141, 141, 141) 1px;
+    border-radius: 3px;
+}
+
+.size-btn {
+  font-size: 15px;
+  font-weight: 200;
+}
+
+.nomargin {
+  margin: 0px;
 }

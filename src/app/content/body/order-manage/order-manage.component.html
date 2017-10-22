@@ -7,12 +7,12 @@
     <div class="row col-12 header-label">
       <h2 class="header">ORDER MANAGEMENT</h2>
     </div>
-    <div class="content-margint table-responsive">
+    <div class="content-margint">
       <div class="searchtab">
         <select name="status"
-                (change)="onChangeStatus()"
+                (change)="onChangeCriteriaStatus()"
                 [(ngModel)]="orderStatus"
-                class="form-control select-status">
+                class="select-status">
           <option value="A"
                   class="body-text">ทั้งหมด</option>
           <option value="N"
@@ -29,36 +29,40 @@
       </div>
       <table datatable
              [dtOptions]="dtOptions"
-             class="table table-striped hover"
+             class="table table-striped hover table-responsive"
              *ngIf="loaded">
         <thead>
           <tr>
-            <th class="head">#Order ID</th>
-            <th class="head">วันที่สั่งซื้อ</th>
-            <th class="head">ชื่อผู้สั่ง</th>
-            <th class="head">ยอดสั่งซื้อ</th>
-            <th class="head">สถานะ</th>
+            <th class="head"
+                style="width: 110px; min-width: 110px;">#Order ID</th>
+            <th class="head"
+                style="width: 110px; min-width: 110px;">วันที่สั่งซื้อ</th>
+            <th class="head"
+                style="min-width: 150px;">ชื่อผู้สั่ง</th>
+            <th class="head"
+                style="width: 100px; min-width: 100px;">ยอดสั่งซื้อ</th>
+            <th class="head"
+                style="width: 120px; min-width: 120px;">สถานะ</th>
+            <th style="min-width: 140px;"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let orderObj of cartOrderFormList"
-              (click)="onSelectRow(orderObj)">
-            <td>
+          <tr *ngFor="let orderObj of cartOrderFormList">
+            <td [routerLink]="['/order-info', orderObj.order.orderId]">
               <div class="body-text">{{ orderObj.order.orderId }}</div>
             </td>
-            <td>
-              <div class="body-text">{{ orderObj.order.createDatetime }}</div>
+            <td [routerLink]="['/order-info', orderObj.order.orderId]">
+              <div class="body-text">{{ orderObj.orderDate }}</div>
             </td>
-            <td>
+            <td [routerLink]="['/order-info', orderObj.order.orderId]">
               <div class="body-text">{{ orderObj.order.firstname }} {{ orderObj.order.lastname }}</div>
             </td>
-            <td>
+            <td [routerLink]="['/order-info', orderObj.order.orderId]">
               <div class="body-text">{{ orderObj.order.totalPrice }}</div>
             </td>
             <td>
               <select name="status"
-                      [(ngModel)]="orderObj.status"
-                      class="form-control">
+                      [(ngModel)]="orderObj.status">
                 <option value="N"
                         class="body-text"
                         disabled>รอการชำระเงิน</option>
@@ -71,6 +75,20 @@
                 <option value="Y"
                         class="body-text">รับสินค้าแล้ว</option>
               </select>
+            </td>
+            <td>
+              <button *ngIf="checkIsChanged(orderObj)"
+                      type="button"
+                      (click)="changeStatus(orderObj)"
+                      class="button-outline primary size-btn nomargin">
+                <i class="fa fa-pencil"
+                   aria-hidden="true"></i> แก้ไข</button>
+              <button type="button"
+                      *ngIf="orderObj.order.paymentStatus === 'W'"
+                      [routerLink]="['/payment-info', orderObj.order.orderId]"
+                      class="button-outline negative size-btn nomargin">
+                <i class="fa fa-file-text-o"
+                   aria-hidden="true"></i> หลักฐานการโอน</button>
             </td>
           </tr>
         </tbody>

@@ -6,6 +6,7 @@ export class CartOrderForm {
   public order: Order;
   public address: Address;
   public products: ProductOrder[];
+
   public status: string;
   public orderDate: string;
 

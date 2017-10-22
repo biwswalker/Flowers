@@ -7,12 +7,20 @@ import { UtilsService } from "./utils.service";
 export class PaymentService {
   constructor(private utilService: UtilsService) {}
 
+  findAlreadyExistPayment(orderId: string) {
+    return firebase
+      .database()
+      .ref("payment/")
+      .child(orderId)
+      .once("value");
+  }
+
   addPaymentConfermation(paymentParam: Payment) {
     paymentParam.paymentId = this.utilService.generateUUID();
     paymentParam.createDatetime = new Date();
     return firebase
       .database()
-      .ref("payment/" + paymentParam.paymentId)
+      .ref("payment/" + paymentParam.orderId)
       .set(paymentParam);
   }
 }

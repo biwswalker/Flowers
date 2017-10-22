@@ -1,0 +1,51 @@
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.size-btn {
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.box-header h2 {
+  font-size: 1.5rem;
+  font-weight: 200;
+}
+
+.box-header {
+  border-bottom: solid #e0e0e0 1px;
+  margin-bottom: 20px;
+}
+
+.margin-vertical10 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.fontwei200 {
+  font-weight: 200;
+}
+
+table.item-list {
+  width: 100%;
+}
+
+table.item-list th {
+  font-weight: 300;
+}
+
+table.item-list td {
+  font-weight: 200;
+  border-bottom: solid #e0e0e0 1px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.none-margin {
+  margin: 0px;
+}
+
+.body-text {
+  font-weight: 200;
+}

@@ -1,3 +1,4 @@
+import { LoginComponent } from './content/body/login/login.component';
 import { OrderService } from './services/order.service';
 import { PaymentService } from './services/payment.service';
 import { AuthService } from './services/auth.service';
@@ -31,8 +32,9 @@ import { CompleteOrderComponent } from './content/body/complete-order/complete-o
 import { SigninComponent } from './content/body/signin/signin.component';
 import { PaymentComponent } from './content/body/payment/payment.component';
 import { TrackingComponent } from './content/body/tracking/tracking.component';
-import { AdminComponent } from './content/body/admin/admin.component';
 import { OrderManageComponent } from './content/body/order-manage/order-manage.component';
+import { PaymentInfoComponent } from './content/body/payment-info/payment-info.component';
+import { OrderInfoComponent } from './content/body/order-info/order-info.component';
 
 @NgModule({
   declarations: [
@@ -51,8 +53,10 @@ import { OrderManageComponent } from './content/body/order-manage/order-manage.c
     SigninComponent,
     PaymentComponent,
     TrackingComponent,
-    AdminComponent,
+    LoginComponent,
     OrderManageComponent,
+    PaymentInfoComponent,
+    OrderInfoComponent,
   ],
   imports: [
     BrowserModule,

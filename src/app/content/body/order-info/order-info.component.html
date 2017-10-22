@@ -4,7 +4,42 @@
   <div class="container">
     <alerts></alerts>
     <div class="row col-lg-7 col-md-12 col-centered content-margint">
+      <button class="btn btn-danger"
+              type="button"
+              [routerLink]="['/order-manage']"
+              style="margin-bottom: 10px;">กลับ</button>
       <div class="row col-12 input-bg none-margin">
+        <div class="col-12 box-header">
+          <h2>
+            <i class="fa fa-cube"
+               aria-hidden="true"></i> สินค้า</h2>
+        </div>
+        <div class="col-12">
+          <table class="item-list">
+            <tr>
+              <th>สินค้า</th>
+              <th style="width:65px; text-align: center;">จำนวน</th>
+              <th style="width:70px; text-align: right;">ราคา</th>
+            </tr>
+            <tr *ngFor="let cartObj of cart.cartItems">
+              <td>{{ cartObj.product.productName }}</td>
+              <td style="text-align: center;">{{ cartObj.productOrder.productQty }}</td>
+              <td style="text-align: right;">฿ {{ cartObj.productOrder.productTotalPrice }}</td>
+            </tr>
+            <tr>
+              <td style="border-bottom: 0px;">ค่าจัดส่ง</td>
+              <td style="border-bottom: 0px;"></td>
+              <td style="text-align: right;border-bottom: 0px;">฿ 0</td>
+            </tr>
+            <tr>
+              <td>ยอดสุทธิ</td>
+              <td></td>
+              <td style="text-align: right;">฿ {{ cart.order.totalPrice }}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-12 space">
+        </div>
         <div class="col-12 box-header">
           <h2>
             <i class="fa fa-address-card-o"
@@ -78,13 +113,13 @@
                  class="form-control">
         </div>
         <div class="col-12 margin-vertical10">
-            <label class="fontwei200">อีเมล์</label>
-            <input type="email"
-                   [(ngModel)]="cart.address.email"
-                   name="email"
-                   disabled
-                   class="form-control">
-          </div>
+          <label class="fontwei200">อีเมล์</label>
+          <input type="email"
+                 [(ngModel)]="cart.address.email"
+                 name="email"
+                 disabled
+                 class="form-control">
+        </div>
         <div class="col-12 margin-vertical10">
           <label class="fontwei200">เบอร์ติดต่อ</label>
           <input type="text"
@@ -93,8 +128,6 @@
                  disabled
                  class="form-control">
         </div>
-
-
         <div class="col-12 space">
         </div>
         <div class="col-12 box-header">
@@ -105,53 +138,32 @@
         <div class="col">
           <label class="fontwei200">{{ paymentMethodName }}</label>
         </div>
-
-
-        <div class="col-12 space">
-        </div>
-        <div class="col-12 box-header">
-          <h2>
-            <i class="fa fa-cube"
-               aria-hidden="true"></i> สินค้า</h2>
-        </div>
-        <div class="col-12">
-          <table class="item-list">
-            <tr>
-              <th>สินค้า</th>
-              <th style="width:65px; text-align: center;">จำนวน</th>
-              <th style="width:70px; text-align: right;">ราคา</th>
-            </tr>
-            <tr *ngFor="let cartObj of cart.cartItems">
-              <td>{{ cartObj.product.productName }}</td>
-              <td style="text-align: center;">{{ cartObj.productOrder.productQty }}</td>
-              <td style="text-align: right;">฿ {{ cartObj.productOrder.productTotalPrice }}</td>
-            </tr>
-            <tr>
-              <td style="border-bottom: 0px;">ค่าจัดส่ง</td>
-              <td style="border-bottom: 0px;"></td>
-              <td style="text-align: right;border-bottom: 0px;">฿ 0</td>
-            </tr>
-            <tr>
-              <td>ยอดสุทธิ</td>
-              <td></td>
-              <td style="text-align: right;">฿ {{ cart.order.totalPrice }}</td>
-            </tr>
-          </table>
-        </div>
       </div>
-      <div class="row col-12">
-        <div class="col-6">
-          <button (click)="onBackToEditOrder()"
-                  class="button-bg negative btn-block size-btn">
-            <i class="fa fa-pencil"
-               aria-hidden="true"></i> แก้ไขข้อมูล</button>
-        </div>
-        <div class="col-6">
-          <button (click)="onConfirmOrder()"
-                  class="button-bg primary btn-block size-btn">
-            <i class="fa fa-check"
-               aria-hidden="true"></i> ยืนยัน</button>
-        </div>
+      <div class="col-12"
+           style="margin-top: 10px;">
+        <select name="status"
+                [(ngModel)]="orderStatus"
+                class="form-control">
+          <option value="N"
+                  class="body-text"
+                  disabled>รอการชำระเงิน</option>
+          <option value="W"
+                  class="body-text">รอการตรวจสอบ</option>
+          <option value="P"
+                  class="body-text">กำลังดำเนินการ</option>
+          <option value="T"
+                  class="body-text">กำลังจัดส่ง</option>
+          <option value="Y"
+                  class="body-text">รับสินค้าแล้ว</option>
+        </select>
+      </div>
+
+      <div class="col-12"
+           style="margin-top: 5px;">
+        <button (click)="onChangeStatus()"
+                class="button-bg primary btn-block size-btn none-margin">
+          <i class="fa fa-check"
+             aria-hidden="true"></i> ยืนยัน</button>
       </div>
     </div>
   </div>

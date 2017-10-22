@@ -1,17 +1,15 @@
-import { Order } from '../../../models/order';
-import { AlertService } from '../../../services/alert.service';
-import { OrderService } from '../../../services/order.service';
-import { CartOrderForm } from '../../../forms/cart-order';
-import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
+import { Order } from "../../../models/order";
+import { AlertService } from "../../../services/alert.service";
+import { OrderService } from "../../../services/order.service";
+import { CartOrderForm } from "../../../forms/cart-order";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-order-manage',
-  templateUrl: './order-manage.component.html',
-  styleUrls: ['./order-manage.component.css']
+  selector: "app-order-manage",
+  templateUrl: "./order-manage.component.html",
+  styleUrls: ["./order-manage.component.css"]
 })
 export class OrderManageComponent implements OnInit {
-
   loading = false;
   loaded = false;
   // Datatables
@@ -23,19 +21,17 @@ export class OrderManageComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private alertService: AlertService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.orderStatus = 'A';
-    $('.dataTables_filter').addClass('pull-left');
-    console.log(new Date())
+    this.orderStatus = "A";
+    $(".dataTables_filter").addClass("pull-left");
+    console.log(new Date());
     window.scrollTo(0, 0);
     this.dtOptions = {
       paging: false,
       lengthChange: false,
-      info: false,
+      info: false
     };
     this.loadingProductList();
   }
@@ -44,14 +40,16 @@ export class OrderManageComponent implements OnInit {
     return Promise.resolve(
       this.orderService
         .getAllOrder()
-        .then((order) => {
+        .then(order => {
           this.cartOrderFormList = [];
           order.forEach(obj => {
             const orderObj: CartOrderForm = obj.val();
             orderObj.status = this.displayStatus(orderObj.order);
-            orderObj.orderDate = this.displayDate(orderObj.order.createDatetime);
+            orderObj.orderDate = this.displayDate(
+              orderObj.order.createDatetime
+            );
             if (this.orderStatus && orderObj.status) {
-              if (this.orderStatus === 'A') {
+              if (this.orderStatus === "A") {
                 this.cartOrderFormList.push(orderObj);
               } else {
                 if (this.orderStatus === orderObj.status) {
@@ -62,7 +60,7 @@ export class OrderManageComponent implements OnInit {
               this.cartOrderFormList.push(orderObj);
             }
             this.loaded = true;
-          })
+          });
           return false;
         })
         .catch(error => {
@@ -76,31 +74,57 @@ export class OrderManageComponent implements OnInit {
     );
   }
 
-  onSelectRow(cartOrderF: CartOrderForm) {
-
-  }
+  onSelectRow(cartOrderF: CartOrderForm) {}
 
   displayDate(createDatetime: string): string {
-    const newDate = new Date(createDatetime)
-    const date: string = String(newDate.getDate);
-    const month: string = String(newDate.getMonth);
-    const year: string = String(newDate.getFullYear);
-    return date + '/' + month + '/' + year;
+    if (createDatetime) {
+      const newDate = new Date(createDatetime);
+      const date: string = String(newDate.getDate());
+      const month: string = String(newDate.getMonth());
+      const year: string = String(newDate.getFullYear());
+      return String(date + "/" + month + "/" + year);
+    }
   }
 
   displayStatus(order: Order): string {
     if (order.paymentStatus) {
-      if (order.paymentStatus === 'W') {
+      if (order.paymentStatus === "W") {
         return order.orderStatus;
       } else {
-        return 'N';
+        return "N";
       }
     }
     return null;
   }
 
-  onChangeStatus(){
+  onChangeCriteriaStatus() {
     this.loadingProductList();
   }
 
+  changeStatus(cartOrder: CartOrderForm) {
+    this.orderService.changeOrderStatus(
+      cartOrder.order.orderId,
+      cartOrder.status
+    );
+    this.loadingProductList();
+  }
+
+  checkIsChanged(form: CartOrderForm): boolean {
+    if (form.order.paymentStatus) {
+      if (form.order.paymentStatus === "N") {
+        if (form.status === "N") {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        if (form.status !== form.order.orderStatus) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  }
 }
