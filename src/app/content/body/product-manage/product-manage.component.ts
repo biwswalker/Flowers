@@ -107,15 +107,15 @@ export class ProductManageComponent implements OnInit, OnDestroy {
         Validators.pattern("[0-9]+")
       ]),
       file: new FormControl(null),
-      productSize: new FormControl(this.productForm.product.productSize, Validators.required)
+      productSize: new FormControl(this.productForm.product.productSize)
     });
   }
 
   onChangeCategory() {
     if (this.category === "6") {
-      this.group.controls["productSize"].enable();
+      this.group.controls['productSize'].setValue('S')
     } else {
-      this.group.controls["productSize"].disable();
+      this.group.controls["productSize"].setValue('');
     }
   }
 
@@ -127,7 +127,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
       this.category = "1";
       this.productForm.product.productCategory = "1";
       this.productForm.product.status = "Y";
-      this.productForm.product.productSize = 'S';
+      // this.productForm.product.productSize = 'S';
       this.resetFormGroup();
     } else if (mode === "U") {
       this.mode = "U";
@@ -286,8 +286,8 @@ export class ProductManageComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener("window:beforeunload", ["$event"])
-  beforeunloadHandler($event) {
-    $event.returnValue = this.ngOnDestroy();
-  }
+  // @HostListener("window:beforeunload", ["$event"])
+  // beforeunloadHandler($event) {
+  //   $event.returnValue = this.ngOnDestroy();
+  // }
 }
