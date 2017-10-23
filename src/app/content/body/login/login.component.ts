@@ -14,9 +14,6 @@ export class LoginComponent implements OnInit {
   // FormGroup
   group: FormGroup;
 
-  // LOADING
-  loading = false;
-
   isLoggedin = false;
 
   constructor(

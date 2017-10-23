@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { AlertService } from './../../../services/alert.service';
 import { Router } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
@@ -11,9 +12,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmationComponent implements OnInit {
 
-  // Loading
-  loading = false;
-
   // Form
   cart: CartForm;
 
@@ -25,6 +23,7 @@ export class ConfirmationComponent implements OnInit {
     private cartService: CartService,
     private router: Router,
     private alertService: AlertService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -55,14 +54,14 @@ export class ConfirmationComponent implements OnInit {
     window.scrollTo(0, 0)
     if (this.cart.address.tel) {
       if (this.cart.cartItems.length > 0) {
-        this.loading = true;
+        this.loadingService.loading(true);
         this.cartService.createOrder(this.cart)
           .then((id) => {
-            this.loading = false;
+            this.loadingService.loading(false);
             this.router.navigate(['/completeOrder'], { queryParams: { orderId: id } });
           })
           .catch(error => {
-            this.loading = false;
+            this.loadingService.loading(false);
             this.alertService.error('เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ')
             setTimeout(() => {
               this.alertService.clear();

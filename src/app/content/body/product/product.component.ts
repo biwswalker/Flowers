@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { ProductForm } from "./../../../forms/product";
 import { Product } from "./../../../models/product";
 import { Component, OnInit } from "@angular/core";
@@ -13,9 +14,6 @@ export class ProductComponent implements OnInit {
   // Model
   productFormList: ProductForm[] = [];
 
-  // Loading
-  loading = false;
-
   // ImageShowing
   imagePath: any;
 
@@ -23,7 +21,8 @@ export class ProductComponent implements OnInit {
   productSize = "";
   constructor(
     private productService: ProductService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -33,7 +32,7 @@ export class ProductComponent implements OnInit {
   }
 
   loadProductList(category: string, size: string): Promise<boolean> {
-    this.loading = true;
+    this.loadingService.loading(true);
     return Promise.resolve(
       this.productService
         .fetchProductListData(category)
@@ -60,11 +59,11 @@ export class ProductComponent implements OnInit {
               }
             }
           });
-          this.loading = false;
+          this.loadingService.loading(false);
           return false;
         })
         .catch(error => {
-          this.loading = false;
+          this.loadingService.loading(false);
           this.alertService.error("เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ");
           setTimeout(() => {
             this.alertService.clear();

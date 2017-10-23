@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../../services/cart.service';
 import { ProductForm } from '../../../forms/product';
@@ -16,9 +17,6 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
   // FormGroup
   group: FormGroup;
 
-  // Loading
-  loading = false;
-
   // Product
   productForm: ProductForm;
 
@@ -31,18 +29,19 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
     this.pdQty = 1;
     window.scrollTo(0, 0);
-    this.loading = true;
+    this.loadingService.loading(true);
     this.productForm = new ProductForm();
     Promise
       .all([this.getProductId(), this.getProduct(this.productId), this.resetFormGroup()])
       .then(success => {
-        this.loading = false;
+        this.loadingService.loading(false);
       });
   }
 

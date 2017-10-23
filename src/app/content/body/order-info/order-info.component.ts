@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { Order } from "./../../../models/order";
 import { CartItem } from "./../../../forms/cart-item";
 import { ProductService } from "./../../../services/product.service";
@@ -12,8 +13,6 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./order-info.component.css"]
 })
 export class OrderInfoComponent implements OnInit {
-  // Loading
-  loading = false;
 
   // Form
   cart: CartForm;
@@ -27,17 +26,19 @@ export class OrderInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private orderService: OrderService,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
     window.scrollTo(0, 0);
     this.cart = new CartForm();
+    this.loadingService.loading(true);
     Promise.all([
       this.getProductId(),
       this.getProduct(this.orderId)
     ]).then(success => {
-      this.loading = false;
+      this.loadingService.loading(false);
     });
   }
 

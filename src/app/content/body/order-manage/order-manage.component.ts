@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { Order } from "../../../models/order";
 import { AlertService } from "../../../services/alert.service";
 import { OrderService } from "../../../services/order.service";
@@ -10,7 +11,6 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./order-manage.component.css"]
 })
 export class OrderManageComponent implements OnInit {
-  loading = false;
   loaded = false;
   // Datatables
   dtOptions: DataTables.Settings = {};
@@ -20,7 +20,8 @@ export class OrderManageComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -37,6 +38,7 @@ export class OrderManageComponent implements OnInit {
   }
 
   loadingProductList(): Promise<boolean> {
+    this.loadingService.loading(true);
     return Promise.resolve(
       this.orderService
         .getAllOrder()
@@ -61,9 +63,11 @@ export class OrderManageComponent implements OnInit {
             }
             this.loaded = true;
           });
+          this.loadingService.loading(false);
           return false;
         })
         .catch(error => {
+          this.loadingService.loading(false);
           this.alertService.error("เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ");
           setTimeout(() => {
             this.alertService.clear();

@@ -8,7 +8,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class CompleteOrderComponent implements OnInit, OnDestroy {
 
-  loading = false;
   subscribe;
   orderId: string;
 

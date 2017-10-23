@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { Router } from '@angular/router';
 import { CartItem } from '../../../forms/cart-item';
 import { CartForm } from '../../../forms/cart';
@@ -10,16 +11,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-
-  // Loading
-  loading = false;
-
   // Form
   cart: CartForm;
 
   constructor(
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -29,7 +27,7 @@ export class CartComponent implements OnInit {
   }
 
   onChangeQty(pid: string, qty: number) {
-    this.loading = true;
+    this.loadingService.loading(true);
     let item = this.cart.cartItems.find((cartItem) => cartItem.product.productId === pid);
     if (item) {
       item = this.cartService.updateCart(item, qty, '');
@@ -37,7 +35,7 @@ export class CartComponent implements OnInit {
       this.cartService.calculatePrice(this.cart);
       this.cartService.save(this.cart);
     }
-    this.loading = false;
+    this.loadingService.loading(false);
   }
 
   onDeleteItem(pid: string) {

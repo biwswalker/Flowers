@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { OrderService } from "./../../../services/order.service";
 import { PaymentService } from "./../../../services/payment.service";
 import { Payment } from "./../../../models/payment";
@@ -14,8 +15,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 export class PaymentComponent implements OnInit, OnDestroy {
   // Payment
   payment: Payment = new Payment();
-  // Loading
-  loading = false;
 
   // FormGroup
   group: FormGroup;
@@ -27,7 +26,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private utilsService: UtilsService,
     private paymentService: PaymentService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -58,7 +58,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   onUploadImage(event) {
-    this.loading = true;
+    this.loadingService.loading(true);
     const files: FileList = event.target.files;
     if (files.length > 0) {
       const file: File = files[0];
@@ -74,10 +74,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
             })
           )
         ]).then(success => {
-          this.loading = false;
+          this.loadingService.loading(false);
         });
       } else {
-        this.loading = false;
+        this.loadingService.loading(false);
         this.alertService.warn("ขนาดไฟล์ไม่เกิน 5 mb");
         setTimeout(() => {
           this.alertService.clear();
@@ -85,7 +85,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         window.scrollTo(0, 0);
       }
     } else {
-      this.loading = false;
+      this.loadingService.loading(false);
       this.alertService.error("เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ");
       setTimeout(() => {
         this.alertService.clear();
@@ -109,7 +109,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         }, 5000);
         return;
       }
-      this.loading = true;
+      this.loadingService.loading(true);
       const orderId: string = this.group.value.orderId;
       this.payment.orderId = orderId.toUpperCase();
       this.payment.firstname = this.group.value.firstname;
@@ -137,7 +137,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
                   )
                 ])
                   .then(snapshot => {
-                    this.loading = false;
+                    this.loadingService.loading(false);
                     this.group.reset();
                     this.img = "";
                     this.alertService.success(
@@ -145,7 +145,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
                     );
                   })
                   .catch(error => {
-                    this.loading = false;
+                    this.loadingService.loading(false);
                     this.ngOnDestroy();
                     this.alertService.error(
                       "เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ"
@@ -155,7 +155,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
                     }, 15000);
                   });
               } else {
-                this.loading = false;
+                this.loadingService.loading(false);
                 this.alertService.warn(
                   "Order ID ที่ระบุได้ทำการชำระเงินเรียบร้อยแล้ว"
                 );
@@ -164,7 +164,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
                 }, 20000);
               }
             } else {
-              this.loading = false;
+              this.loadingService.loading(false);
               this.alertService.warn(
                 "ไม่พบ Order ID ที่ระบุ โปรตรวจสอบใหม่อีกครั้ง"
               );

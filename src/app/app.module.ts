@@ -1,3 +1,4 @@
+import { LoadingService } from './services/loading.service';
 import { LoginComponent } from './content/body/login/login.component';
 import { OrderService } from './services/order.service';
 import { PaymentService } from './services/payment.service';
@@ -68,7 +69,8 @@ import { OrderInfoComponent } from './content/body/order-info/order-info.compone
     FirebaseConfigModule,
     LoadingModule.forRoot({
       animationType: ANIMATION_TYPES.wanderingCubes,
-      backdropBackgroundColour: 'rgba(0,0,0,0.1)',
+      fullScreenBackdrop: true,
+      backdropBackgroundColour: 'rgba(0,0,0,0.4)',
       backdropBorderRadius: '4px',
       primaryColour: '#F4B2B2',
       secondaryColour: '#F4B2B2',
@@ -85,6 +87,7 @@ import { OrderInfoComponent } from './content/body/order-info/order-info.compone
     AuthService,
     PaymentService,
     OrderService,
+    LoadingService,
     { provide: StorageService, useClass: LocalStorageService }
   ],
   bootstrap: [AppComponent]

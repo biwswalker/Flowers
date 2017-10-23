@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartForm } from '../../../forms/cart';
@@ -14,15 +15,13 @@ export class CheckoutComponent implements OnInit {
   // FormGroup
   group: FormGroup;
 
-  // Loading
-  loading = false;
-
   // Form
   cart: CartForm;
 
   constructor(
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -51,7 +50,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onContinue() {
-    this.loading = true;
+    this.loadingService.loading(true);
     this.cart.order.firstname = this.group.value.firstname;
     this.cart.order.lastname = this.group.value.lastname;
     this.cart.order.paymentType = this.group.value.paymentType;
@@ -64,6 +63,6 @@ export class CheckoutComponent implements OnInit {
     this.cart.address.tel = this.group.value.tel;
     this.cartService.updateOrder(this.cart.order, this.cart.address);
     this.router.navigateByUrl('/confirmation');
-    this.loading = false;
+    this.loadingService.loading(false);
   }
 }

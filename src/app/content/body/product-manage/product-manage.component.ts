@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { UtilsService } from "./../../../services/utils.service";
 import { AlertService } from "../../../services/alert.service";
 import { ManageProductForm } from "../../../forms/manage-product";
@@ -29,8 +30,6 @@ export class ProductManageComponent implements OnInit, OnDestroy {
   // Image
   imagePath: any = "";
 
-  // Loading
-  loading = false;
   loaded = false;
 
   category: string;
@@ -39,7 +38,8 @@ export class ProductManageComponent implements OnInit, OnDestroy {
     private utilsService: UtilsService,
     private productService: ProductService,
     private alertService: AlertService,
-    public categoryService: CategoryService
+    public categoryService: CategoryService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -49,10 +49,10 @@ export class ProductManageComponent implements OnInit, OnDestroy {
       info: false,
       pageLength: 10
     };
-    this.loading = true;
+    this.loadingService.loading(true);
     window.scrollTo(0, 0);
     Promise.all([this.loadingProductList()]).then(successes => {
-      this.loading = false;
+      this.loadingService.loading(false);
     });
     this.imagePath = "./assets/img/empty.png";
     this.mode = "S";
@@ -135,10 +135,10 @@ export class ProductManageComponent implements OnInit, OnDestroy {
     } else {
       this.mode = "S";
       this.productForm = new ManageProductForm();
-      this.loading = true;
+      this.loadingService.loading(true);
       window.scrollTo(0, 0);
       Promise.all([this.loadingProductList()]).then(successes => {
-        this.loading = false;
+        this.loadingService.loading(false);
       });
     }
   }
@@ -159,7 +159,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.loading = true;
+      this.loadingService.loading(true);
       this.productForm.product.productName = this.group.value.productName;
       this.productForm.product.productCategory = this.group.value.productCategory;
       this.productForm.product.productDetail = this.group.value.productDetail;
@@ -171,7 +171,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
           .addProduct(this.productForm)
           .then(data => {
             console.log("Success");
-            this.loading = false;
+            this.loadingService.loading(false);
             this.onChangePage("S");
             this.alertService.success("บันทึกสินค้าเรียบร้อย");
             setTimeout(() => {
@@ -180,7 +180,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
             return;
           })
           .catch(error => {
-            this.loading = false;
+            this.loadingService.loading(false);
             this.onChangePage("S");
             this.ngOnDestroy();
             this.alertService.error("เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ");
@@ -194,7 +194,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
           .updateProduct(this.productForm)
           .then(data => {
             console.log("Success");
-            this.loading = false;
+            this.loadingService.loading(false);
             this.onChangePage("S");
             this.alertService.success("แก้ไขสินค้าเรียบร้อย");
             setTimeout(() => {
@@ -203,7 +203,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
             return;
           })
           .catch(error => {
-            this.loading = false;
+            this.loadingService.loading(false);
             this.onChangePage("S");
             this.ngOnDestroy();
             this.alertService.error("เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ");
@@ -217,7 +217,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
   }
 
   onUploadImage(event) {
-    this.loading = true;
+    this.loadingService.loading(true);
     const files: FileList = event.target.files;
     if (files.length > 0) {
       const file: File = files[0];
@@ -233,10 +233,10 @@ export class ProductManageComponent implements OnInit, OnDestroy {
             })
           )
         ]).then(success => {
-          this.loading = false;
+          this.loadingService.loading(false);
         });
       } else {
-        this.loading = false;
+        this.loadingService.loading(false);
         this.alertService.warn("ขนาดไฟล์ไม่เกิน 5 mb");
         setTimeout(() => {
           this.alertService.clear();

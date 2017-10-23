@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentService } from './../../../services/payment.service';
 import { Payment } from './../../../models/payment';
@@ -12,25 +13,24 @@ export class PaymentInfoComponent implements OnInit {
 
   // Payment
   payment: Payment = new Payment();
-  // Loading
-  loading = false;
 
   orderId: string;
   private sub: any;
 
   constructor(
     private route: ActivatedRoute,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    this.loading = true;
+    this.loadingService.loading(true);
     this.payment = new Payment();
     Promise
       .all([this.getProductId(), this.getProduct(this.orderId)])
       .then(success => {
-        this.loading = false;
+        this.loadingService.loading(false);
       });
   }
 

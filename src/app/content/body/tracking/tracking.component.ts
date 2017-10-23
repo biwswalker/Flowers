@@ -1,3 +1,4 @@
+import { LoadingService } from "./../../../services/loading.service";
 import { OrderService } from "./../../../services/order.service";
 import { Order } from "./../../../models/order";
 import { Component, OnInit } from "@angular/core";
@@ -8,15 +9,15 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./tracking.component.css"]
 })
 export class TrackingComponent implements OnInit {
-  // Loading
-  loading = false;
-
   searched = false;
   orderId: string;
   status: string;
   order: Order = new Order();
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit() {
     this.orderId = "";
@@ -25,6 +26,7 @@ export class TrackingComponent implements OnInit {
   }
 
   onSearch() {
+    this.loadingService.loading(true);
     this.order = new Order();
     if (this.orderId) {
       const orderIdStr = this.orderId.toUpperCase();
@@ -33,24 +35,27 @@ export class TrackingComponent implements OnInit {
         if (data.val()) {
           this.searched = false;
           this.order = data.val().order;
-          if (this.order.paymentStatus === 'W') {
-            if (this.order.orderStatus === 'W') {
+          if (this.order.paymentStatus === "W") {
+            if (this.order.orderStatus === "W") {
               this.status = "รอการตรวจสอบ";
-            } else if (this.order.orderStatus === 'P') {
+            } else if (this.order.orderStatus === "P") {
               this.status = "กำลังดำเนินการ";
-            } else if (this.order.orderStatus === 'T') {
+            } else if (this.order.orderStatus === "T") {
               this.status = "กำลังจัดส่ง";
-            } else if (this.order.orderStatus === 'Y') {
+            } else if (this.order.orderStatus === "Y") {
               this.status = "รับสินค้าแล้ว";
             }
           } else {
             this.status = "รอการชำระเงิน";
           }
+          this.loadingService.loading(false);
         } else {
+          this.loadingService.loading(false);
           this.searched = true;
         }
       });
     } else {
+      this.loadingService.loading(false);
       this.searched = true;
     }
   }
