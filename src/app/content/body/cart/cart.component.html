@@ -4,6 +4,9 @@
     <div class="row col-12 header-label">
       <h2 class="header">CART</h2>
     </div>
+    <div class="col-12 content-margint">
+        <button class="btn btn-primary" routerLink="/product">เลือกสินค้าเพิ่ม</button>
+    </div>
     <div class="row col-12 minh40" *ngIf="cart.cartItems.length == 0" >
       <p>ไม่พบสินค้าในตระกร้า</p>
       <p>ท่าสามารสั่งซื้อในหน้า <a routerLink="/product">รายการสินค้า</a> ได้</p>

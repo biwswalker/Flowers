@@ -1,3 +1,5 @@
+import { CategoryService } from '../../../services/category.service';
+import { Category } from '../../../models/category';
 import { LoadingService } from './../../../services/loading.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../../services/cart.service';
@@ -24,13 +26,15 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
   private sub: any;
   pdQty: number;
   showingPrice: number;
+  category: Category = new Category();
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router,
     private cartService: CartService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private categoryService: CategoryService
   ) { }
 
   ngOnInit() {
@@ -66,6 +70,7 @@ export class ProductPreviewComponent implements OnInit, OnDestroy {
           if (productObj) {
             this.productForm.product = productObj;
             this.showingPrice = this.productForm.product.productPrice;
+            this.category = this.categoryService.getCategoryByKey(this.productForm.product.productCategory);
           }
         })
         .catch(error => {

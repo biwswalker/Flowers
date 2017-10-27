@@ -19,6 +19,7 @@ import { ProductComponent } from "./content/body/product/product.component";
 const appRoutes: Routes = [
   { path: "", component: IndexComponent },
   { path: "product", component: ProductComponent },
+  { path: "product/:cid", component: ProductComponent },
   { path: "preview/:pd", component: ProductPreviewComponent },
   { path: "cart", component: CartComponent },
   { path: "checkout", component: CheckoutComponent },

@@ -467,3 +467,23 @@ ul.sidemenu {
 
 
 /* END SIDE MENU */
+
+.breadcrumb-item {
+  font-weight: 200;
+}
+
+.breadcrumb-item a {
+  color: rgba(244, 178, 178, 0.8);
+}
+
+.breadcrumb {
+  background-color: rgba(234, 237, 240, 0.28) !important;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  color: rgba(37, 37, 37, 0.7) !important;
+}
+
+.breadcrumb-item.active {
+  color: rgba(37, 37, 37, 0.7) !important;
+}

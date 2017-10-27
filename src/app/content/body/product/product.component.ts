@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from './../../../services/loading.service';
 import { ProductForm } from "./../../../forms/product";
 import { Product } from "./../../../models/product";
@@ -19,16 +20,30 @@ export class ProductComponent implements OnInit {
 
   categoryMode = "";
   productSize = "";
+  private sub: any;
+
   constructor(
+    private route: ActivatedRoute,
     private productService: ProductService,
     private alertService: AlertService,
     private loadingService: LoadingService
-  ) {}
+  ) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    let setCategory = Promise.resolve((this.categoryMode = ""));
-    Promise.all([this.loadProductList(this.categoryMode, ""), setCategory]);
+    Promise.all([this.getCategoryId(),this.loadProductList(this.categoryMode, "")]);
+  }
+
+  getCategoryId() {
+    Promise.resolve(
+      this.sub = this.route.params.subscribe(params => {
+        if(params['cid']){
+          this.categoryMode = params['cid'];
+        } else {
+          this.categoryMode = '';
+        }
+      })
+    )
   }
 
   loadProductList(category: string, size: string): Promise<boolean> {
@@ -50,7 +65,7 @@ export class ProductComponent implements OnInit {
                 }
               } else {
                 if (!category) {
-                  if(form.product.productCategory !== '6'){
+                  if (form.product.productCategory !== '6') {
                     this.productFormList.push(form);
                   }
                 } else {
