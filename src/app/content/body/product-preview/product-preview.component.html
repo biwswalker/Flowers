@@ -2,22 +2,24 @@
 <section id="preview">
   <div class="container">
     <div class="row col-12">
-      <nav aria-label="breadcrumb"
-           role="navigation">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a routerLink="/">หน้าหลัก</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a routerLink="/product">รายการสินค้า</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a [routerLink]="['/product', category.categoryId]">{{category.categoryName}}</a>
-          </li>
-          <li class="breadcrumb-item active"
-              aria-current="page">{{productForm.product.productName}}</li>
-        </ol>
-      </nav>
+      <div class="col-12">
+        <nav aria-label="breadcrumb"
+             role="navigation">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a routerLink="/">หน้าหลัก</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a routerLink="/product">รายการสินค้า</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/product', category.categoryId]">{{category.categoryName}}</a>
+            </li>
+            <li class="breadcrumb-item active"
+                aria-current="page">{{productForm.product.productName}}</li>
+          </ol>
+        </nav>
+      </div>
     </div>
     <div class="row col-12">
       <div class="col-lg-7 col-12">

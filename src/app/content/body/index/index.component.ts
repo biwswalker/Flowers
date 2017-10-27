@@ -1,8 +1,12 @@
+import { EmailService } from '../../../services/email.service';
 import { LoadingService } from "./../../../services/loading.service";
 import { Product } from "../../../models/product";
 import { ProductForm } from "../../../forms/product";
 import { ProductService } from "../../../services/product.service";
 import { Component, OnInit } from "@angular/core";
+
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: "app-index",
@@ -15,8 +19,10 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private loadingService: LoadingService
-  ) {}
+    private loadingService: LoadingService,
+    private emailService: EmailService,
+    private http: Http
+  ) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -44,5 +50,10 @@ export class IndexComponent implements OnInit {
           this.loadingService.loading(false);
         })
     );
+  }
+
+
+  sentEmail() {
+    this.emailService.sendEmail();
   }
 }

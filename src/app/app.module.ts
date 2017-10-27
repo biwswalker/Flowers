@@ -1,3 +1,4 @@
+import { EmailService } from './services/email.service';
 import { LoadingService } from './services/loading.service';
 import { LoginComponent } from './content/body/login/login.component';
 import { OrderService } from './services/order.service';
@@ -88,6 +89,7 @@ import { OrderInfoComponent } from './content/body/order-info/order-info.compone
     PaymentService,
     OrderService,
     LoadingService,
+    EmailService,
     { provide: StorageService, useClass: LocalStorageService }
   ],
   bootstrap: [AppComponent]
