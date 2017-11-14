@@ -86,3 +86,7 @@ table.item-list td {
   padding-top: 12px;
   font-weight: 300;
 }
+
+#my-map {
+  height: 300px;
+}

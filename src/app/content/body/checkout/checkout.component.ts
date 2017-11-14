@@ -1,9 +1,12 @@
+import { Observable } from 'rxjs/Rx';
 import { LoadingService } from './../../../services/loading.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartForm } from '../../../forms/cart';
 import { CartService } from '../../../services/cart.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+
+declare var google: any;
 
 @Component({
   selector: 'app-checkout',
@@ -11,6 +14,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+
+  @ViewChild('map') mapRef: ElementRef;
 
   // FormGroup
   group: FormGroup;
@@ -21,10 +26,27 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private loadingService: LoadingService
-  ) { }
+    private loadingService: LoadingService,
+    private cdr: ChangeDetectorRef) {
+    console.log(this.mapRef);
+  }
+
+  displayMap() {
+    const location = new google.maps.LatLng(17.385044, 78.486671);
+    const option = {
+      center: location,
+      zoom: 10
+    };
+    const map = new google.maps.Map(this.mapRef.nativeElement, option);
+  }
+
+  ngAfterViewInit() {
+    console.log(this.mapRef);
+    this.displayMap();
+  }
 
   ngOnInit() {
+
     window.scrollTo(0, 0);
     this.cart = new CartForm();
     this.cart = this.cartService.retrieve();
@@ -65,4 +87,5 @@ export class CheckoutComponent implements OnInit {
     this.router.navigateByUrl('/confirmation');
     this.loadingService.loading(false);
   }
+
 }

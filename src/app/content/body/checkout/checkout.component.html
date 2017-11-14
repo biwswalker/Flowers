@@ -7,17 +7,25 @@
     <div class="row col-12 minh40"
          *ngIf="cart.cartItems.length == 0">
       <p>ไม่พบสินค้าในตระกร้า</p>
-      <p>ท่าสามารสั่งซื้อในหน้า <a routerLink="/product">รายการสินค้า</a> ได้</p>
+      <p>ท่าสามารสั่งซื้อในหน้า
+        <a routerLink="/product">รายการสินค้า</a> ได้</p>
     </div>
+
     <div *ngIf="cart.cartItems.length > 0">
+
       <form [formGroup]="group"
             (ngSubmit)="onContinue()">
         <div class="row col-12 content-margint nomargin">
+          <div class="col-12 margint10">
+            <div #map
+                 id="my-map"></div>
+          </div>
 
           <div class="col-lg-4 col-md-12 col-sm-12 margint10">
             <div class="row col-12 box input-bg nomargin">
               <div class="col-12 box-header">
-                <h2><i class="fa fa-address-card-o"
+                <h2>
+                  <i class="fa fa-address-card-o"
                      aria-hidden="true"></i> ที่อยู่การจัดส่ง</h2>
               </div>
               <div class="col-6 margin-vertical10">
@@ -46,28 +54,31 @@
                 <select class="form-control"
                         formControlName="subDistrict"
                         name="subDistrict">
-              <option value="" disabled></option>
-              <option value="WIANG">เวียง</option>
-              <option value="ROBWIANG">รอบเวียง</option>
-            </select>
+                  <option value=""
+                          disabled></option>
+                  <option value="WIANG">เวียง</option>
+                  <option value="ROBWIANG">รอบเวียง</option>
+                </select>
               </div>
               <div class="col-12 margin-vertical10">
                 <label class="fontwei200">อำเภอ</label>
                 <select class="form-control"
                         formControlName="district"
                         name="district">
-              <option value="" disabled></option>
-              <option value="MUANG">เมือง</option>
-            </select>
+                  <option value=""
+                          disabled></option>
+                  <option value="MUANG">เมือง</option>
+                </select>
               </div>
               <div class="col-12 margin-vertical10">
                 <label class="fontwei200">จังหวัด</label>
                 <select class="form-control"
                         formControlName="province"
                         name="province">
-              <option value="" disabled></option>
-              <option value="CRI">เชียงราย</option>
-            </select>
+                  <option value=""
+                          disabled></option>
+                  <option value="CRI">เชียงราย</option>
+                </select>
               </div>
               <div class="col-12 margin-vertical10">
                 <label class="fontwei200">รหัสไปรษณีย์</label>
@@ -77,12 +88,12 @@
                        name="postcode">
               </div>
               <div class="col-12 margin-vertical10">
-                  <label class="fontwei200">อีเมล์</label>
-                  <input type="email"
-                         class="form-control"
-                         formControlName="email"
-                         name="email">
-                </div>
+                <label class="fontwei200">อีเมล์</label>
+                <input type="email"
+                       class="form-control"
+                       formControlName="email"
+                       name="email">
+              </div>
               <div class="col-12 margin-vertical10">
                 <label class="fontwei200">เบอร์ติดต่อ</label>
                 <input type="text"
@@ -96,7 +107,8 @@
           <div class="col-lg-4 col-md-12 col-sm-12 margint10">
             <div class="row col-12 box input-bg nomargin">
               <div class="col-12 box-header">
-                <h2><i class="fa fa-credit-card"
+                <h2>
+                  <i class="fa fa-credit-card"
                      aria-hidden="true"></i> ชำระเงิน</h2>
               </div>
               <div class="col-12 margin-vertical10">
@@ -139,7 +151,8 @@
           <div class="col-lg-4 col-md-12 col-sm-12 margint10">
             <div class="col-12 box input-bg nomargin nopaddingb">
               <div class="col-12 box-header">
-                <h2><i class="fa fa-cube"
+                <h2>
+                  <i class="fa fa-cube"
                      aria-hidden="true"></i> สรุปการสั่งซื้อ</h2>
               </div>
               <div class="row col-12 margin-vertical10 nomargin nomarginb">
@@ -151,10 +164,12 @@
                   </tr>
                   <tr *ngFor="let cartObj of cart.cartItems">
                     <td>
-                      <div><img src="{{cartObj.product.productImagePath }}"
+                      <div>
+                        <img src="{{cartObj.product.productImagePath }}"
                              style="max-width: 50%;">
                       </div>
-                      <div>{{ cartObj.product.productName }} <b *ngIf="cartObj.product.productSize">({{ cartObj.product.productSize }})</b>
+                      <div>{{ cartObj.product.productName }}
+                        <b *ngIf="cartObj.product.productSize">({{ cartObj.product.productSize }})</b>
                       </div>
                     </td>
                     <td style="text-align: center;">{{ cartObj.productOrder.productQty }}</td>
@@ -183,7 +198,8 @@
               <button [disabled]="!group.valid"
                       type="submit"
                       class="button-bg primary btn-block nomargin continue-btn">
-                    <i class="fa fa-archive" aria-hidden="true"></i> ดำเนินการต่อ</button>
+                <i class="fa fa-archive"
+                   aria-hidden="true"></i> ดำเนินการต่อ</button>
             </div>
           </div>
         </div>

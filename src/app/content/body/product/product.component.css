@@ -17,40 +17,50 @@
 }
 
 .a-underline {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 p.item-label {
-  font-size: 18px;
-  color: #333333;
+    font-size: 18px;
+    color: #333333;
 }
 
 p.item-label.name {
-  font-weight: 200;
+    font-weight: 200;
 }
 
 p.item-label.price {
-  font-weight: 100;
+    font-weight: 100;
 }
 
 h2.section-heading {
-  font-size: 3rem;
-  font-weight: 200;
+    font-size: 3rem;
+    font-weight: 200;
 }
 
 .size-btn {
-  font-size: 20px;
-  font-weight: 200;
+    font-size: 20px;
+    font-weight: 200;
 }
 
 .nonmargin {
-  margin: 0;
+    margin: 0;
 }
 
-.margint{
-  margin-top: 10px;
+.margint {
+    margin-top: 10px;
 }
 
-.nopadding{
-  padding: 0px;
+.nopadding {
+    padding: 0px;
+}
+
+.blocking {
+  position: fixed;
+  background: red;
+  height: 100%;
+  width: 100%;
+  bottom: 0px;
+  top: 0px;
+  z-index: 1001;
 }

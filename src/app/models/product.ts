@@ -11,4 +11,6 @@ export class Product {
   public createUser: string;
   public createDatetime: string;
   public productSize: string;
+
+  public distritId: string;
 }
