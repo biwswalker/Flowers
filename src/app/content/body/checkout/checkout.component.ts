@@ -16,10 +16,8 @@ declare var google: any;
 export class CheckoutComponent implements OnInit {
 
   @ViewChild('map') mapRef: ElementRef;
-
   // FormGroup
   group: FormGroup;
-
   // Form
   cart: CartForm;
 
@@ -28,21 +26,10 @@ export class CheckoutComponent implements OnInit {
     private router: Router,
     private loadingService: LoadingService,
     private cdr: ChangeDetectorRef) {
-    console.log(this.mapRef);
-  }
-
-  displayMap() {
-    const location = new google.maps.LatLng(17.385044, 78.486671);
-    const option = {
-      center: location,
-      zoom: 10
-    };
-    const map = new google.maps.Map(this.mapRef.nativeElement, option);
   }
 
   ngAfterViewInit() {
-    console.log(this.mapRef);
-    this.displayMap();
+    this.initMap();
   }
 
   ngOnInit() {
@@ -86,6 +73,65 @@ export class CheckoutComponent implements OnInit {
     this.cartService.updateOrder(this.cart.order, this.cart.address);
     this.router.navigateByUrl('/confirmation');
     this.loadingService.loading(false);
+  }
+
+  initMap() {
+    const location = new google.maps.LatLng(19.8162363, 99.6089084);
+    const option = {
+      center: location,
+      zoom: 7
+    };
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    const map = new google.maps.Map(this.mapRef.nativeElement, option);
+    directionsDisplay.setMap(map);
+    this.calculateAndDisplayRoute(directionsService, directionsDisplay);
+  }
+
+  calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    let crrLat = 0;
+    let crrLng = 0;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log(position);
+        crrLat = position.coords.latitude;
+        crrLng = position.coords.longitude;
+      });
+    }
+
+    var originDistance = { lat: 20.1084463, lng: 99.8730801 };
+    var destinationDistance = { lat: crrLat, lng: crrLng };
+
+    directionsService.route({
+      origin: originDistance,
+      destination: destinationDistance,
+      travelMode: 'DRIVING'
+    }, function (response, status) {
+      if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+        var service = new google.maps.DistanceMatrixService;
+        service.getDistanceMatrix({
+          origins: [originDistance],
+          destinations: [destinationDistance],
+          travelMode: 'DRIVING',
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false
+        }, function (response, status) {
+          if (status !== 'OK') {
+            console.error('Error was: ' + status)
+          } else {
+            var originDista = response.originAddresses;
+            var destinationDista = response.destinationAddresses;
+            var result = response.rows[0].elements[0];
+            const distance = result.distance.text;
+            console.log(distance);
+          }
+        });
+      } else {
+        console.warn('Directions request failed due to ' + status)
+      }
+    });
   }
 
 }
