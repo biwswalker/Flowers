@@ -12,13 +12,24 @@
     </div>
 
     <div *ngIf="cart.cartItems.length > 0">
-
       <form [formGroup]="group"
             (ngSubmit)="onContinue()">
         <div class="row col-12 content-margint nomargin">
+
           <div class="col-12 margint10">
-            <div #map
-                 id="my-map"></div>
+            <div class="row col-12 box input-bg nomargin">
+              <div class="col-12 box-header">
+                <h2>
+                  <i class="fa fa-map-marker"
+                     aria-hidden="true"></i> กรุณาระบุตำแหน่งที่จัดส่งของคุณบนแผนที่ *</h2>
+              </div>
+              <div class="col-12 margin-vertical10 nosidepadding"
+                   style="margin-bottom: -14px;margin-top: -20px;">
+                <div #map
+                     id="my-map"></div>
+              </div>
+
+            </div>
           </div>
 
           <div class="col-lg-4 col-md-12 col-sm-12 margint10">
@@ -53,31 +64,46 @@
                 <label class="fontwei200">ตำบล</label>
                 <select class="form-control"
                         formControlName="subDistrict"
-                        name="subDistrict">
-                  <option value=""
-                          disabled></option>
-                  <option value="WIANG">เวียง</option>
-                  <option value="ROBWIANG">รอบเวียง</option>
+                        name="subDistrict"
+                        (change)="onChangeDestination()">
+                  <option *ngFor="let tumbol of tumbols"
+                          [value]="tumbol.key">{{tumbol.name}}</option>
                 </select>
               </div>
               <div class="col-12 margin-vertical10">
                 <label class="fontwei200">อำเภอ</label>
                 <select class="form-control"
                         formControlName="district"
-                        name="district">
-                  <option value=""
-                          disabled></option>
-                  <option value="MUANG">เมือง</option>
+                        name="district"
+                        disabled>
+                  <option value="อำเภอเมืองเชียงราย">เมืองเชียงราย</option>
+                  <option value="อำเภอ เวียงชัย">เวียงชัย</option>
+                  <option value="อำเภอ เชียงของ">เชียงของ</option>
+                  <option value="อำเภอ เทิง">เทิง</option>
+                  <option value="อำเภอ พาน">พาน</option>
+                  <option value="อำเภอ ป่าแดด">ป่าแดด</option>
+                  <option value="อำเภอ แม่จัน">แม่จัน</option>
+                  <option value="อำเภอ เชียงแสน">เชียงแสน</option>
+                  <option value="อำเภอ แม่สาย">แม่สาย</option>
+                  <option value="อำเภอ แม่สรวย">แม่สรวย</option>
+                  <option value="อำเภอ เวียงป่าเป้า">เวียงป่าเป้า</option>
+                  <option value="อำเภอ พญาเม็งราย">พญาเม็งราย</option>
+                  <option value="อำเภอ เวียงแก่น">เวียงแก่น</option>
+                  <option value="อำเภอ ขุนตาล">ขุนตาล</option>
+                  <option value="อำเภอ แม่ฟ้าหลวง">แม่ฟ้าหลวง</option>
+                  <option value="อำเภอ แม่ลาว">แม่ลาว</option>
+                  <option value="อำเภอ เวียงเชียงรุ้ง">เวียงเชียงรุ้ง</option>
+                  <option value="อำเภอ ดอยหลวง">ดอยหลวง</option>
                 </select>
               </div>
               <div class="col-12 margin-vertical10">
                 <label class="fontwei200">จังหวัด</label>
                 <select class="form-control"
                         formControlName="province"
-                        name="province">
-                  <option value=""
-                          disabled></option>
-                  <option value="CRI">เชียงราย</option>
+                        name="province"
+                        disabled>
+                  <option value="จ.เชียงราย"
+                          selected>เชียงราย</option>
                 </select>
               </div>
               <div class="col-12 margin-vertical10">
@@ -106,6 +132,32 @@
 
           <div class="col-lg-4 col-md-12 col-sm-12 margint10">
             <div class="row col-12 box input-bg nomargin">
+              <div class="col-12 box-header">
+                <h2>
+                  <i class="fa fa-truck"
+                     aria-hidden="true"></i> ระยะทางการส่งของ</h2>
+              </div>
+              <div class="col-12 margin-vertical10">
+                <div class="fontwei200 margin-vertical10"><i class="fa fa-paper-plane" aria-hidden="true"></i> จาก :
+                  <p class="location-target">{{cart.store.storeName}}</p>
+                </div>
+                <div class="fontwei200 margin-vertical10"><i class="fa fa-flag" aria-hidden="true"></i> ถึง :
+                  <div class="location-target"
+                       #destination></div>
+                </div>
+                <div class="fontwei200 margin-vertical10"><i class="fa fa-car" aria-hidden="true"></i> ระยะทาง :
+                  <div class="inline location-target"
+                       #distance></div>
+                </div>
+
+                <div class="fontwei200 margin-vertical10"><i class="fa fa-money" aria-hidden="true"></i> รวมค่าขนส่ง :
+                  <div class="inline location-target"
+                       #dilivery></div> บาท
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-12 box input-bg nomargin margint10">
               <div class="col-12 box-header">
                 <h2>
                   <i class="fa fa-credit-card"

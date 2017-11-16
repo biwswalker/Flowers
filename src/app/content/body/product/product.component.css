@@ -54,13 +54,3 @@ h2.section-heading {
 .nopadding {
     padding: 0px;
 }
-
-.blocking {
-  position: fixed;
-  background: red;
-  height: 100%;
-  width: 100%;
-  bottom: 0px;
-  top: 0px;
-  z-index: 1001;
-}

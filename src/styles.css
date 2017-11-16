@@ -6,6 +6,10 @@
     text-align: right;
 }
 
+.inline {
+    display: inline;
+}
+
 section {
     padding: 25px 0 !important;
 }

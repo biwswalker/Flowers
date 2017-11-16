@@ -12,7 +12,7 @@ h2.header {
 }
 
 .margint10 {
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 .sidepadding15 {
@@ -89,4 +89,12 @@ table.item-list td {
 
 #my-map {
   height: 300px;
+}
+
+.location-line {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.location-target {
+    font-weight: 300;
 }

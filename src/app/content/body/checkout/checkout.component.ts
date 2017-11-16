@@ -1,21 +1,35 @@
+import { Store } from '../../../models/store';
 import { Observable } from 'rxjs/Rx';
 import { LoadingService } from './../../../services/loading.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartForm } from '../../../forms/cart';
 import { CartService } from '../../../services/cart.service';
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { mapStyle, subDistrict } from '../../../dataset';
 
 declare var google: any;
+declare var document: any;
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, AfterViewInit {
 
   @ViewChild('map') mapRef: ElementRef;
+  // @ViewChild('origin') originRef: ElementRef;
+  @ViewChild('destination') destinationRef: ElementRef;
+  @ViewChild('distance') distanceRef: ElementRef;
+  @ViewChild('dilivery') diliveryRef: ElementRef;
+  distan: string = '';
+  private geocoder = new google.maps.Geocoder;
+  private directionsDisplay = new google.maps.DirectionsRenderer;
+  private map;
+  private originalLocation;
+
+  private tumbols = [];
   // FormGroup
   group: FormGroup;
   // Form
@@ -29,18 +43,48 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.initMap();
+    Promise.all([
+      this.initMap()
+    ])
   }
 
   ngOnInit() {
-
     window.scrollTo(0, 0);
     this.cart = new CartForm();
     this.cart = this.cartService.retrieve();
+    this.cart.address.district = 'อำเภอเมืองเชียงราย'
+    this.cart.address.province = 'จ.เชียงราย'
+
+    this.cart.store = new Store();
+    this.cart.store.storeName = 'Biwswalke Shop'
+
     if (!this.cart.order.paymentType) {
       this.cart.order.paymentType = 'T';
     }
-    this.initialFormGroup();
+    this.initialTumbol()
+    this.initialFormGroup()
+  }
+
+  retrieveData() {
+    this.cart = new CartForm();
+    this.cart = this.cartService.retrieve();
+    this.cart.address.district = 'อำเภอเมืองเชียงราย'
+    this.cart.address.province = 'จ.เชียงราย'
+    this.cart.store.storeName = 'Biwswalke Shop'
+    if (!this.cart.order.paymentType) {
+      this.cart.order.paymentType = 'T';
+    }
+  }
+
+  initialTumbol() {
+    this.tumbols = [];
+    if (this.cart.address.district) {
+      for (let tumbol of subDistrict) {
+        if (tumbol.district.endsWith(this.cart.address.district)) {
+          this.tumbols.push(tumbol)
+        }
+      }
+    }
   }
 
   initialFormGroup() {
@@ -56,6 +100,7 @@ export class CheckoutComponent implements OnInit {
       'tel': new FormControl(this.cart.address.tel, Validators.required),
       'paymentType': new FormControl(this.cart.order.paymentType, Validators.required),
     });
+
   }
 
   onContinue() {
@@ -76,62 +121,132 @@ export class CheckoutComponent implements OnInit {
   }
 
   initMap() {
+    this.originalLocation = { lat: 20.1082023, lng: 99.8738022 };
     const location = new google.maps.LatLng(19.8162363, 99.6089084);
     const option = {
       center: location,
-      zoom: 7
+      zoom: 7,
+      styles: mapStyle
     };
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
-    const map = new google.maps.Map(this.mapRef.nativeElement, option);
-    directionsDisplay.setMap(map);
-    this.calculateAndDisplayRoute(directionsService, directionsDisplay);
+
+    this.map = new google.maps.Map(this.mapRef.nativeElement, option);
+    this.directionsDisplay.setMap(this.map);
+    this.initialCurrentLocation();
+
+
+    // On Click
+    this.map.addListener('click', (event) => {
+      var destinationDistance = { lat: event.latLng.lat(), lng: event.latLng.lng() };
+      this.displayMapRoute(destinationDistance, 'L')
+    });
   }
 
-  calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    let crrLat = 0;
-    let crrLng = 0;
+  initialCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        console.log(position);
-        crrLat = position.coords.latitude;
-        crrLng = position.coords.longitude;
+        var destinationDistance = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.displayMapRoute(destinationDistance, 'L');
       });
+    } else {
+      this.displayMapRoute(this.originalLocation, 'L');
     }
+  }
 
-    var originDistance = { lat: 20.1084463, lng: 99.8730801 };
-    var destinationDistance = { lat: crrLat, lng: crrLng };
-
+  displayMapRoute(destinationDistance, type) {
+    switch (type) {
+      case 'L':
+        this.geocodeLatLng(destinationDistance);
+        break;
+      case 'A':
+        this.geocodeAddress(destinationDistance);
+        break;
+    }
+    var directionsService = new google.maps.DirectionsService;
     directionsService.route({
-      origin: originDistance,
+      origin: this.originalLocation,
       destination: destinationDistance,
       travelMode: 'DRIVING'
-    }, function (response, status) {
+    }, (response, status) => {
       if (status === 'OK') {
-        directionsDisplay.setDirections(response);
-        var service = new google.maps.DistanceMatrixService;
-        service.getDistanceMatrix({
-          origins: [originDistance],
-          destinations: [destinationDistance],
-          travelMode: 'DRIVING',
-          unitSystem: google.maps.UnitSystem.METRIC,
-          avoidHighways: false,
-          avoidTolls: false
-        }, function (response, status) {
-          if (status !== 'OK') {
-            console.error('Error was: ' + status)
-          } else {
-            var originDista = response.originAddresses;
-            var destinationDista = response.destinationAddresses;
-            var result = response.rows[0].elements[0];
-            const distance = result.distance.text;
-            console.log(distance);
-          }
-        });
-      } else {
-        console.warn('Directions request failed due to ' + status)
+        this.directionsDisplay.setDirections(response);
+        this.distanceMatrix(destinationDistance);
       }
     });
   }
 
+  distanceMatrix(destinationDistance) {
+    var service = new google.maps.DistanceMatrixService;
+    service.getDistanceMatrix({
+      origins: [this.originalLocation],
+      destinations: [destinationDistance],
+      travelMode: 'DRIVING',
+      unitSystem: google.maps.UnitSystem.METRIC,
+      avoidHighways: false,
+      avoidTolls: false
+    }, (response, status) => {
+      if (status !== 'OK') {
+        console.error('Error was: ' + status);
+      } else {
+        var originDista = response.originAddresses;
+        var destinationDista = response.destinationAddresses;
+        var result = response.rows[0].elements[0];
+        var distance = result.distance.text;
+        // Set data
+        // this.originRef.nativeElement.innerHTML = originDista;
+        this.destinationRef.nativeElement.innerHTML = destinationDista;
+        this.distanceRef.nativeElement.innerHTML = distance;
+        var numDistance = distance.split(" ", 1); 
+        let deliveryCost = numDistance[0] * 6;
+        this.diliveryRef.nativeElement.innerHTML = deliveryCost.toString().split('.', 1)[0];
+      }
+    });
+  }
+
+  geocodeLatLng(destinationCode) {
+    this.geocoder.geocode({ 'location': destinationCode }, (results, status) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          console.log(results[0])
+          for (let addrComponent of results[0].address_components) {
+            switch (addrComponent.types[0]) {
+              case 'postal_code':
+                this.group.patchValue({ postcode: addrComponent.short_name })
+                break;
+              case 'locality':
+                this.group.patchValue({ subDistrict: addrComponent.long_name })
+                for (let sub of results[0].address_components) {
+                  if (sub.types[0] === 'political') {
+                    this.group.patchValue({ subDistrict: sub.long_name })
+                  }
+                }
+                break;
+            }
+          }
+        } else {
+          console.error('No results found');
+        }
+      }
+    });
+  }
+
+  geocodeAddress(destinationCode) {
+    this.geocoder.geocode({ 'address': destinationCode }, (results, status) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          this.geocodeLatLng(results[0].geometry.location)
+        } else {
+          console.error('No results found');
+        }
+      }
+    });
+  }
+
+  onChangeDestination() {
+    let destinationTarget = '';
+    if (this.group.value.subDistrict) {
+      destinationTarget += this.group.value.subDistrict;
+    }
+    destinationTarget += this.cart.address.district + ' ' + this.cart.address.province
+    this.displayMapRoute(destinationTarget, 'A')
+  }
 }

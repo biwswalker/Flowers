@@ -1,3 +1,5 @@
+import { Location } from './location';
+
 export class Address {
   public address: string;
   public subDistrict: string;
@@ -6,4 +8,5 @@ export class Address {
   public postcode: string;
   public tel: string;
   public email: string;
+  public location: Location;
 }
