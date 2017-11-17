@@ -13,7 +13,7 @@ export const mapStyle = [
     }
 ];
 
-export const subDistrict = [
+export const subDistrictData = [
     // อำเภอเมืองเชียงราย
     { district: 'อำเภอเมืองเชียงราย', key: 'ตำบล เวียง', name: 'เวียง' },
     { district: 'อำเภอเมืองเชียงราย', key: 'ตำบล รอบเวียง', name: 'รอบเวียง' },

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { CartForm } from '../../../forms/cart';
 import { CartService } from '../../../services/cart.service';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { mapStyle, subDistrict } from '../../../dataset';
+import { mapStyle, subDistrictData } from '../../../dataset';
 
 declare var google: any;
 declare var document: any;
@@ -24,6 +24,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   @ViewChild('distance') distanceRef: ElementRef;
   @ViewChild('dilivery') diliveryRef: ElementRef;
   @ViewChild('diliveryCost') diliveryCostRef: ElementRef;
+  @ViewChild('finalTotal') finalTotelRef: ElementRef;
   distan: string = '';
   private geocoder = new google.maps.Geocoder;
   private directionsDisplay = new google.maps.DirectionsRenderer;
@@ -80,7 +81,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   initialTumbol() {
     this.tumbols = [];
     if (this.cart.address.district) {
-      for (let tumbol of subDistrict) {
+      for (let tumbol of subDistrictData) {
         if (tumbol.district.endsWith(this.cart.address.district)) {
           this.tumbols.push(tumbol)
         }
@@ -188,20 +189,20 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       if (status !== 'OK') {
         console.error('Error was: ' + status);
       } else {
-        var originDista = response.originAddresses;
-        var destinationDista = response.destinationAddresses;
+        // var originDista = response.originAddresses;
+        // var destinationDista = response.destinationAddresses;
         var result = response.rows[0].elements[0];
         var distance = result.distance.text;
         // Set data
         // this.originRef.nativeElement.innerHTML = originDista;
-        this.destinationRef.nativeElement.innerHTML = destinationDista;
-        var numDistance = distance.split(" ", 1); 
+        this.destinationRef.nativeElement.innerHTML = this.group.value.subDistrict + ' ' + this.group.value.district + ' ' + this.group.value.postcode;
+        var numDistance = distance.split(" ", 1);
         let deliveryCost = numDistance[0] * 6;
         let strCost = deliveryCost.toString().split('.', 1)[0];
         let intCost = Number(strCost);
-        this.distanceRef.nativeElement.innerHTML = numDistance[0];        
+        this.distanceRef.nativeElement.innerHTML = numDistance[0];
         this.diliveryRef.nativeElement.innerHTML = strCost;
-        this.diliveryCostRef.nativeElement.innerHTML = '฿ '+intCost;
+        this.diliveryCostRef.nativeElement.innerHTML = '฿ ' + intCost;
         this.cart.order.deliveryCost = intCost;
         this.calculateTotal();
       }
@@ -215,6 +216,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           console.log(results[0])
           for (let addrComponent of results[0].address_components) {
             switch (addrComponent.types[0]) {
+              case 'country':
+                if (addrComponent.short_name !== 'TH') {
+                  this.initialCurrentLocation();
+                }
+                break;
               case 'postal_code':
                 this.group.patchValue({ postcode: addrComponent.short_name })
                 break;
@@ -223,6 +229,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
                 for (let sub of results[0].address_components) {
                   if (sub.types[0] === 'political') {
                     this.group.patchValue({ subDistrict: sub.long_name })
+                  }
+                }
+                for (let tumbol of subDistrictData) {
+                  if (!tumbol.district.endsWith(this.group.value.subDistrict)) {
+                    this.initialCurrentLocation();
                   }
                 }
                 break;
@@ -256,8 +267,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.displayMapRoute(destinationTarget, 'A')
   }
 
-  calculateTotal(){
+  calculateTotal() {
     this.cart = this.cartService.calculateFinalPrice(this.cart);
-    console.log(this.cart.order.finalTotal)    
+    this.finalTotelRef.nativeElement.innerHTML = '฿ ' + this.cart.order.finalTotal;
   }
 }
