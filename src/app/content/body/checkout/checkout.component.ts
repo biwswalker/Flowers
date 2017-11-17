@@ -1,5 +1,4 @@
 import { Store } from '../../../models/store';
-import { Observable } from 'rxjs/Rx';
 import { LoadingService } from './../../../services/loading.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,6 +6,7 @@ import { CartForm } from '../../../forms/cart';
 import { CartService } from '../../../services/cart.service';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { mapStyle, subDistrictData } from '../../../dataset';
+import { Observable } from 'rxjs/Observable';
 
 declare var google: any;
 declare var document: any;
@@ -19,17 +19,20 @@ declare var document: any;
 export class CheckoutComponent implements OnInit, AfterViewInit {
 
   @ViewChild('map') mapRef: ElementRef;
-  // @ViewChild('origin') originRef: ElementRef;
   @ViewChild('destination') destinationRef: ElementRef;
   @ViewChild('distance') distanceRef: ElementRef;
   @ViewChild('dilivery') diliveryRef: ElementRef;
   @ViewChild('diliveryCost') diliveryCostRef: ElementRef;
   @ViewChild('finalTotal') finalTotelRef: ElementRef;
-  distan: string = '';
-  private geocoder = new google.maps.Geocoder;
-  private directionsDisplay = new google.maps.DirectionsRenderer;
+
+  // Google
   private map;
+  private geocoder = new google.maps.Geocoder;
+  private directionsDisplay;
+  private directionsService;
+  // Location
   private originalLocation;
+  private destinationLocation;
 
   private tumbols = [];
   // FormGroup
@@ -45,9 +48,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    Promise.all([
-      this.initMap()
-    ])
+    this.initMap();
   }
 
   ngOnInit() {
@@ -124,63 +125,80 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   initMap() {
     this.originalLocation = { lat: 20.1082023, lng: 99.8738022 };
-    const location = new google.maps.LatLng(19.8162363, 99.6089084);
-    const option = {
-      center: location,
-      zoom: 7,
-      styles: mapStyle
-    };
-
-    this.map = new google.maps.Map(this.mapRef.nativeElement, option);
-    this.directionsDisplay.setMap(this.map);
-    this.initialCurrentLocation();
-
-
-    // On Click
-    this.map.addListener('click', (event) => {
-      var destinationDistance = { lat: event.latLng.lat(), lng: event.latLng.lng() };
-      this.displayMapRoute(destinationDistance, 'L')
+    this.map = new google.maps.Map(this.mapRef.nativeElement, {
+      center: this.originalLocation,
     });
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsRenderer({
+      draggable: true,
+      map: this.map
+    });
+
+    this.directionsDisplay.addListener('directions_changed', () => {
+      const origin = this.directionsDisplay.getDirections().request.origin;
+      const destination = this.directionsDisplay.getDirections().request.destination;
+      if (!destination.location) {
+        if (!destination.query) {
+          this.destinationLocation = { lat: destination.lat(), lng: destination.lng() };
+          this.map.setCenter(this.destinationLocation);
+          this.displayRoute();
+        }
+      }
+      if (!origin.location) {
+        this.displayRoute();
+      }
+    });
+    this.initialCurrentLocation();
   }
 
   initialCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        var destinationDistance = { lat: position.coords.latitude, lng: position.coords.longitude };
-        this.displayMapRoute(destinationDistance, 'L');
+        this.destinationLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.displayRoute();
       });
-    } else {
-      this.displayMapRoute(this.originalLocation, 'L');
+    }
+    else {
+      this.destinationLocation = this.originalLocation;
+      this.displayRoute();
     }
   }
 
-  displayMapRoute(destinationDistance, type) {
-    switch (type) {
-      case 'L':
-        this.geocodeLatLng(destinationDistance);
-        break;
-      case 'A':
-        this.geocodeAddress(destinationDistance);
-        break;
-    }
-    var directionsService = new google.maps.DirectionsService;
-    directionsService.route({
+  displayRoute() {
+    this.directionsService.route({
       origin: this.originalLocation,
-      destination: destinationDistance,
+      destination: this.destinationLocation,
       travelMode: 'DRIVING'
     }, (response, status) => {
       if (status === 'OK') {
         this.directionsDisplay.setDirections(response);
-        this.distanceMatrix(destinationDistance);
+
+        if (!this.destinationLocation.lat) {
+          this.geocoder.geocode({ 'address': this.destinationLocation }, (results, status) => {
+            if (status === 'OK') {
+              if (results[0]) {
+                this.destinationLocation = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
+                this.geocodeLatLng();
+              } else {
+                console.error('No results found');
+              }
+            }
+          });
+        } else {
+          this.geocodeLatLng();
+        }
+        this.distanceMatrix();
+      } else {
+        alert('Could not display directions due to: ' + status);
       }
     });
   }
 
-  distanceMatrix(destinationDistance) {
+  distanceMatrix() {
     var service = new google.maps.DistanceMatrixService;
     service.getDistanceMatrix({
       origins: [this.originalLocation],
-      destinations: [destinationDistance],
+      destinations: [this.destinationLocation],
       travelMode: 'DRIVING',
       unitSystem: google.maps.UnitSystem.METRIC,
       avoidHighways: false,
@@ -195,7 +213,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         var distance = result.distance.text;
         // Set data
         // this.originRef.nativeElement.innerHTML = originDista;
-        this.destinationRef.nativeElement.innerHTML = this.group.value.subDistrict + ' ' + this.group.value.district + ' ' + this.group.value.postcode;
+        this.destinationRef.nativeElement.innerHTML = this.cart.address.subDistrict + ' ' + this.cart.address.district + ' ' + this.cart.address.postcode;
         var numDistance = distance.split(" ", 1);
         let deliveryCost = numDistance[0] * 6;
         let strCost = deliveryCost.toString().split('.', 1)[0];
@@ -209,35 +227,36 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
   }
 
-  geocodeLatLng(destinationCode) {
-    this.geocoder.geocode({ 'location': destinationCode }, (results, status) => {
+  geocodeLatLng() {
+    this.geocoder.geocode({ 'location': this.destinationLocation }, (results, status) => {
       if (status === 'OK') {
         if (results[0]) {
-          console.log(results[0])
+          let country = '';
           for (let addrComponent of results[0].address_components) {
             switch (addrComponent.types[0]) {
               case 'country':
-                if (addrComponent.short_name !== 'TH') {
-                  this.initialCurrentLocation();
-                }
+                country = addrComponent.short_name;
                 break;
               case 'postal_code':
                 this.group.patchValue({ postcode: addrComponent.short_name })
+                this.cart.address.postcode = addrComponent.short_name;
                 break;
               case 'locality':
                 this.group.patchValue({ subDistrict: addrComponent.long_name })
+                this.cart.address.subDistrict = addrComponent.short_name;
                 for (let sub of results[0].address_components) {
                   if (sub.types[0] === 'political') {
                     this.group.patchValue({ subDistrict: sub.long_name })
-                  }
-                }
-                for (let tumbol of subDistrictData) {
-                  if (!tumbol.district.endsWith(this.group.value.subDistrict)) {
-                    this.initialCurrentLocation();
+                    this.cart.address.subDistrict = sub.long_name;
                   }
                 }
                 break;
             }
+          }
+          if (country.endsWith('TH')) {
+            this.checkArea();
+          } else {
+            this.initialCurrentLocation();
           }
         } else {
           console.error('No results found');
@@ -246,29 +265,33 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
   }
 
-  geocodeAddress(destinationCode) {
-    this.geocoder.geocode({ 'address': destinationCode }, (results, status) => {
-      if (status === 'OK') {
-        if (results[0]) {
-          this.geocodeLatLng(results[0].geometry.location)
-        } else {
-          console.error('No results found');
-        }
-      }
-    });
+  onChangeDestination() {
+    this.destinationLocation = '';
+    if (this.group.value.subDistrict) {
+      this.destinationLocation += this.group.value.subDistrict;
+    }
+    this.destinationLocation += this.cart.address.district + ' ' + this.cart.address.province
+    this.displayRoute();
   }
 
-  onChangeDestination() {
-    let destinationTarget = '';
-    if (this.group.value.subDistrict) {
-      destinationTarget += this.group.value.subDistrict;
-    }
-    destinationTarget += this.cart.address.district + ' ' + this.cart.address.province
-    this.displayMapRoute(destinationTarget, 'A')
-  }
 
   calculateTotal() {
     this.cart = this.cartService.calculateFinalPrice(this.cart);
     this.finalTotelRef.nativeElement.innerHTML = '฿ ' + this.cart.order.finalTotal;
+  }
+
+  checkArea() {
+    let subDistrict = this.group.value.subDistrict;
+    let bool = false;
+    if (subDistrict) {
+      for (let tumbol of this.tumbols) {
+        if (tumbol.key === subDistrict) {
+          bool = true;
+        }
+      }
+      if (!bool) {
+        this.initialCurrentLocation();
+      }
+    }
   }
 }

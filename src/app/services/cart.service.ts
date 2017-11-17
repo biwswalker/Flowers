@@ -97,6 +97,14 @@ export class CartService {
     return cart;
   }
 
+  changeDistrict(district){
+    this.empty();
+    let cart = new CartForm();
+    cart.address.district = district;
+    cart.address.province = 'จ.เชียงราย';
+    this.save(cart);
+  }
+
   retrieve() {
     let cart = new CartForm();
     const storedCart = this.storage.getItem(CART_KEY);

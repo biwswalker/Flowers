@@ -10,11 +10,11 @@ import { Component } from "@angular/core";
 export class AppComponent {
   loading = false;
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.loadingService.status.subscribe((val: boolean) => {
-      this.loading = val;
+      setTimeout(() => { this.loading = val, 0 })
     });
   }
 }

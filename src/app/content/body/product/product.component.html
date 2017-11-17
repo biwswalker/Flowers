@@ -21,6 +21,8 @@
     <div class="row">
       <div class="col-12 row margint nonmargin">
         <select class="form-control"
+                [(ngModel)]="district"
+                (change)="onChangeDistrict()"
                 name="district">
           <option value="อำเภอเมืองเชียงราย">เมืองเชียงราย</option>
           <option value="อำเภอ เวียงชัย">เวียงชัย</option>

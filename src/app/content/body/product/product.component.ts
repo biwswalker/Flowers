@@ -5,6 +5,7 @@ import { Product } from "./../../../models/product";
 import { Component, OnInit } from "@angular/core";
 import { ProductService } from "../../../services/product.service";
 import { AlertService } from "../../../services/alert.service";
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: "app-product",
@@ -18,6 +19,7 @@ export class ProductComponent implements OnInit {
   // ImageShowing
   imagePath: any;
 
+  district = '';
   categoryMode = "";
   productSize = "";
   private sub: any;
@@ -26,18 +28,22 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private alertService: AlertService,
-    private loadingService: LoadingService
-  ) { }
+    private loadingService: LoadingService,
+    private cartService: CartService
+  ) { 
+    let cartF = this.cartService.retrieve();
+    this.district = cartF.address.district;
+  }
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    Promise.all([this.getCategoryId(),this.loadProductList(this.categoryMode, "")]);
+    Promise.all([this.getCategoryId(), this.loadProductList(this.categoryMode, "")]);
   }
 
   getCategoryId() {
     Promise.resolve(
       this.sub = this.route.params.subscribe(params => {
-        if(params['cid']){
+        if (params['cid']) {
           this.categoryMode = params['cid'];
         } else {
           this.categoryMode = '';
@@ -96,5 +102,9 @@ export class ProductComponent implements OnInit {
 
   onChangeSize() {
     Promise.all([this.loadProductList(this.categoryMode, this.productSize)]);
+  }
+
+  onChangeDistrict() {
+    this.cartService.changeDistrict(this.district);
   }
 }
