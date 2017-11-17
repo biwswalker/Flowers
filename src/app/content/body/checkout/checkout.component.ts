@@ -23,6 +23,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   @ViewChild('destination') destinationRef: ElementRef;
   @ViewChild('distance') distanceRef: ElementRef;
   @ViewChild('dilivery') diliveryRef: ElementRef;
+  @ViewChild('diliveryCost') diliveryCostRef: ElementRef;
   distan: string = '';
   private geocoder = new google.maps.Geocoder;
   private directionsDisplay = new google.maps.DirectionsRenderer;
@@ -194,10 +195,15 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         // Set data
         // this.originRef.nativeElement.innerHTML = originDista;
         this.destinationRef.nativeElement.innerHTML = destinationDista;
-        this.distanceRef.nativeElement.innerHTML = distance;
         var numDistance = distance.split(" ", 1); 
         let deliveryCost = numDistance[0] * 6;
-        this.diliveryRef.nativeElement.innerHTML = deliveryCost.toString().split('.', 1)[0];
+        let strCost = deliveryCost.toString().split('.', 1)[0];
+        let intCost = Number(strCost);
+        this.distanceRef.nativeElement.innerHTML = numDistance[0];        
+        this.diliveryRef.nativeElement.innerHTML = strCost;
+        this.diliveryCostRef.nativeElement.innerHTML = '฿ '+intCost;
+        this.cart.order.deliveryCost = intCost;
+        this.calculateTotal();
       }
     });
   }
@@ -248,5 +254,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     }
     destinationTarget += this.cart.address.district + ' ' + this.cart.address.province
     this.displayMapRoute(destinationTarget, 'A')
+  }
+
+  calculateTotal(){
+    this.cart = this.cartService.calculateFinalPrice(this.cart);
+    console.log(this.cart.order.finalTotal)    
   }
 }

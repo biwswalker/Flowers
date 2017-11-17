@@ -21,7 +21,7 @@
               <div class="col-12 box-header">
                 <h2>
                   <i class="fa fa-map-marker"
-                     aria-hidden="true"></i> กรุณาระบุตำแหน่งที่จัดส่งของคุณบนแผนที่ *</h2>
+                     aria-hidden="true"></i> ระบุตำแหน่งที่จัดส่ง *</h2>
               </div>
               <div class="col-12 margin-vertical10 nosidepadding"
                    style="margin-bottom: -14px;margin-top: -20px;">
@@ -141,16 +141,18 @@
                 <div class="fontwei200 margin-vertical10"><i class="fa fa-paper-plane" aria-hidden="true"></i> จาก :
                   <p class="location-target">{{cart.store.storeName}}</p>
                 </div>
+
                 <div class="fontwei200 margin-vertical10"><i class="fa fa-flag" aria-hidden="true"></i> ถึง :
                   <div class="location-target"
                        #destination></div>
                 </div>
-                <div class="fontwei200 margin-vertical10"><i class="fa fa-car" aria-hidden="true"></i> ระยะทาง :
+
+                <div class="fontwei200 location-line"><i class="fa fa-car" aria-hidden="true"></i> ระยะทาง :
                   <div class="inline location-target"
-                       #distance></div>
+                       #distance></div> กม.
                 </div>
 
-                <div class="fontwei200 margin-vertical10"><i class="fa fa-money" aria-hidden="true"></i> รวมค่าขนส่ง :
+                <div class="fontwei200 location-line"><i class="fa fa-money" aria-hidden="true"></i> รวมค่าจัดส่ง :
                   <div class="inline location-target"
                        #dilivery></div> บาท
                 </div>
@@ -235,14 +237,14 @@
                   <tr>
                     <td style="border-bottom: 0px;">ค่าจัดส่ง</td>
                     <td style="border-bottom: 0px;"></td>
-                    <td style="text-align: right;border-bottom: 0px;">฿ 0</td>
+                    <td style="text-align: right;border-bottom: 0px;" #diliveryCost></td>
                   </tr>
                 </table>
               </div>
               <div class="col-12 box-footer nosidepadding">
                 <div class="sidepadding15">
                   <div class="floatl total">ยอดที่ต้องชำระ</div>
-                  <div class="floatr total">฿ {{ cart.order.totalPrice }}</div>
+                  <div class="floatr total">฿ {{ cart.order.finalTotal }}</div>
                 </div>
               </div>
             </div>

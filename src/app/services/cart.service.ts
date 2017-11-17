@@ -83,6 +83,20 @@ export class CartService {
     return cart;
   }
 
+  calculateFinalPrice(cart: CartForm) {
+    let total: number = 0;
+    let dilivery: number = 0;
+    cart.cartItems.forEach((item: CartItem) => {
+      total += item.productOrder.productTotalPrice;
+    })
+    if(cart.order.deliveryCost){
+      dilivery = cart.order.deliveryCost;
+    }
+    cart.order.totalPrice = total;
+    cart.order.finalTotal = (total + dilivery);
+    return cart;
+  }
+
   retrieve() {
     let cart = new CartForm();
     const storedCart = this.storage.getItem(CART_KEY);
