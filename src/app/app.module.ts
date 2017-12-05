@@ -37,6 +37,10 @@ import { TrackingComponent } from './content/body/tracking/tracking.component';
 import { OrderManageComponent } from './content/body/order-manage/order-manage.component';
 import { PaymentInfoComponent } from './content/body/payment-info/payment-info.component';
 import { OrderInfoComponent } from './content/body/order-info/order-info.component';
+import { StoreComponent } from './content/body/store/store.component';
+import { EditStoreComponent } from './content/body/store/edit-store/edit-store.component';
+import { StoreService } from './services/store.service';
+import { ListStoreComponent } from './content/body/store/list-store/list-store.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +63,9 @@ import { OrderInfoComponent } from './content/body/order-info/order-info.compone
     OrderManageComponent,
     PaymentInfoComponent,
     OrderInfoComponent,
+    StoreComponent,
+    EditStoreComponent,
+    ListStoreComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +97,7 @@ import { OrderInfoComponent } from './content/body/order-info/order-info.compone
     OrderService,
     LoadingService,
     EmailService,
+    StoreService,
     { provide: StorageService, useClass: LocalStorageService }
   ],
   bootstrap: [AppComponent]

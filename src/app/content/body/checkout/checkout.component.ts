@@ -9,7 +9,6 @@ import { mapStyle, subDistrictData } from '../../../dataset';
 import { Observable } from 'rxjs/Observable';
 
 declare var google: any;
-declare var document: any;
 
 @Component({
   selector: 'app-checkout',
@@ -83,7 +82,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.tumbols = [];
     if (this.cart.address.district) {
       for (let tumbol of subDistrictData) {
-        if (tumbol.district.endsWith(this.cart.address.district)) {
+        if (tumbol.district === this.cart.address.district) {
           this.tumbols.push(tumbol)
         }
       }

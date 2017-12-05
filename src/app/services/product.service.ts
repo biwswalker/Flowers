@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { ManageProductForm } from "../forms/manage-product";
 import * as firebase from 'firebase';
 import { Product } from "../models/product";
+import { Promise } from 'firebase';
+import { resolve, reject } from 'q';
 
 
 @Injectable()
@@ -23,26 +25,38 @@ export class ProductService {
     return firebase.database().ref('product/' + form.product.productId).set(form.product);
   }
 
-  fetchProductListData(productCategory: string) {
+  fetchProductListData(district: string, productCategory: string) {
     return firebase.database().ref('product').once('value')
       .then(list => {
+        var promises = [];
         this.productList = [];
-        list.forEach(data => {
-          const pd: Product = data.val();
-          if (productCategory) {
-            if (pd.productCategory === productCategory) {
-              this.productList.push(pd);
-            }
-          } else {
-            this.productList.push(pd);
-          }
+        list.forEach((element) => {
+          promises.push(
+            this.isProductLocal(district, element.val().storeId).then(returned => {
+              if (returned) {
+                if (productCategory) {
+                  if (element.val().productCategory === productCategory) {
+                    this.productList.push(element.val());
+                  }
+                } else {
+                  this.productList.push(element.val());
+                }
+              }
+            })
+          );
         });
-        return this.productList;
+        return Promise.all(promises).then(() => {
+          return this.productList;
+        });
       })
       .catch(error => {
         console.log('Error ' + error);
         return [];
       });
+  }
+
+  fetchProductListDataAdmin(): Promise<Product[]> {
+    return firebase.database().ref('product').once('value');
   }
 
   getProductByKey(productId: string) {
@@ -65,5 +79,18 @@ export class ProductService {
         console.log('Error ' + error);
         return [];
       });
+  }
+
+  isProductLocal(district, storeId): Promise<boolean> {
+    return firebase.database().ref('store').once('value')
+      .then(list => {
+        let isLocal = false;
+        list.forEach(data => {
+          if (data.val().district === district && data.val().storeId === storeId && data.val().status === 'Y') {
+            isLocal = true;
+          }
+        });
+        return isLocal;
+      })
   }
 }

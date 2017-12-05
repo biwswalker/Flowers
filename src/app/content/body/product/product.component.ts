@@ -30,7 +30,7 @@ export class ProductComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private cartService: CartService
-  ) { 
+  ) {
     let cartF = this.cartService.retrieve();
     this.district = cartF.address.district;
   }
@@ -56,7 +56,7 @@ export class ProductComponent implements OnInit {
     this.loadingService.loading(true);
     return Promise.resolve(
       this.productService
-        .fetchProductListData(category)
+        .fetchProductListData(this.district, category)
         .then((products: Product[]) => {
           this.productFormList = [];
           let form: ProductForm;
@@ -64,7 +64,6 @@ export class ProductComponent implements OnInit {
             if (pd.status === "Y") {
               form = new ProductForm();
               form.product = pd;
-
               if (size) {
                 if (form.product.productSize === size) {
                   this.productFormList.push(form);
@@ -105,6 +104,7 @@ export class ProductComponent implements OnInit {
   }
 
   onChangeDistrict() {
-    this.cartService.changeDistrict(this.district);
+    this.categoryMode = '';
+    Promise.all([this.cartService.changeDistrict(this.district), this.loadProductList('', '')]);
   }
 }

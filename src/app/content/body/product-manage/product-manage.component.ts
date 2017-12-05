@@ -1,3 +1,5 @@
+import { StoreService } from '../../../services/store.service';
+import { Store } from '../../../models/store';
 import { LoadingService } from './../../../services/loading.service';
 import { UtilsService } from "./../../../services/utils.service";
 import { AlertService } from "../../../services/alert.service";
@@ -34,13 +36,16 @@ export class ProductManageComponent implements OnInit, OnDestroy {
 
   category: string;
 
+  stores: Store[] = [];
+
   constructor(
     private utilsService: UtilsService,
     private productService: ProductService,
     private alertService: AlertService,
     public categoryService: CategoryService,
-    private loadingService: LoadingService
-  ) {}
+    private loadingService: LoadingService,
+    private storeService: StoreService
+  ) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -51,9 +56,11 @@ export class ProductManageComponent implements OnInit, OnDestroy {
     };
     this.loadingService.loading(true);
     window.scrollTo(0, 0);
-    Promise.all([this.loadingProductList()]).then(successes => {
-      this.loadingService.loading(false);
-    });
+    Promise.all([this.loadingProductList(),
+    this.loadingStoreList()])
+      .then(successes => {
+        this.loadingService.loading(false);
+      });
     this.imagePath = "./assets/img/empty.png";
     this.mode = "S";
   }
@@ -61,22 +68,37 @@ export class ProductManageComponent implements OnInit, OnDestroy {
   loadingProductList(): Promise<boolean> {
     return Promise.resolve(
       this.productService
-        .fetchProductListData("")
-        .then((products: Product[]) => {
+        .fetchProductListDataAdmin()
+        .then((snapshot) => {
           this.productListForm = [];
           let form: ManageProductForm;
-          products.forEach(product => {
-            form = new ManageProductForm();
-            form.product = product;
-            form.category = this.categoryService.getCategoryByKey(
-              product.productCategory
+          var promises = [];
+          snapshot.forEach((product: any) => {
+            promises.push(
+              new Promise(resolve => {
+                this.storeService.getStoreById(product.val().storeId)
+                  .then(store => {
+                    form = new ManageProductForm();
+                    if (store) {
+                      form.store = store;
+                    }
+                    form.product = product.val();
+                    form.category = this.categoryService.getCategoryByKey(
+                      product.val().productCategory
+                    );
+                    this.productListForm.push(form);
+                    resolve();
+                  })
+              })
             );
-            this.productListForm.push(form);
           });
-          this.loaded = true;
-          return false;
+          Promise.all(promises).then(() => {
+            this.loaded = true;
+            return false;
+          })
         })
         .catch(error => {
+          console.error(error)
           this.alertService.error("เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ");
           setTimeout(() => {
             this.alertService.clear();
@@ -84,6 +106,18 @@ export class ProductManageComponent implements OnInit, OnDestroy {
           window.scrollTo(0, 0);
           return false;
         })
+    );
+  }
+
+  loadingStoreList(): Promise<boolean> {
+    return Promise.resolve(
+      this.storeService.fetchStoreListData()
+        .then(succes => {
+          if (succes) {
+            this.stores = this.storeService.getStoreList()
+          }
+        }
+        )
     );
   }
 
@@ -106,6 +140,8 @@ export class ProductManageComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.pattern("[0-9]+")
       ]),
+      productStore: new FormControl(this.productForm.product.storeId,
+        Validators.required),
       file: new FormControl(null),
       productSize: new FormControl(this.productForm.product.productSize)
     });
@@ -166,6 +202,7 @@ export class ProductManageComponent implements OnInit, OnDestroy {
       this.productForm.product.status = this.group.value.status;
       this.productForm.product.productPrice = this.group.value.productPrice;
       this.productForm.product.productSize = this.group.value.productSize;
+      this.productForm.product.storeId = this.group.value.productStore;
       if (this.mode === "I") {
         this.productService
           .addProduct(this.productForm)

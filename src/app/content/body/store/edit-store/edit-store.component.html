@@ -1,0 +1,118 @@
+<button class="btn btn-danger"
+        (click)="onBack()">ยกเลิก</button>
+<form [formGroup]="group"
+      (ngSubmit)="onClickSubmit()">
+  <div class="row nomargin">
+
+    <div class="col-12">
+      <div class="input-bg">
+        <div class="row col-12 padding-form nomargin">
+          <div class="col-lg-8 col-sm-8 col-9">
+            <label class="fontwei200">ชื่อร้าน{{updateStore}}</label>
+            <input formControlName="storeName"
+                   name="storeName"
+                   type="text"
+                   class="form-control">
+          </div>
+          <div class="col-lg-4 col-md-4 col-3">
+            <label class="fontwei200">สถานะ</label>
+            <select formControlName="status"
+                    name="status"
+                    class="form-control">
+              <option value="Y">ใช้งาน</option>
+              <option value="N">ไม่ใช้งาน</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row col-12 padding-form nomargin">
+          <div class="col-lg-6 col-md-6 col-12">
+            <label class="fontwei200">จังหวัด</label>
+            <select class="form-control"
+                    formControlName="province"
+                    name="province"
+                    disabled>
+              <option value="จ.เชียงราย"
+                      selected>เชียงราย</option>
+            </select>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12">
+            <label class="fontwei200">อำเภอ</label>
+            <select class="form-control"
+                    formControlName="district"
+                    name="district"
+                    (change)="onChangeDistrict()">
+              <option value="อำเภอเมืองเชียงราย">เมืองเชียงราย</option>
+              <option value="อำเภอ เวียงชัย">เวียงชัย</option>
+              <option value="อำเภอ เชียงของ">เชียงของ</option>
+              <option value="อำเภอ เทิง">เทิง</option>
+              <option value="อำเภอ พาน">พาน</option>
+              <option value="อำเภอ ป่าแดด">ป่าแดด</option>
+              <option value="อำเภอ แม่จัน">แม่จัน</option>
+              <option value="อำเภอ เชียงแสน">เชียงแสน</option>
+              <option value="อำเภอ แม่สาย">แม่สาย</option>
+              <option value="อำเภอ แม่สรวย">แม่สรวย</option>
+              <option value="อำเภอ เวียงป่าเป้า">เวียงป่าเป้า</option>
+              <option value="อำเภอ พญาเม็งราย">พญาเม็งราย</option>
+              <option value="อำเภอ เวียงแก่น">เวียงแก่น</option>
+              <option value="อำเภอ ขุนตาล">ขุนตาล</option>
+              <option value="อำเภอ แม่ฟ้าหลวง">แม่ฟ้าหลวง</option>
+              <option value="อำเภอ แม่ลาว">แม่ลาว</option>
+              <option value="อำเภอ เวียงเชียงรุ้ง">เวียงเชียงรุ้ง</option>
+              <option value="อำเภอ ดอยหลวง">ดอยหลวง</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row col-12 padding-form nomargin">
+          <div class="col-lg-6 col-md-6 col-12">
+            <label class="fontwei200">ตำบล</label>
+            <select class="form-control"
+                    formControlName="subDistrict"
+                    name="subDistrict"
+                    (change)="onChangeDestination()">
+              <option [value]="" disabled></option>
+              <option *ngFor="let tumbol of tumbols"
+                      [value]="tumbol.key">{{tumbol.name}}</option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-md-3 col-6">
+            <label class="fontwei200">ละติจูด</label>
+            <input formControlName="lat"
+                   name="lat"
+                   type="text"
+                   class="form-control"
+                   disabled>
+          </div>
+          <div class="col-lg-3 col-md-3 col-6">
+            <label class="fontwei200">ลองติจูด</label>
+            <input formControlName="lng"
+                   name="lng"
+                   type="text"
+                   class="form-control"
+                   disabled>
+          </div>
+        </div>
+
+        <div class="row col-12 padding-form nomargin">
+          <div class="col-12">
+            <div #map
+                 id="my-map"></div>
+          </div>
+        </div>
+
+        <div class="row col-12 padding-t nomargin">
+          <div class="col-12">
+            <button type="submit"
+                    class="button-bg primary btn-block size-btn nomargin"
+                    [disabled]="!group.valid">บันทึก</button>
+            <!-- <button type="submit"
+                    class="button-bg primary btn-block size-btn nomargin"
+                    *ngIf="mode === 'U'"
+                    [disabled]="!group.valid">แก้ไข</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

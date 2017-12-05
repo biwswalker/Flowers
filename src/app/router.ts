@@ -15,6 +15,7 @@ import { NgModule } from "@angular/core";
 
 import { IndexComponent } from "./content/body/index/index.component";
 import { ProductComponent } from "./content/body/product/product.component";
+import { StoreComponent } from './content/body/store/store.component';
 
 const appRoutes: Routes = [
   { path: "", component: IndexComponent },
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
   { path: "product-manage", component: ProductManageComponent },
   { path: "order-manage", component: OrderManageComponent },
   { path: "payment-info/:oid", component: PaymentInfoComponent },
-  { path: "order-info/:oid", component: OrderInfoComponent }
+  { path: "order-info/:oid", component: OrderInfoComponent },
+  { path: "store-manage", component: StoreComponent }
 ];
 
 @NgModule({

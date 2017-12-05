@@ -1,0 +1,64 @@
+.margin-t {
+    margin-top: 10px;
+}
+
+.btn-close {
+    position: absolute;
+    right: 0
+}
+
+.padding-t {
+    padding-top: 10px;
+}
+
+.mid {
+    vertical-align: middle;
+}
+
+.none-border {
+    border: none;
+}
+
+.padding-side {
+    padding: 0 40px;
+}
+
+.maxwidth {
+    width: 100%;
+}
+
+.upload-btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.cursor-btn {
+  cursor: pointer;
+}
+
+.nomargin {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+th.head {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.body-text {
+  font-weight: 200;
+}
+
+.non-margin {
+  margin: 0px;
+}
+
+h2.header {
+  font-size: 3rem;
+  font-weight: 200;
+}
+
+.fontwei200 {
+    font-weight: 200;
+}

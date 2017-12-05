@@ -20,6 +20,8 @@
             <th class="head"
                 style="min-width: 100px;">ชื่อสินค้า</th>
             <th class="head"
+                style="min-width: 100px;">ร้านค้า</th>
+            <th class="head"
                 style="min-width: 100px;">ประเภทสินค้า</th>
             <th class="head"
                 style="min-width: 100px;">สถานะ</th>
@@ -30,6 +32,9 @@
               (click)="onSelectRow(productObj)">
             <td>
               <div class="body-text">{{ productObj.product.productName }}</div>
+            </td>
+            <td>
+              <div class="body-text">{{ productObj.store.storeName }}</div>
             </td>
             <td>
               <div class="body-text">{{ productObj.category.categoryName }}</div>
@@ -52,15 +57,15 @@
 <!-- Begin Edit -->
 <section id="product-table"
          *ngIf="mode !== 'S'">
-  <form [formGroup]="group"
-        (ngSubmit)="onClickSubmit()">
-    <div class="container">
-      <div class="row col-12 header-label">
-        <h2 class="header">PRODUCT MANAGEMENT</h2>
-      </div>
-      <div class="content-margint"></div>
-      <button class="btn btn-danger"
-              (click)="onBack()">ยกเลิก</button>
+  <div class="container">
+    <div class="row col-12 header-label">
+      <h2 class="header">PRODUCT MANAGEMENT</h2>
+    </div>
+    <div class="content-margint"></div>
+    <button class="btn btn-danger"
+            (click)="onBack()">ยกเลิก</button>
+    <form [formGroup]="group"
+          (ngSubmit)="onClickSubmit()">
       <div class="row">
         <div class="col-lg-5 col-md-6 col-12"
              style="margin-top: 20px">
@@ -98,6 +103,19 @@
                         class="form-control">
                   <option value="Y">ใช้งาน</option>
                   <option value="N">ไม่ใช้งาน</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row col-12 padding-form nomargin">
+              <div class="col-12">
+                <label for="">ร้านที่จำหน่าย</label>
+                <select formControlName="productStore"
+                        name="productStore"
+                        class="form-control">
+                  <option value=""></option>
+                  <option *ngFor="let storeObj of stores"
+                          [value]="storeObj.storeId">{{storeObj.storeName}}</option>
                 </select>
               </div>
             </div>
@@ -166,7 +184,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </section>
 <!-- End Edit -->

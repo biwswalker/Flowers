@@ -89,7 +89,7 @@ export class CartService {
     cart.cartItems.forEach((item: CartItem) => {
       total += item.productOrder.productTotalPrice;
     })
-    if(cart.order.deliveryCost){
+    if (cart.order.deliveryCost) {
       dilivery = cart.order.deliveryCost;
     }
     cart.order.totalPrice = total;
@@ -97,12 +97,15 @@ export class CartService {
     return cart;
   }
 
-  changeDistrict(district){
-    this.empty();
-    let cart = new CartForm();
-    cart.address.district = district;
-    cart.address.province = 'จ.เชียงราย';
-    this.save(cart);
+  changeDistrict(district) {
+    const cartRetrieve = this.retrieve();
+    if (cartRetrieve.address.district !== district) {
+      this.empty();
+      let cart = new CartForm();
+      cart.address.district = district;
+      cart.address.province = 'จ.เชียงราย';
+      this.save(cart);
+    }
   }
 
   retrieve() {
@@ -133,7 +136,7 @@ export class CartService {
           this.empty();
           return orderId;
         }).catch(error => {
-          console.log('Error : '+error.message)
+          console.log('Error : ' + error.message)
         });
     }
   }

@@ -1,0 +1,34 @@
+<button class="btn btn-primary"
+        (click)="onInsert()">เพิ่มร้านค้า</button>
+<table datatable
+       [dtOptions]="dtOptions"
+       *ngIf="loaded"
+       class="table table-striped hover table-responsive">
+  <thead>
+    <tr>
+      <th class="head"
+          style="min-width: 100px;">ชื่อร้านค้า</th>
+      <th class="head"
+          style="min-width: 100px;">อำเภอ</th>
+      <th class="head"
+          style="min-width: 100px;">สถานะ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let storeObj of storeList"
+        (click)="onSelectRow(storeObj)" style="cursor: pointer;">
+      <td>
+        <div class="body-text">{{ storeObj.storeName }}</div>
+      </td>
+      <td>
+        <div class="body-text">{{ storeObj.district }}</div>
+      </td>
+      <td>
+        <div *ngIf="storeObj.status === 'Y'"
+             class="body-text">ใช้งาน</div>
+        <div *ngIf="storeObj.status === 'N'"
+             class="body-text">ไม่ใช้งาน</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
